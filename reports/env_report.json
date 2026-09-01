@@ -1,0 +1,52 @@
+{
+  "python": {
+    "version": "3.12.13",
+    "executable": "/home/david/rag/.venv/bin/python3",
+    "in_venv": true
+  },
+  "platform": {
+    "system": "Linux",
+    "release": "6.18.33.2-microsoft-standard-WSL2",
+    "machine": "x86_64"
+  },
+  "packages": {
+    "datasets": "5.0.1",
+    "huggingface-hub": "1.29.0",
+    "pandas": "3.0.5",
+    "pyarrow": "25.0.1",
+    "numpy": "2.5.2",
+    "pillow": "12.3.0",
+    "torch": null,
+    "transformers": null,
+    "sentence-transformers": null,
+    "colpali-engine": null
+  },
+  "gpu": {
+    "available": true,
+    "count": 1,
+    "gpus": [
+      {
+        "name": "NVIDIA GeForce RTX 3090",
+        "memory_total": "24576 MiB",
+        "memory_used": "2186 MiB",
+        "driver_version": "591.86",
+        "compute_capability": "8.6"
+      }
+    ]
+  },
+  "torch": {
+    "installed": false,
+    "note": "install with `uv sync --extra retrieval`"
+  },
+  "disk": {
+    "path": "/home/david/rag",
+    "total_gb": 1081.1,
+    "free_gb": 501.0
+  },
+  "huggingface": {
+    "hub_cache": "/home/david/.cache/huggingface/hub",
+    "exists": true,
+    "size_gb": 159.23,
+    "token_present": true
+  }
+}

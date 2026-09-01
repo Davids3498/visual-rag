@@ -1,0 +1,30 @@
+# Postgres + pgvector for the text baseline's single-vector ANN index (build step 2).
+# Ports 5432/5433 are already taken on this box, so this stack sits on 5434.
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: vrag-postgres
+    environment:
+      POSTGRES_USER: vrag
+      POSTGRES_PASSWORD: vrag
+      POSTGRES_DB: vrag
+    ports:
+      - "5434:5432"
+    volumes:
+      - vrag-pgdata:/var/lib/postgresql/data
+    # HNSW builds are memory-hungry; give the build room so index creation is not the
+    # bottleneck being measured.
+    command: >
+      postgres
+      -c shared_buffers=1GB
+      -c maintenance_work_mem=2GB
+      -c max_parallel_maintenance_workers=4
+      -c work_mem=64MB
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vrag -d vrag"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  vrag-pgdata:

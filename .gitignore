@@ -1,0 +1,18 @@
+# environment
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.env
+
+# data artifacts: the HF cache backs these, they are rebuilt by `make data`
+data/
+
+# generated reports: stats JSON is small and worth committing, renders are not
+reports/**/*.png
+reports/**/*.jpg
+
+
+part2-own-corpus-and-contribution.md
+part1-pipeline-and-serving.md
