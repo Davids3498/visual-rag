@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# k3s on the host: the NVIDIA container runtime is detected at install time and k3s creates a
+# `nvidia` RuntimeClass; the device plugin has to be applied by hand.
+resources:
+  - ../../base
+  - ../../device-plugin
+
+patches:
+  - path: storage-class.yaml
+    target:
+      kind: StatefulSet
+      name: pgvector
+  - path: gpu-runtime.yaml
+    target:
+      kind: Deployment
+      name: vllm

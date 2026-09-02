@@ -22,56 +22,57 @@
     }
   },
   "eval": {
-    "queries": 177,
-    "judgements_all": 903,
-    "judgements_relevant": 903,
+    "queries": 283,
+    "judgements_all": 1614,
+    "judgements_relevant": 1614,
     "score_distribution": {
-      "1": 684,
-      "2": 219
+      "1": 1240,
+      "2": 374
     },
     "relevant_pages_per_query": {
-      "mean": 5.1,
+      "mean": 5.7,
       "median": 3.0,
       "min": 1,
-      "max": 26
+      "max": 34
     },
     "docs_per_query": {
-      "mean": 1.08,
-      "multi_doc_queries": 11
+      "mean": 1.1,
+      "multi_doc_queries": 23
     },
-    "queries_with_full_answer_page": 131,
+    "queries_with_full_answer_page": 203,
     "gold_content_types": {
-      "Text": 790,
-      "Table": 154,
-      "Infographic": 95,
-      "Image": 24,
-      "Other": 15,
-      "N/A (If relevance score=0)": 4
+      "Text": 1394,
+      "Table": 207,
+      "Infographic": 201,
+      "Image": 44,
+      "Other": 17,
+      "N/A (If relevance score=0)": 5,
+      "Chart": 2
     },
     "query_types": {
-      "extractive": 87,
-      "boolean": 41,
-      "enumerative": 33,
-      "multi-hop": 27,
-      "numerical": 17,
-      "open-ended": 15,
-      "compare-contrast": 15
+      "extractive": 125,
+      "open-ended": 67,
+      "enumerative": 55,
+      "boolean": 44,
+      "numerical": 29,
+      "compare-contrast": 29,
+      "multi-hop": 28
     },
     "query_formats": {
-      "question": 116,
-      "instruction": 46,
-      "keyword": 15
+      "question": 161,
+      "instruction": 84,
+      "keyword": 38
     },
-    "gold_pages_unique": 670,
-    "gold_docs_unique": 22
+    "gold_pages_unique": 1000,
+    "gold_docs_unique": 26
   },
   "visual_dependency": {
     "gold_pages_with_empty_markdown": 0,
-    "gold_pages_with_markdown_under_200_chars": 20,
-    "gold_spans_visual": 276,
-    "gold_spans_total": 903,
-    "queries_with_any_visual_gold": 81,
-    "queries_visual_only": 20
+    "gold_pages_with_markdown_under_200_chars": 30,
+    "gold_spans_visual": 448,
+    "gold_spans_total": 1614,
+    "queries_with_any_visual_gold": 126,
+    "queries_visual_only": 23
   },
   "text_baseline_inputs": {
     "pages_with_empty_markdown": 205,

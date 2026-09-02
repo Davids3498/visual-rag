@@ -1,4 +1,4 @@
-.PHONY: help setup setup-retrieval env data sanity db-up db-down baseline lint test clean
+.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench lint test clean
 
 help:
 	@grep -E '^[a-z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -26,6 +26,35 @@ db-down:  ## stop it (keeps the volume)
 
 baseline:  ## step 2: embed markdown with BGE-M3, index in pgvector, score NDCG@10
 	uv run python scripts/03_text_baseline.py
+
+visual:  ## step 3: ColQwen2 page-image embeddings, two-stage ANN + MaxSim rerank
+	uv run python scripts/04_visual_retrieval.py
+
+calibrate:  ## step 4: compare both runs against the published industrial numbers
+	uv run python scripts/05_calibration.py
+
+serve-up:  ## start the quantized Qwen2.5-VL on vLLM (port 8000)
+	docker compose --profile serving up -d vllm
+
+serve-down:  ## stop it and give the GPU back
+	docker compose --profile serving stop vllm
+
+generate:  ## step 5: RAG answers from page images, with citations
+	uv run python scripts/06_generate.py
+
+k8s-up:  ## deploy pgvector + vLLM to the local cluster (OVERLAY=k3s|minikube)
+	kubectl apply -k k8s/overlays/$(or $(OVERLAY),k3s)
+	kubectl rollout status -n visual-rag statefulset/pgvector --timeout=300s
+	kubectl rollout status -n visual-rag deployment/vllm --timeout=1200s
+
+k8s-verify:  ## check GPU scheduling, pod health and a real request -> reports/k8s.json
+	uv run python scripts/07_k8s_verify.py
+
+k8s-down:  ## remove the workloads (keeps the cluster and its volumes)
+	kubectl delete -k k8s/overlays/$(or $(OVERLAY),k3s) --ignore-not-found
+
+bench:  ## step 7: latency/throughput/GPU/cost at concurrency 1,4,16 -> reports/serving.json
+	uv run python scripts/08_serving_bench.py
 
 lint:  ## ruff check + format check
 	uv run --group dev ruff check .

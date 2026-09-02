@@ -244,6 +244,30 @@ def _eval_stats(
     }
 
 
+def query_slices(eval_queries: pd.DataFrame) -> dict[str, list[int]]:
+    """The slices every retriever is reported on, defined once so runs stay comparable.
+
+    Note when reading the results: these slices differ in how many gold pages they contain
+    (visual_only averages 1.4, multi_doc 12.6), and NDCG is easier with fewer right answers.
+    Comparing slices *within* one retriever is confounded; comparing retrievers *within* one
+    slice is not, and that is the comparison this project rests on.
+    """
+    slices = {
+        "all": eval_queries["query_id"].tolist(),
+        "human_written": eval_queries.loc[
+            eval_queries["query_generator"] == "human", "query_id"
+        ].tolist(),
+        "synthetic": eval_queries.loc[
+            eval_queries["query_generator"] == "sdg", "query_id"
+        ].tolist(),
+        "visual_only": eval_queries.loc[eval_queries["visual_only"], "query_id"].tolist(),
+        "any_visual_gold": eval_queries.loc[eval_queries["n_visual_gold"] > 0, "query_id"].tolist(),
+        "text_only_gold": eval_queries.loc[eval_queries["n_visual_gold"] == 0, "query_id"].tolist(),
+        "multi_doc": eval_queries.loc[eval_queries["n_docs"] > 1, "query_id"].tolist(),
+    }
+    return {name: qids for name, qids in slices.items() if qids}
+
+
 # --- persistence -------------------------------------------------------------------------
 
 _FILES = {

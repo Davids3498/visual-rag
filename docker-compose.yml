@@ -12,12 +12,14 @@ services:
       - "5434:5432"
     volumes:
       - vrag-pgdata:/var/lib/postgresql/data
-    # HNSW builds are memory-hungry; give the build room so index creation is not the
-    # bottleneck being measured.
+    # Parallel HNSW builds allocate their shared segment in /dev/shm, whose Docker default of
+    # 64 MB is far below maintenance_work_mem — the build fails with "No space left on device"
+    # long before the disk is full.
+    shm_size: 2gb
     command: >
       postgres
       -c shared_buffers=1GB
-      -c maintenance_work_mem=2GB
+      -c maintenance_work_mem=1GB
       -c max_parallel_maintenance_workers=4
       -c work_mem=64MB
     healthcheck:
@@ -25,6 +27,58 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
+
+  # Step 5: the self-hosted generator. Started only with `--profile serving` because it holds
+  # GPU memory the retriever also needs — see the gpu-memory-utilization note below.
+  vllm:
+    image: vllm/vllm-openai:v0.28.0
+    container_name: vrag-vllm
+    profiles: ["serving"]
+    ports:
+      - "8000:8000"
+    volumes:
+      # Reuse the host HF cache so the weights are downloaded once, not per container.
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      HUGGING_FACE_HUB_TOKEN: ${HF_TOKEN:-}
+      # WSL2 only. vLLM's engine allocates UVA buffers, which need pinned host memory, and it
+      # keeps pinned memory off by default under WSL even on kernels that support it (here
+      # 6.18.33 — verified working with torch.zeros(pin_memory=True)). Without this the engine
+      # dies at startup with "UVA is not available".
+      VLLM_WSL2_ENABLE_PIN_MEMORY: "1"
+    # vLLM's workers talk over shared memory; the Docker default is far too small.
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # RTX 3090 is Ampere (sm_86): no FP8, so the quantisation that fits is AWQ int4.
+    # gpu-memory-utilization is the footgun — vLLM claims ~90% of the card by default and
+    # would leave nothing for ColQwen2, which has to answer the query that comes first.
+    # 0.55 of 24 GB leaves ~9 GB for the retriever.
+    # List form, not a folded string: --limit-mm-per-prompt takes JSON and shell quoting
+    # through a compose `command: >` block mangles it.
+    command:
+      - Qwen/Qwen2.5-VL-7B-Instruct-AWQ
+      - --served-model-name
+      - qwen2.5-vl-7b-awq
+      - --gpu-memory-utilization
+      - "0.55"
+      - --max-model-len
+      - "8192"
+      # Three retrieved pages per answer; the default of 999 sizes buffers for a case we
+      # never send.
+      - --limit-mm-per-prompt
+      - '{"image": 3}'
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
+      interval: 15s
+      timeout: 5s
+      retries: 40
+      start_period: 300s
 
 volumes:
   vrag-pgdata:

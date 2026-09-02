@@ -72,6 +72,15 @@ def test_corpus_is_the_full_benchmark_not_just_the_gold_pages(built):
     assert len(built.corpus) == config.EXPECTED_ROWS["corpus"]
 
 
-def test_queries_are_the_strict_english_human_slice(built):
+def test_queries_are_the_full_english_slice(built):
     assert (built.queries["language"] == config.EVAL_LANGUAGE).all()
-    assert (built.queries["query_generator"] == config.EVAL_QUERY_GENERATOR).all()
+    # Both provenances are kept and reported as slices; filtering either one out up front
+    # would silently change what the headline number means.
+    generators = set(built.queries["query_generator"])
+    assert generators == {"human", "sdg"}
+
+
+def test_slices_partition_the_eval_set_by_provenance(built):
+    slices = data.query_slices(built.queries)
+    assert len(slices["human_written"]) + len(slices["synthetic"]) == len(built.queries)
+    assert set(slices["human_written"]) & set(slices["synthetic"]) == set()

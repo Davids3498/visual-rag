@@ -77,3 +77,57 @@ def test_default_gain_is_the_trec_eval_convention():
     reference = metrics.evaluate_pytrec(run, gold, ks=(10,))["ndcg_cut_10"]
     assert linear == pytest.approx(reference, abs=1e-4)
     assert exponential != pytest.approx(reference, abs=1e-4)
+
+
+# --- uncertainty ---------------------------------------------------------------------------
+
+
+def test_bootstrap_ci_of_a_constant_has_no_width():
+    low, high = metrics.bootstrap_ci([0.5] * 30, resamples=500)
+    assert low == pytest.approx(0.5) and high == pytest.approx(0.5)
+
+
+def test_bootstrap_ci_brackets_the_mean_and_narrows_with_more_queries():
+    rng = random.Random(0)
+    small = [rng.random() for _ in range(20)]
+    large = [rng.random() for _ in range(2000)]
+    for sample in (small, large):
+        low, high = metrics.bootstrap_ci(sample, resamples=2000)
+        assert low <= sum(sample) / len(sample) <= high
+    width = lambda s: (lambda ci: ci[1] - ci[0])(metrics.bootstrap_ci(s, resamples=2000))  # noqa: E731
+    assert width(large) < width(small)
+
+
+def test_paired_delta_of_identical_systems_is_zero_and_insignificant():
+    scores = [0.1, 0.7, 0.3, 0.9, 0.5] * 6
+    delta, (low, high) = metrics.paired_delta_ci(scores, scores)
+    assert delta == 0.0
+    assert low <= 0 <= high
+    assert metrics.permutation_p_value(scores, scores) > 0.5
+
+
+def test_a_consistent_improvement_is_detected():
+    rng = random.Random(1)
+    baseline = [rng.random() for _ in range(150)]
+    better = [min(1.0, score + 0.15) for score in baseline]
+    delta, (low, high) = metrics.paired_delta_ci(better, baseline)
+    assert delta > 0 and low > 0
+    assert metrics.permutation_p_value(better, baseline) < 0.01
+
+
+def test_pairing_is_what_makes_a_small_consistent_gain_detectable():
+    """Unpaired variance would swamp a gain this size — the pairing is load-bearing."""
+    rng = random.Random(2)
+    baseline = [rng.random() for _ in range(200)]
+    better = [min(1.0, score + 0.02) for score in baseline]
+    _, (low, _) = metrics.paired_delta_ci(better, baseline)
+    assert low > 0  # paired: detected
+    unpaired_low, unpaired_high = metrics.bootstrap_ci(better)
+    baseline_low, baseline_high = metrics.bootstrap_ci(baseline)
+    assert unpaired_low < baseline_high  # unpaired: intervals overlap, nothing concluded
+
+
+def test_statistics_are_deterministic_for_a_fixed_seed():
+    rng = random.Random(3)
+    sample = [rng.random() for _ in range(50)]
+    assert metrics.bootstrap_ci(sample, seed=7) == metrics.bootstrap_ci(sample, seed=7)

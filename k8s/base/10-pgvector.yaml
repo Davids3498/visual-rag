@@ -1,0 +1,122 @@
+# The retrieval index: pgvector holds the stage-1 centroid vectors (83,904 rows) and the
+# text baseline's page vectors. CPU-only, but it is stateful, so it gets a StatefulSet with a
+# real volume claim rather than a Deployment with an emptyDir.
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgvector
+  namespace: visual-rag
+spec:
+  clusterIP: None          # headless: the StatefulSet pod gets a stable DNS name
+  selector:
+    app: pgvector
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgvector-external
+  namespace: visual-rag
+spec:
+  type: NodePort
+  selector:
+    app: pgvector
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+      nodePort: 30434       # the indexing scripts run outside the cluster and connect here
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pgvector-credentials
+  namespace: visual-rag
+type: Opaque
+stringData:
+  # Local single-node cluster with no ingress; rotate and move to a sealed secret or an
+  # external secret store before this is reachable from anywhere but localhost.
+  POSTGRES_USER: vrag
+  POSTGRES_PASSWORD: vrag
+  POSTGRES_DB: vrag
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pgvector
+  namespace: visual-rag
+spec:
+  serviceName: pgvector
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgvector
+  template:
+    metadata:
+      labels:
+        app: pgvector
+    spec:
+      securityContext:
+        fsGroup: 999                # postgres uid/gid in the official image
+      containers:
+        - name: postgres
+          image: pgvector/pgvector:pg17
+          args:
+            - postgres
+            - -c
+            - shared_buffers=1GB
+            - -c
+            - maintenance_work_mem=1GB
+            - -c
+            - max_parallel_maintenance_workers=4
+            - -c
+            - work_mem=64MB
+          envFrom:
+            - secretRef:
+                name: pgvector-credentials
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - name: postgres
+              containerPort: 5432
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+            - name: dshm
+              mountPath: /dev/shm
+          resources:
+            requests:
+              cpu: "500m"
+              memory: 2Gi
+            limits:
+              memory: 6Gi
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "vrag", "-d", "vrag"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["pg_isready", "-U", "vrag", "-d", "vrag"]
+            initialDelaySeconds: 30
+            periodSeconds: 20
+      volumes:
+        # Parallel HNSW builds allocate their scratch in /dev/shm. The container default is
+        # 64 MB, which fails an 84k-row index build with "No space left on device" while the
+        # disk is empty — the same trap as the Docker Compose path.
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

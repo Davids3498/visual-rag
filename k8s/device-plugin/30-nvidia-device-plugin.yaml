@@ -1,0 +1,73 @@
+# Kubernetes does not see GPUs on its own: the device plugin advertises `nvidia.com/gpu` as a
+# schedulable resource, and without it the vLLM pod stays Pending forever with
+# "0/1 nodes are available: 1 Insufficient nvidia.com/gpu".
+#
+# Time-slicing is configured here on purpose. This box has one 3090, and the plugin allocates
+# whole GPUs — so the moment a second GPU workload exists (a containerised ColQwen2 retriever,
+# or a second vLLM replica), one pod is unschedulable. Time-slicing advertises the card as 4
+# logical devices so both can be scheduled.
+#
+# The honest caveat, which belongs in any interview answer about this: time-slicing gives
+# *scheduling* sharing, not isolation. The pods interleave on the same SMs and share the same
+# 24 GB — nothing stops one from OOMing the other. Real isolation needs MIG, which Ampere
+# consumer cards do not support. That is why vLLM is additionally capped at 0.55 of the card.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nvidia-device-plugin-config
+  namespace: kube-system
+data:
+  any: |-
+    version: v1
+    flags:
+      migStrategy: none
+    sharing:
+      timeSlicing:
+        resources:
+          - name: nvidia.com/gpu
+            replicas: 4
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nvidia-device-plugin-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      name: nvidia-device-plugin-ds
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: nvidia-device-plugin-ds
+    spec:
+      runtimeClassName: nvidia
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+      priorityClassName: system-node-critical
+      containers:
+        - name: nvidia-device-plugin-ctr
+          image: nvcr.io/nvidia/k8s-device-plugin:v0.20.0
+          env:
+            - name: FAIL_ON_INIT_ERROR
+              value: "false"
+            - name: CONFIG_FILE
+              value: /config/any
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: device-plugin
+              mountPath: /var/lib/kubelet/device-plugins
+            - name: config
+              mountPath: /config
+      volumes:
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+        - name: config
+          configMap:
+            name: nvidia-device-plugin-config

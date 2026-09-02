@@ -1,0 +1,214 @@
+{
+  "dataset": "vidore/vidore_v3_industrial",
+  "protocol": {
+    "queries": 283,
+    "language": "english",
+    "generators": {
+      "human": 177,
+      "sdg": 106
+    },
+    "metric": "ndcg@10",
+    "graded_relevance": true,
+    "note": "Matches the published protocol: the leaderboard reports NDCG@10 per dataset over the English queries, human-written and synthetic together."
+  },
+  "systems": [
+    {
+      "system": "text",
+      "ndcg@10": 0.3904,
+      "ci95": [
+        0.3499,
+        0.4317
+      ],
+      "queries": 283
+    },
+    {
+      "system": "visual_two_stage",
+      "ndcg@10": 0.4982,
+      "ci95": [
+        0.4541,
+        0.5433
+      ],
+      "queries": 283
+    },
+    {
+      "system": "visual_exhaustive",
+      "ndcg@10": 0.5192,
+      "ci95": [
+        0.4756,
+        0.563
+      ],
+      "queries": 283
+    }
+  ],
+  "comparisons": [
+    {
+      "comparison": "visual \u2212 text",
+      "delta": 0.1078,
+      "ci95": [
+        0.0717,
+        0.1457
+      ],
+      "p_value": 0.0001,
+      "queries": 283,
+      "significant": true
+    },
+    {
+      "comparison": "exhaustive \u2212 two_stage",
+      "delta": 0.021,
+      "ci95": [
+        0.0106,
+        0.0327
+      ],
+      "p_value": 0.0003,
+      "queries": 283,
+      "significant": true
+    }
+  ],
+  "by_slice": [
+    {
+      "slice": "all",
+      "queries": 283,
+      "text": 0.3904,
+      "visual": 0.4982,
+      "delta": 0.1078,
+      "ci95": [
+        0.0717,
+        0.1457
+      ],
+      "significant": true
+    },
+    {
+      "slice": "human_written",
+      "queries": 177,
+      "text": 0.4638,
+      "visual": 0.6217,
+      "delta": 0.1579,
+      "ci95": [
+        0.1085,
+        0.2085
+      ],
+      "significant": true
+    },
+    {
+      "slice": "synthetic",
+      "queries": 106,
+      "text": 0.2678,
+      "visual": 0.2918,
+      "delta": 0.0241,
+      "ci95": [
+        -0.0248,
+        0.0737
+      ],
+      "significant": false
+    },
+    {
+      "slice": "visual_only",
+      "queries": 23,
+      "text": 0.5716,
+      "visual": 0.7929,
+      "delta": 0.2213,
+      "ci95": [
+        0.078,
+        0.3712
+      ],
+      "significant": true
+    },
+    {
+      "slice": "any_visual_gold",
+      "queries": 126,
+      "text": 0.3577,
+      "visual": 0.4459,
+      "delta": 0.0882,
+      "ci95": [
+        0.0459,
+        0.1333
+      ],
+      "significant": true
+    },
+    {
+      "slice": "text_only_gold",
+      "queries": 157,
+      "text": 0.4166,
+      "visual": 0.5401,
+      "delta": 0.1235,
+      "ci95": [
+        0.0676,
+        0.181
+      ],
+      "significant": true
+    },
+    {
+      "slice": "multi_doc",
+      "queries": 23,
+      "text": 0.119,
+      "visual": 0.1604,
+      "delta": 0.0415,
+      "ci95": [
+        -0.0143,
+        0.1048
+      ],
+      "significant": false
+    }
+  ],
+  "published_reference": [
+    {
+      "model": "nemo-colembed-3b",
+      "ndcg@10": 0.57,
+      "note": "best model at benchmark launch; industrial was the lowest-scoring public set",
+      "source": "https://huggingface.co/blog/QuentinJG/introducing-vidore-v3"
+    },
+    {
+      "model": "nemotron-colembed-vl-8b-v2",
+      "ndcg@10": 0.5603,
+      "note": "leaderboard #1 overall (0.6342 across all 10 datasets)",
+      "source": "https://arxiv.org/html/2602.03992v2"
+    },
+    {
+      "model": "tomoro-colqwen3-embed-8b",
+      "ndcg@10": 0.5441,
+      "source": "https://arxiv.org/html/2602.03992v2"
+    },
+    {
+      "model": "nemotron-colembed-vl-4b-v2",
+      "ndcg@10": 0.5391,
+      "source": "https://arxiv.org/html/2602.03992v2"
+    }
+  ],
+  "frontier_band": [
+    0.539,
+    0.57
+  ],
+  "context": {
+    "vidore_v3_english_average_all_datasets": 0.65,
+    "note": "The ~0.65 figure quoted in the project plan is the cross-dataset English average. Industrial is the hardest of the ten subsets; judging this corpus against 0.65 would flag a correct pipeline as broken."
+  },
+  "gate": {
+    "checks": [
+      {
+        "check": "visual beats text, and the interval excludes zero",
+        "expected": "\u0394 > 0, CI excludes 0",
+        "observed": "\u0394=+0.108, CI=[0.0717, 0.1457], p=0.0001",
+        "pass": true
+      },
+      {
+        "check": "visual lands below the published frontier but within reach of it",
+        "expected": "0.39 <= ndcg <= 0.57, frontier (0.539, 0.57)",
+        "observed": "0.519 (exhaustive), 0.498 (served)",
+        "pass": true
+      },
+      {
+        "check": "text baseline is a real baseline, not broken and not implausible",
+        "expected": "0.20 \u2264 ndcg < visual",
+        "observed": "0.390",
+        "pass": true
+      },
+      {
+        "check": "the two-stage shortlist costs little against its own ceiling",
+        "expected": "two_stage \u2265 90% of exhaustive",
+        "observed": "96.0%",
+        "pass": true
+      }
+    ],
+    "verdict": "PASS"
+  }
+}

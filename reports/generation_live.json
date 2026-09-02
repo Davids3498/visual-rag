@@ -1,0 +1,288 @@
+{
+  "generator": {
+    "model": "qwen2.5-vl-7b-awq",
+    "quantization": "AWQ int4",
+    "server": "vLLM (OpenAI-compatible)",
+    "base_url": "http://localhost:8000/v1",
+    "temperature": 0.0,
+    "max_tokens": 400
+  },
+  "retrieval_source": "live",
+  "gpu_memory_mb": {
+    "before_retriever": 14854,
+    "peak": 19577,
+    "total": 24576
+  },
+  "summary": {
+    "queries": 8,
+    "pages_per_query": 3,
+    "retrieval_hit_rate": 0.875,
+    "answered": 6,
+    "refused": 2,
+    "citation_rate": 1.0,
+    "citation_precision": 0.833,
+    "grounded_answer_rate": 0.833,
+    "refusal_when_no_gold_page": 1.0,
+    "refusal_when_gold_page_shown": 0.143,
+    "latency_ms": {
+      "mean": 1869.9,
+      "p50": 2009.4,
+      "p95": 2428.9
+    },
+    "completion_tokens_mean": 45.9,
+    "output_tokens_per_second": 24.5,
+    "retrieval_ms": {
+      "mean": 236.5,
+      "p50": 104.4,
+      "p95": 800.3
+    },
+    "retrieval_encode_ms": {
+      "mean": 145.0,
+      "p50": 52.6,
+      "p95": 542.0
+    },
+    "retrieval_stage1_ms": {
+      "mean": 44.9,
+      "p50": 45.5,
+      "p95": 60.7
+    },
+    "retrieval_stage2_ms": {
+      "mean": 46.7,
+      "p50": 7.8,
+      "p95": 205.1
+    },
+    "end_to_end_ms": 2113.8
+  },
+  "records": [
+    {
+      "query_id": 63,
+      "query": "F-14 vs AV-8 engine shutdown requirements during refueling",
+      "shown_pages": [
+        354,
+        332,
+        549
+      ],
+      "gold_shown": [
+        332
+      ],
+      "cited_pages": [
+        332
+      ],
+      "cited_gold": [
+        332
+      ],
+      "refused": false,
+      "answer": "The F-14 requires shutting down the right engine before refueling, while the AV-8 does not specify engine shutdown for refueling. [Page 2]",
+      "reference_answer": "The F-14 requires shutdown of the right engine during hot refueling. The document does not provide information about the AV-8's refueling engine requirements.",
+      "latency_ms": 2054.4,
+      "prompt_tokens": 4782,
+      "completion_tokens": 35,
+      "retrieval": {
+        "encode_ms": 785.4,
+        "stage1_ms": 45.8,
+        "stage2_ms": 303.1,
+        "total_ms": 1134.3
+      }
+    },
+    {
+      "query_id": 161,
+      "query": "Can the Air Force (AF) seek reimbursement if a dealer refuses to honor a warranty claim as per United States Air Force (USAF) technical manuals and orders?",
+      "shown_pages": [
+        5072,
+        4924,
+        3588
+      ],
+      "gold_shown": [
+        5072
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "Yes, the Air Force can seek reimbursement if a dealer refuses to honor a warranty claim. An Action Warranty Report (AWR) is required in such cases, and the report must include details such as the contract number, date of delivery, and the reason for the refusal.",
+      "latency_ms": 1739.4,
+      "prompt_tokens": 4714,
+      "completion_tokens": 4,
+      "retrieval": {
+        "encode_ms": 89.9,
+        "stage1_ms": 66.9,
+        "stage2_ms": 23.2,
+        "total_ms": 180.0
+      }
+    },
+    {
+      "query_id": 173,
+      "query": "Is simultaneous fuel and oxygen servicing of R-12 HSV prohibited due to severe risks as outlined in the USAF technical manuals and orders?",
+      "shown_pages": [
+        464,
+        520,
+        614
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "Yes, simultaneous fuel and oxygen servicing of aircraft is prohibited due to severe risks, as outlined in the USAF technical manuals and orders.",
+      "latency_ms": 1775.0,
+      "prompt_tokens": 4793,
+      "completion_tokens": 4,
+      "retrieval": {
+        "encode_ms": 77.6,
+        "stage1_ms": 49.1,
+        "stage2_ms": 10.8,
+        "total_ms": 137.4
+      }
+    },
+    {
+      "query_id": 190,
+      "query": "Mention the specifications of the Equipment that has the nomenclature \"Mechanical Beam Analytical Balance\".",
+      "shown_pages": [
+        3139,
+        3112,
+        3122
+      ],
+      "gold_shown": [
+        3139
+      ],
+      "cited_pages": [
+        3139
+      ],
+      "cited_gold": [
+        3139
+      ],
+      "refused": false,
+      "answer": "The specifications for the Equipment with the nomenclature \"Mechanical Beam Analytical Balance\" are:\n\n- Manufacturer: Ohaus Corp.\n- Part Number: PN 1650\n- National Stock Number: 6670-00-957-3781\n\n[Page 1]",
+      "reference_answer": "The specifications of the equipment that has the nomenclature \"Mechanical Beam Analytical Balance\" are F-Flange (Snap On) Cap, CAGE Code #85973 (Ohaus Corp.), PN 1650.",
+      "latency_ms": 2201.7,
+      "prompt_tokens": 4702,
+      "completion_tokens": 67,
+      "retrieval": {
+        "encode_ms": 68.2,
+        "stage1_ms": 47.8,
+        "stage2_ms": 7.8,
+        "total_ms": 123.7
+      }
+    },
+    {
+      "query_id": 217,
+      "query": "Does reflectorization enhance visibility for ground vehicles and trailers as per the USAF technical manual (TO_35-1-18)?",
+      "shown_pages": [
+        4661,
+        4922,
+        4868
+      ],
+      "gold_shown": [
+        4661
+      ],
+      "cited_pages": [
+        4922
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "Yes, reflectorization enhances visibility for ground vehicles and trailers as per the USAF technical manual (TO_35-1-18). The manual specifies that SE will be reflectorized using black reflective strips 2 inch wide and 6 inches in length conforming to L-S-300C, Type II, Class 1, Reflectivity 2, Durability 1. This ensures better visibility for both day and night, at a distance of 100 feet, as stated in [Page 2].",
+      "reference_answer": "Yes, reflectorization enhances visibility for ground vehicles as per the USAF technical manual TO_35-1-18, as section 1.2.4 specifies that reflectorized markings are required for night visibility. The manual does not specifically mention trailers.",
+      "latency_ms": 2551.3,
+      "prompt_tokens": 4712,
+      "completion_tokens": 111,
+      "retrieval": {
+        "encode_ms": 32.7,
+        "stage1_ms": 45.3,
+        "stage2_ms": 7.1,
+        "total_ms": 85.1
+      }
+    },
+    {
+      "query_id": 235,
+      "query": "What materials cannot be loaded/unloaded during concurrent operations (except under combat conditions)?",
+      "shown_pages": [
+        646,
+        652,
+        641
+      ],
+      "gold_shown": [
+        641,
+        646
+      ],
+      "cited_pages": [
+        641
+      ],
+      "cited_gold": [
+        641
+      ],
+      "refused": false,
+      "answer": "Cargo containing explosives, oxygen or flammable gases or liquids shall not be loaded or unloaded during concurrent servicing operations [Page 3].",
+      "reference_answer": "Cargo containing explosives, oxygen, or flammable gases or liquids shall not be loaded or unloaded during concurrent operations, except under combat conditions or simulated combat exercises.",
+      "latency_ms": 1964.4,
+      "prompt_tokens": 4833,
+      "completion_tokens": 27,
+      "retrieval": {
+        "encode_ms": 36.7,
+        "stage1_ms": 31.4,
+        "stage2_ms": 7.0,
+        "total_ms": 75.1
+      }
+    },
+    {
+      "query_id": 250,
+      "query": "Can both the R-9 and R-11 be used for aircraft fuel servicing?",
+      "shown_pages": [
+        372,
+        623,
+        413
+      ],
+      "gold_shown": [
+        372,
+        413
+      ],
+      "cited_pages": [
+        372
+      ],
+      "cited_gold": [
+        372
+      ],
+      "refused": false,
+      "answer": "[Page 1] The document specifies that \"AIRCRAFT FUEL SERVICING WITH R-9, R-11, AND COMMERCIAL FUEL SERVICING TRUCKS AND WITH FUELS OPERATIONAL READINESS CAPABILITY EQUIPMENT (FORCE)\" is covered by this technical manual.",
+      "reference_answer": "Yes, both the R-9 and R-11 can be used for aircraft fuel servicing.",
+      "latency_ms": 499.4,
+      "prompt_tokens": 4784,
+      "completion_tokens": 64,
+      "retrieval": {
+        "encode_ms": 37.0,
+        "stage1_ms": 40.4,
+        "stage2_ms": 6.5,
+        "total_ms": 84.0
+      }
+    },
+    {
+      "query_id": 260,
+      "query": "What are the similarities and differences between radius gage A and gage B?",
+      "shown_pages": [
+        4131,
+        4136,
+        4113
+      ],
+      "gold_shown": [
+        4131
+      ],
+      "cited_pages": [
+        4131
+      ],
+      "cited_gold": [
+        4131
+      ],
+      "refused": false,
+      "answer": "Radius gage A has a double-ended blade with a lock that holds the blades in position, while gage B has separate blades for inside and outside measurements. Both gages have 16 blades and are made of hard-rolled steel. [Page 1]",
+      "reference_answer": "Both radius gages A and B are made of hard-rolled steel, have double-ended blades with a lock mechanism, are marked in 64ths, and each has 16 blades. The difference is that gage A has both inside and outside radii on one blade, while gage B has separate blades for inside and outside measurements.",
+      "latency_ms": 2173.9,
+      "prompt_tokens": 4833,
+      "completion_tokens": 55,
+      "retrieval": {
+        "encode_ms": 32.7,
+        "stage1_ms": 32.1,
+        "stage2_ms": 7.9,
+        "total_ms": 72.7
+      }
+    }
+  ]
+}

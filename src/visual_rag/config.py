@@ -29,10 +29,13 @@ EXPECTED_ROWS = {
     "documents_metadata": 27,
 }
 
-# The clean, strict eval slice: English questions actually written by a human annotator.
+# The eval slice: all 283 English queries. The other ~1.4k rows are translations of these same
+# 283 into five languages, so this is the full English benchmark, not a sample of it.
 EVAL_LANGUAGE = "english"
-EVAL_QUERY_GENERATOR = "human"
-# The other ~1.4k queries are machine-generated ("sdg") or translations of the English set.
+EVAL_QUERY_GENERATOR = "any"
+# 177 of the 283 were written by a human annotator and 106 were generated ("sdg"). Both are
+# kept and reported as separate slices rather than filtered out up front: the human subset is
+# the stricter set, the full 283 is what the benchmark actually publishes.
 
 # Graded relevance: 2 = page fully answers the query, 1 = partial. 0 (if present) = judged
 # non-relevant, which is a real annotation but not a positive.

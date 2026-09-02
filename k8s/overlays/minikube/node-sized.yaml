@@ -1,0 +1,16 @@
+# The host HF cache is bind-mounted into the node VM at /hf-cache
+# (minikube start --mount --mount-string=$HOME/.cache/huggingface:/hf-cache).
+- op: replace
+  path: /spec/template/spec/volumes/0/hostPath/path
+  value: /hf-cache
+# The node VM has 12 GB of RAM, so the generous limit from the base would make the pod
+# unschedulable. Requests are what the scheduler reads — keep them inside the node.
+- op: replace
+  path: /spec/template/spec/containers/0/resources/requests/memory
+  value: 6Gi
+- op: replace
+  path: /spec/template/spec/containers/0/resources/limits/memory
+  value: 10Gi
+- op: replace
+  path: /spec/template/spec/containers/0/resources/requests/cpu
+  value: "2"

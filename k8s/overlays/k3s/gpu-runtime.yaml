@@ -1,0 +1,10 @@
+# k3s routes GPU pods through the nvidia RuntimeClass it creates on install.
+- op: add
+  path: /spec/template/spec/runtimeClassName
+  value: nvidia
+# The host's HuggingFace cache, so the 6.5 GB of AWQ weights are not downloaded again.
+# CHANGE THIS to your own cache path (`echo $HF_HOME` or ~/.cache/huggingface) — kustomize
+# does not expand environment variables, so it has to be a literal.
+- op: replace
+  path: /spec/template/spec/volumes/0/hostPath/path
+  value: /home/david/.cache/huggingface

@@ -1,0 +1,958 @@
+{
+  "generator": {
+    "model": "qwen2.5-vl-7b-awq",
+    "quantization": "AWQ int4",
+    "server": "vLLM (OpenAI-compatible)",
+    "base_url": "http://172.27.138.26:30800/v1",
+    "temperature": 0.0,
+    "max_tokens": 400
+  },
+  "retrieval_source": "run",
+  "gpu_memory_mb": {
+    "before_retriever": 14816,
+    "peak": 14816,
+    "total": 24576
+  },
+  "summary": {
+    "queries": 40,
+    "pages_per_query": 3,
+    "retrieval_hit_rate": 0.625,
+    "answered": 36,
+    "refused": 4,
+    "citation_rate": 0.833,
+    "citation_precision": 0.6,
+    "grounded_answer_rate": 0.528,
+    "refusal_when_no_gold_page": 0.133,
+    "refusal_when_gold_page_shown": 0.08,
+    "latency_ms": {
+      "mean": 2481.2,
+      "p50": 2449.4,
+      "p95": 3040.4
+    },
+    "completion_tokens_mean": 69.5,
+    "output_tokens_per_second": 28.0
+  },
+  "records": [
+    {
+      "query_id": 0,
+      "query": "Which components are involved in the emergency shutdown procedure and what are their roles in ensuring system isolation?",
+      "shown_pages": [
+        446,
+        476,
+        472
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        472
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The emergency shutdown procedure involves several components to ensure system isolation:\n\na. The deadman control and lanyard/control cable on the Type II hydrant system. When released, they close both the hydrant valve and the truck control valve if connected to a Type III hydrant.\n\nb. Emergency fuel shutoff switches. Actuating any of these will stop the vehicle engine.\n\nc. Emergency engine shutdown switches. Actuating any of these stops the vehicle engine.\n\nThese components work together to quickly isolate the system, preventing further fuel flow and ensuring safety during an emergency situation. [Page 3]",
+      "reference_answer": "The components involved in the emergency shutdown procedure are the Pneumatic System and the N2 Bottle Cylinder, which power the emergency shutdown system. The Radio Remote Control System Keypad is used to activate the emergency shutdown and stop fuel flow. The E-Stop Switch is used to initiate an emergency shutdown. The Globe valve controls the propane flow, and the Pilot valve controls the COAX valve. The Control stand contains the valves.",
+      "latency_ms": 2423.6,
+      "prompt_tokens": 4760,
+      "completion_tokens": 120,
+      "retrieval": null
+    },
+    {
+      "query_id": 4,
+      "query": "Explain how the manual addresses safety risks associated with refueling military aircraft while their engines remain operational.",
+      "shown_pages": [
+        530,
+        558,
+        475
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The manual emphasizes strict adherence to safety protocols when refueling military aircraft with running engines. It requires a minimum of seven personnel, prohibits external maintenance during refueling, and mandates that passengers and NAOC personnel stay on board but cannot exit during fuel servicing. Refueling operators must maintain contact with the servicing supervisor via headsets. Additionally, it specifies distances from lower ultrahigh frequency antennas and HF transmissions, and warns against touching aircraft or metal objects during HF transmissions.",
+      "reference_answer": "The manual addresses safety risks associated with refueling military aircraft while their engines remain operational by outlining clear procedures to mitigate risks such as injury to or death of personnel, long-term health hazards, damage or destruction of equipment, and loss of mission effectiveness. These procedures include grounding the aircraft and equipment, monitoring fuel vents, lights, and fuel tank pressure indicators, ensuring the nozzle is locked to prevent fuel spills, positioning the aircraft at a minimum distance, and following emergency procedures. Specific safety measures include stopping refueling if fuel vent pressure exceeds 4 PSI or if the tank pressure is in the red, monitoring the vent tank wet light for possible spills, avoiding the fuselage cooling fan to prevent equipment damage, verifying the nozzle is locked before fueling, checking the refueling probe for damage, restricting hot refueling to EA-6 aircraft at USAF bases, and prohibiting hot refueling of E-2 aircraft with folded wings.",
+      "latency_ms": 2661.7,
+      "prompt_tokens": 4787,
+      "completion_tokens": 93,
+      "retrieval": null
+    },
+    {
+      "query_id": 6,
+      "query": "How do visual indicators in technical diagrams communicate revision updates according to the manual's documentation standards?",
+      "shown_pages": [
+        1476,
+        1364,
+        3452
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        1476
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "According to the manual's documentation standards, visual indicators such as change bars or the change symbol \"R\" in the outer margin of each column of text indicate changes or revisions to the text portion affected in a changed or revised work package. Changes to illustrations are indicated by pointing hands or change bars, as applicable. [Page 1]",
+      "reference_answer": "Visual indicators in technical diagrams communicate revision updates by using a vertical line in the outer margin for text changes, and shaded or screened areas, or miniature pointing hands for changes to illustrations.",
+      "latency_ms": 2480.8,
+      "prompt_tokens": 4699,
+      "completion_tokens": 68,
+      "retrieval": null
+    },
+    {
+      "query_id": 9,
+      "query": "Explain the key safety protocols for hot refueling Navy aircraft at Air Force bases as outlined in the technical manual.",
+      "shown_pages": [
+        304,
+        338,
+        307
+      ],
+      "gold_shown": [
+        307
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The key safety protocols include avoiding the tail hook area, not touching any pitot tubes or probes which may be hot, and avoiding areas underneath external tanks or stores until they are safed. Additionally, Navy pilots must be advised on current USAF hot refueling emergency procedures if the US Navy employs emergency dry-break disconnect devices for rapid taxi away in emergencies.",
+      "reference_answer": "The key safety protocols for hot refueling Navy aircraft at Air Force bases include ensuring that fuel servicing equipment and electrical equipment are grounded, inspecting the refueling nozzle locking device, checking for refueling pressure and ensuring it does not exceed 55 PSI, monitoring the tank pressure indicator and stopping refueling if it enters the red zone, and ensuring that valves are closed properly. Additionally, refueling should not be conducted within 300 feet of ground radar equipment or within 50 feet of other aircraft with engines operating. Personnel must also avoid carrying loose metal objects and must not refuel during electrical storms.",
+      "latency_ms": 2551.0,
+      "prompt_tokens": 4762,
+      "completion_tokens": 72,
+      "retrieval": null
+    },
+    {
+      "query_id": 10,
+      "query": "What are the specific applications of each plating method discussed in aerospace components?",
+      "shown_pages": [
+        3754,
+        3757,
+        4058
+      ],
+      "gold_shown": [
+        3757
+      ],
+      "cited_pages": [
+        3754,
+        3757
+      ],
+      "cited_gold": [
+        3757
+      ],
+      "refused": false,
+      "answer": "The document discusses various plating methods for aerospace components, including Cadmium Plating, Nickel Plating, and Chromium Plating. Cadmium plating is used for decorative purposes and to provide wear resistance and corrosion protection. Nickel plating is applied after base metal heat treatments and mechanical operations for wear resistance and abrasion resistance. Chromium plating is used for wear resistance and corrosion protection, often as an undercoat for other functional coatings or to restore dimensions. [Page 1, Page 2]",
+      "reference_answer": "Nickel plating (QQ-N-290) is used where temperatures do not exceed 1,000\u00b0F, to minimize dissimilar metal contact issues, as an undercoat for other coatings, and to restore dimensions. Chromium plating (QQ-C-320) is applied to salvage worn parts, provide hard, wear-resistant surfaces, prevent hydrogen embrittlement, and restore dimensions.",
+      "latency_ms": 2793.7,
+      "prompt_tokens": 4824,
+      "completion_tokens": 101,
+      "retrieval": null
+    },
+    {
+      "query_id": 18,
+      "query": "aircraft ground equipment positioning guidelines GPU vs fuel truck placement",
+      "shown_pages": [
+        17,
+        591,
+        324
+      ],
+      "gold_shown": [
+        17
+      ],
+      "cited_pages": [
+        17,
+        591
+      ],
+      "cited_gold": [
+        17
+      ],
+      "refused": false,
+      "answer": "GPU must be positioned at least 50 feet minimum, upwind of the fuel servicing area, and within 45 degrees either side of the aircraft nose. The fuel truck must be positioned 50 feet from the APU exhaust outlet if an APU is used during refueling.\n\n[Page 1]\n\nThe diagram on Page 2 shows the positioning of the GPU and fuel truck relative to the aircraft for safety zones. The GPU should be placed outside the 50-foot safety zone, while the fuel truck must stay within the 50-foot safety zone from the APU exhaust outlet.\n\n[Page 2]",
+      "reference_answer": "The Ground Power Unit (GPU) must be positioned 50 feet minimum, and to the maximum extent of the power cable, preferably upwind of the fuel servicing area, and within 45 degrees either side of the aircraft nose. If the APU is used during refueling, the fuel truck must be positioned 50 feet from the APU exhaust outlet.",
+      "latency_ms": 3039.1,
+      "prompt_tokens": 4782,
+      "completion_tokens": 128,
+      "retrieval": null
+    },
+    {
+      "query_id": 22,
+      "query": "List all safety precautions mentioned in the document that address the risks of fuel flammability and toxicity during aircraft refueling operations.",
+      "shown_pages": [
+        409,
+        354,
+        530
+      ],
+      "gold_shown": [
+        354
+      ],
+      "cited_pages": [
+        354
+      ],
+      "cited_gold": [
+        354
+      ],
+      "refused": false,
+      "answer": "The document mentions several safety precautions related to the flammability and toxicity of aviation turbine fuel:\n\n- Avoid repeated or prolonged contact with skin and eyes due to its flammable and toxic properties [Page 2].\n- Use only in well-ventilated areas to minimize exposure [Page 2].\n- Keep away from open flames or other sources of ignition [Page 2].\n\nThese precautions aim to reduce the risk of injury or death to personnel from handling fuel.",
+      "reference_answer": "The safety precautions for fuel flammability and toxicity include using skin and eye protection, avoiding repeated or prolonged contact, using aviation turbine fuel only in well-ventilated areas, and keeping away from open flames or other sources of ignition.",
+      "latency_ms": 2655.7,
+      "prompt_tokens": 4767,
+      "completion_tokens": 93,
+      "retrieval": null
+    },
+    {
+      "query_id": 24,
+      "query": "What are the critical systems inspected during pre-exercise checks and what specific criteria must each meet to ensure compliance?",
+      "shown_pages": [
+        173,
+        218,
+        189
+      ],
+      "gold_shown": [
+        218
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The critical systems inspected during pre-exercise checks include the propane system, control stand, burn area, exterior/interior burners and igniters, mock-up, propane piping, water piping, drive around area, lighting, water conservation pond, air or pneumatic system, circuit breakers, and water valves. Each must be inspected for proper operation, absence of leaks, and adherence to manufacturer specifications to ensure compliance.",
+      "reference_answer": "The critical systems inspected during pre-exercise checks are the LP Gas Bulk Storage and the Aircraft Fire Training Facility. For compliance, all components, such as valves, controls, and gauges, must be operating properly, secure, and leak-free. All indicators must be accurate, legible, and properly installed. The operational settings, such as proper pressure levels, and the electrical system must function well to ensure safe and compliant operation. Specific checks include ensuring all circuit breakers are in the on position, all water drain valves are closed, the pneumatic system is turned on, and the propane tank emergency shutoff and control panels emergency electrical shutoff buttons are pulled out. The air compressor and filter/dryer must be visually inspected for excess corrosion, wear, and serviceability.",
+      "latency_ms": 2609.6,
+      "prompt_tokens": 4715,
+      "completion_tokens": 86,
+      "retrieval": null
+    },
+    {
+      "query_id": 44,
+      "query": "How do Immediate Action and Routine Action TCTO categories differ in terms of compliance timelines and safety risk implications for Air Force operations?",
+      "shown_pages": [
+        2427,
+        2348,
+        2347
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "Immediate Action TCTOs require compliance within 1 to 30 days, with a maximum rescission date of 1 year after issue. They address critical safety risks that could result in injury or property damage, or unacceptable reductions in combat efficiency.\n\nRoutine Action TCTOs have compliance periods ranging from 11 to 365 days, with a maximum rescission date of 2 years after issue. They cover conditions not covered by Immediate Action TCTOs, such as equipment deficiencies that could create hazards through prolonged usage or reduce operational efficiency.",
+      "reference_answer": "Immediate Action TCTOs are issued immediately to address high-risk safety deficiencies that require urgent action without waiting for parts, whereas Routine Action TCTOs are released only after kits and parts become available to address less urgent issues. Immediate Action Safety TCTOs are issued to address safety deficiencies that require removal from service or impose flight restrictions.",
+      "latency_ms": 2823.3,
+      "prompt_tokens": 4705,
+      "completion_tokens": 112,
+      "retrieval": null
+    },
+    {
+      "query_id": 48,
+      "query": "How many internal fuel tanks are located in the center wing of the S-3 aircraft?",
+      "shown_pages": [
+        345,
+        350,
+        2472
+      ],
+      "gold_shown": [
+        345
+      ],
+      "cited_pages": [
+        345
+      ],
+      "cited_gold": [
+        345
+      ],
+      "refused": false,
+      "answer": "The S-3 aircraft has four internal fuel tanks in the center wing section, as stated on Page 1 (document TO_00-25-172CL-3, page 46).",
+      "reference_answer": "Four internal fuel tanks are located in the center wing of the S-3 aircraft.",
+      "latency_ms": 2283.6,
+      "prompt_tokens": 4782,
+      "completion_tokens": 45,
+      "retrieval": null
+    },
+    {
+      "query_id": 66,
+      "query": "How do temperature and humidity controls in clean rooms contribute to contamination prevention in aerospace manufacturing?",
+      "shown_pages": [
+        678,
+        685,
+        717
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        678,
+        685,
+        717
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "Temperature and humidity controls in clean rooms are critical for preventing contamination in aerospace manufacturing. According to Page 1, controlled areas must meet the requirements of a class 100,000 clean room, with temperature not exceeding 80\u00b0F and relative humidity at or below 50%. [Page 1] This ensures that products remain within their specified tolerances, avoiding issues like static charges or metallic oxidation. [Page 2] Additionally, monitoring these parameters at least once a month helps maintain certification, which is essential for product reliability. [Page 3]",
+      "reference_answer": "Temperature and humidity controls in clean rooms are a method of contamination control used to manage and reduce particulate matter in the air, thereby maintaining a contamination-free workspace as required for aerospace manufacturing.",
+      "latency_ms": 2850.1,
+      "prompt_tokens": 4702,
+      "completion_tokens": 117,
+      "retrieval": null
+    },
+    {
+      "query_id": 73,
+      "query": "Calculate the difference in required notification times between structural failures and training-related injuries in aviation maintenance procedures",
+      "shown_pages": [
+        232,
+        647,
+        2800
+      ],
+      "gold_shown": [
+        232
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "The difference in required notification times between structural failures and training-related injuries in aviation maintenance procedures is 18 hours. Structural failures must be reported within 24 hours, while training-related injuries must be reported within 6 hours.",
+      "latency_ms": 1931.3,
+      "prompt_tokens": 4748,
+      "completion_tokens": 4,
+      "retrieval": null
+    },
+    {
+      "query_id": 76,
+      "query": "What factors influenced the design modifications of aircraft fire training facilities between 1991 and 2013?",
+      "shown_pages": [
+        44,
+        263,
+        88
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        44
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The design modifications were influenced by the need to provide a safe live fire training environment for firefighters, updates to past customer requirements, and the requirement for contractors to demonstrate competency in maintaining specific manufacturer's products [Page 1].",
+      "reference_answer": "Factors that influenced the design modifications of aircraft fire training facilities between 1991 and 2013 are safety concerns during live-fire training, the need to prevent a false sense of security, physical demands on participants, changes in instructor experience levels, and advances in building construction and suppression systems.",
+      "latency_ms": 2253.8,
+      "prompt_tokens": 4715,
+      "completion_tokens": 45,
+      "retrieval": null
+    },
+    {
+      "query_id": 84,
+      "query": "How do geographical location factors influence the structural and procedural configurations of Aircraft Fire Training Facilities in different climate zones?",
+      "shown_pages": [
+        218,
+        58,
+        66
+      ],
+      "gold_shown": [
+        218
+      ],
+      "cited_pages": [
+        218
+      ],
+      "cited_gold": [
+        218
+      ],
+      "refused": false,
+      "answer": "Geographical location factors significantly influence the structural and procedural configurations of Aircraft Fire Training Facilities (AFTFs) in different climate zones. The design incorporates a lined burn area and conservation pond for water conservation and recycling, a pneumatic emergency shutdown system, an ignition system, and a liquid propane fuel system. These features adapt to various climatic conditions, ensuring quality training while meeting operational and safety standards. For instance, the facility at Alpena ANG Alpena CRTC, Michigan, includes a 100-foot lined burn area with an aircraft mock-up and a 10,000 water gallon liquid propane fuel tank, providing live fires necessary to simulate multi-aircraft type fires. This configuration ensures adaptability to different climates, such as hot or cold temperatures, which may affect fire behavior and training effectiveness. [Page 1]",
+      "reference_answer": "Geographical location factors, such as temperature and weather conditions, influence the structural and procedural configurations of Aircraft Fire Training Facilities. For example, the Thule AB facility is designed for warm-weather operations only and cannot be used for fire training while winterized, indicating that climate zones affect facility design and operational procedures.",
+      "latency_ms": 3341.2,
+      "prompt_tokens": 4713,
+      "completion_tokens": 172,
+      "retrieval": null
+    },
+    {
+      "query_id": 105,
+      "query": "Describe the key elements typically included in corrosion risk checklists used for Air Force equipment maintenance.",
+      "shown_pages": [
+        2939,
+        2842,
+        3175
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The key elements typically included in corrosion risk checklists for Air Force equipment maintenance, as described in TO_1-1-691, include:\n\n- Regularly scheduled aircraft washing per Table 3-1.\n- Regular cleaning or wiping down of unpainted surfaces with compatible fluids or lubricants.\n- Keeping low-point drains open.\n- Inspection, removal, and reapplication of corrosion preventive compounds on a scheduled basis.\n- Earliest detection and repair of damaged protective coatings.\n- Use of clean/fresh potable water for all aircraft, missile, and equipment washing and rinsing operations.\n\nThese elements ensure comprehensive coverage of potential corrosion risks across various components of Air Force equipment.",
+      "reference_answer": "Key elements in corrosion risk checklists for Air Force equipment maintenance include inspecting for the presence of corrosive substances like solder flux, which can trap moisture and cause circuit failure; checking for microbial presence and water intrusion, which can support corrosion; verifying the proper use of corrosion preventive compounds such as MIL-PRF-32033 and MIL-PRF-63460; and ensuring that gaskets are properly installed to prevent moisture entry. Additionally, the checklists should address the effects of environmental factors such as temperature, salt atmosphere, ozone, and other industrial pollutants.",
+      "latency_ms": 3064.8,
+      "prompt_tokens": 4698,
+      "completion_tokens": 137,
+      "retrieval": null
+    },
+    {
+      "query_id": 119,
+      "query": "What is the minimum required timeframe for a visual check of vehicles in Level A storage?",
+      "shown_pages": [
+        5150,
+        5155,
+        4996
+      ],
+      "gold_shown": [
+        5150
+      ],
+      "cited_pages": [
+        5150
+      ],
+      "cited_gold": [
+        5150
+      ],
+      "refused": false,
+      "answer": "The minimum required timeframe for a visual check of vehicles in Level A storage is 90 days, as stated on Page 1, Section 8.12.1, Visual Inspection.",
+      "reference_answer": "The minimum required timeframe for a visual check of vehicles in Level A storage is at least every 90 days.",
+      "latency_ms": 2246.5,
+      "prompt_tokens": 4701,
+      "completion_tokens": 40,
+      "retrieval": null
+    },
+    {
+      "query_id": 125,
+      "query": "What are the three parts of a reamer as per the USAF technical manuals and orders?",
+      "shown_pages": [
+        4369,
+        4371,
+        4372
+      ],
+      "gold_shown": [
+        4369,
+        4371
+      ],
+      "cited_pages": [
+        4369
+      ],
+      "cited_gold": [
+        4369
+      ],
+      "refused": false,
+      "answer": "The three parts of a reamer, as per the USAF technical manuals and orders, are the body, the shank, and the blades. The shank has a square tang to allow the reamer to be held with a wrench for turning. [Page 1]",
+      "reference_answer": "The three parts of a reamer, as per the USAF technical manuals and orders, are: 1. Body, 2. Blades, 3. Shank.",
+      "latency_ms": 2430.6,
+      "prompt_tokens": 4836,
+      "completion_tokens": 57,
+      "retrieval": null
+    },
+    {
+      "query_id": 128,
+      "query": "What coating is applied to the lip of a razor-edge door?",
+      "shown_pages": [
+        3369,
+        5028,
+        3433
+      ],
+      "gold_shown": [
+        3369
+      ],
+      "cited_pages": [
+        3369
+      ],
+      "cited_gold": [
+        3369
+      ],
+      "refused": false,
+      "answer": "The coating applied to the lip of a razor-edge door is cadmium plating. This is described on Page 1 (document TO_1-1-700, page 218) under section 10.17.1 Cadmium Plating.",
+      "reference_answer": "The lip of a razor-edge door is coated with cadmium plating.",
+      "latency_ms": 2380.8,
+      "prompt_tokens": 4696,
+      "completion_tokens": 58,
+      "retrieval": null
+    },
+    {
+      "query_id": 135,
+      "query": "Does the AFTF technical manual prohibit substitutions for ignition cables?",
+      "shown_pages": [
+        177,
+        262,
+        52
+      ],
+      "gold_shown": [
+        52,
+        177
+      ],
+      "cited_pages": [
+        177
+      ],
+      "cited_gold": [
+        177
+      ],
+      "refused": false,
+      "answer": "[Page 1] The AFTF technical manual prohibits substitutions for ignition cables. It states that \"No substitution permitted\" for the Ignition Cable (NSN: 6145-00-197-8166 or 6145-00-845-1861 MIL-C-3702-U5MC and MIL-C-3702-U7MC).",
+      "reference_answer": "Yes, the AFTF technical manual prohibits substitutions for ignition cables.",
+      "latency_ms": 2661.3,
+      "prompt_tokens": 4705,
+      "completion_tokens": 92,
+      "retrieval": null
+    },
+    {
+      "query_id": 141,
+      "query": "Which item should follow the TO 00-25-234 guidelines with handling marked by a specific symbol as per the USAF technical manuals and orders?",
+      "shown_pages": [
+        1363,
+        1101,
+        360
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        1363
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The item that should follow the TO 00-25-234 guidelines with handling marked by a specific symbol is the Forest Penetrator, Rescue Seat Assembly PN K26-1000-5 and PN K26-1000-9, as indicated on Page 1 of document TO_00-25-245_1.",
+      "reference_answer": "Electrostatic Discharge Sensitive Items should follow the TO 00-25-234 guidelines, with handling marked by the ESDS symbol (three arrows pointing into a circle), as per the USAF technical manuals and orders.",
+      "latency_ms": 2574.9,
+      "prompt_tokens": 4738,
+      "completion_tokens": 82,
+      "retrieval": null
+    },
+    {
+      "query_id": 146,
+      "query": "Is a Grade 3 coating applied to a special-purpose truck's exterior radiator core?",
+      "shown_pages": [
+        5038,
+        5036,
+        5035
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        5038
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "Yes, a Grade 3 coating is applied to a special-purpose truck's exterior radiator core. [Page 1]",
+      "reference_answer": "Yes, Grade 3 coating is applied to the exterior radiator core of a special-purpose truck.",
+      "latency_ms": 2079.8,
+      "prompt_tokens": 4702,
+      "completion_tokens": 25,
+      "retrieval": null
+    },
+    {
+      "query_id": 149,
+      "query": "According to the guidelines, should plumb bobs be used as hammers or levers?",
+      "shown_pages": [
+        4573,
+        4564,
+        4527
+      ],
+      "gold_shown": [
+        4573
+      ],
+      "cited_pages": [
+        4573
+      ],
+      "cited_gold": [
+        4573
+      ],
+      "refused": false,
+      "answer": "No, plumb bobs should not be used as hammers or levers. This is stated on Page 1 of document TO_32-1-101, where it says \"Do not use a plumb bob as a hammer or lever.\"",
+      "reference_answer": "No, plumb bobs should not be used as hammers or levers.",
+      "latency_ms": 2404.4,
+      "prompt_tokens": 4834,
+      "completion_tokens": 55,
+      "retrieval": null
+    },
+    {
+      "query_id": 151,
+      "query": "Can crazing be caused by the paints used in a plastic panel paint restoration process?",
+      "shown_pages": [
+        2017,
+        3651,
+        2016
+      ],
+      "gold_shown": [
+        2017
+      ],
+      "cited_pages": [
+        2017
+      ],
+      "cited_gold": [
+        2017
+      ],
+      "refused": false,
+      "answer": "Yes, crazing can be caused by the paints used in a plastic panel paint restoration process. Specifically, [Page 1] states that \"SOME PAINTS CONTAIN ORGANIC SOLVENTS HARMFUL TO PLASTIC AND MAY CAUSE CRAZING.\"",
+      "reference_answer": "Yes, crazing can be caused by the paints used in the plastic panel paint restoration process, as some paints contain organic solvents harmful to plastic.",
+      "latency_ms": 2366.0,
+      "prompt_tokens": 4701,
+      "completion_tokens": 58,
+      "retrieval": null
+    },
+    {
+      "query_id": 155,
+      "query": "What are the types of specialized components mandated by the AFTF to maintain operational readiness and environmental resilience as per the USAF technical manuals and orders?",
+      "shown_pages": [
+        3452,
+        4924,
+        5051
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        4924
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The types of specialized components mandated by the AFTF include corrosion prevention and control for Air Force vehicles, vehicle deficiencies and warranties, and storage and shipment. These are detailed in Chapter 6 of the manual [Page 2].",
+      "reference_answer": "The types of specialized components mandated by the AFTF to maintain operational readiness and environmental resilience are the GSE Extrusion Welder, Grinder (Black and Decker), Hot Air Blower, and Multi-Aspirator. The GSE Extrusion Welder, Grinder, and Hot Air Blower are used to repair tears and holes in the facility liner, while the Multi-Aspirator is used for aeration and algae control in the water conservation pond.",
+      "latency_ms": 2269.1,
+      "prompt_tokens": 4712,
+      "completion_tokens": 47,
+      "retrieval": null
+    },
+    {
+      "query_id": 156,
+      "query": "Is non-wetting or de-wetting in the overlap area considered an acceptable condition?",
+      "shown_pages": [
+        1961,
+        1931,
+        1992
+      ],
+      "gold_shown": [
+        1931,
+        1961,
+        1992
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "No, non-wetting in the overlap area is not considered an acceptable condition and is a defect. Dewetting in the overlap area is also not considered an acceptable condition and is a defect. Dewetting is only considered acceptable if it meets minimum solder coverage requirements, but this does not apply to the overlap area.",
+      "latency_ms": 1928.6,
+      "prompt_tokens": 4705,
+      "completion_tokens": 4,
+      "retrieval": null
+    },
+    {
+      "query_id": 164,
+      "query": "Can tube cutters cut brass tubing  as per section 36.2.1 in USAF TO 32-1-101?",
+      "shown_pages": [
+        4342,
+        4346,
+        4347
+      ],
+      "gold_shown": [
+        4342
+      ],
+      "cited_pages": [
+        4347
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "Yes, according to Section 36.2.1 in USAF TO 32-1-101, tube cutters can cut brass tubing. The document states that \"Tube cutters can cut from 1/8 inch through 2-5/8 inches tubing. They can cut copper, aluminum, or brass tubing.\" [Page 3]",
+      "reference_answer": "Yes, tube cutters can cut brass tubing.",
+      "latency_ms": 2619.9,
+      "prompt_tokens": 4849,
+      "completion_tokens": 77,
+      "retrieval": null
+    },
+    {
+      "query_id": 178,
+      "query": "Which solvent is used to degrease the sheet area before making the 'spot' test as outlined in the USAF technical manuals and orders?",
+      "shown_pages": [
+        3840,
+        5206,
+        2741
+      ],
+      "gold_shown": [
+        3840
+      ],
+      "cited_pages": [
+        3840
+      ],
+      "cited_gold": [
+        3840
+      ],
+      "refused": false,
+      "answer": "The solvent used to degrease the sheet area before making the 'spot' test is MIL-PRF-680, as stated in Page 1 of document TO_1-1A-9, page 187.",
+      "reference_answer": "MIL-PRF-680 (replaced Federal Specification P-D-680) is used to degrease the sheet area before making the 'spot' test as outlined in the USAF technical manuals and orders.",
+      "latency_ms": 2381.3,
+      "prompt_tokens": 4755,
+      "completion_tokens": 51,
+      "retrieval": null
+    },
+    {
+      "query_id": 188,
+      "query": "Required step for gaseous oxygen carts before beginning operations.",
+      "shown_pages": [
+        626,
+        629,
+        830
+      ],
+      "gold_shown": [
+        626,
+        629
+      ],
+      "cited_pages": [
+        626
+      ],
+      "cited_gold": [
+        626
+      ],
+      "refused": false,
+      "answer": "The required step for gaseous oxygen carts before beginning operations is to ensure that they are completely free of petroleum-based products such as greases or solvents. Failure to comply could result in injury to, or death of, personnel or long term health hazards. [Page 1]",
+      "reference_answer": "The required step for gaseous oxygen carts before beginning operations is to statically ground the cart to a common ground before connecting the servicing hose.",
+      "latency_ms": 2433.3,
+      "prompt_tokens": 4786,
+      "completion_tokens": 58,
+      "retrieval": null
+    },
+    {
+      "query_id": 199,
+      "query": "State the purpose of a TC device and how it is constructed as per the USAF technical manuals and orders.",
+      "shown_pages": [
+        4623,
+        4713,
+        3821
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        4623
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "TC devices are used for corrosion prevention and control, including rustproofing procedures for tactical vehicles and trailers. They are constructed by following the Calibration Procedure for Torque Indicating Devices [Page 1] and the Calibration Procedure for Snap Action, Impulse Feel Torque Wrenches [Page 1].",
+      "reference_answer": "A TC (thermocouple) is a thermoelectric device used to accurately measure temperature. It consists of two leads of dissimilar metal joined at one end, called the measuring junction or hot junction, which produces an electric current when heated. This junction can be formed by welding or twisting the wire elements together.",
+      "latency_ms": 2465.6,
+      "prompt_tokens": 4792,
+      "completion_tokens": 63,
+      "retrieval": null
+    },
+    {
+      "query_id": 205,
+      "query": "What is the diameter and length of the wooden maul head, in inches?",
+      "shown_pages": [
+        4188,
+        4187,
+        4526
+      ],
+      "gold_shown": [
+        4188
+      ],
+      "cited_pages": [
+        4188
+      ],
+      "cited_gold": [
+        4188
+      ],
+      "refused": false,
+      "answer": "The wooden maul has a cylindrical head which is about 8 inches in diameter and about 10 inches long. [Page 1]",
+      "reference_answer": "The wooden maul has a cylindrical head that is about 8 inches in diameter and about 10 inches long.",
+      "latency_ms": 2215.2,
+      "prompt_tokens": 4833,
+      "completion_tokens": 30,
+      "retrieval": null
+    },
+    {
+      "query_id": 207,
+      "query": "Do TO 00-25-172CL-3 prioritize fire prevention through Halon extinguishers and engine shutdowns as per USAF technical manuals and orders?",
+      "shown_pages": [
+        598,
+        515,
+        618
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        598
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "[Page 1] The document TO 00-25-172 prioritizes fire prevention by recommending the use of Halon 1211 fire extinguishers for certain aircraft types. [Page 1] It also specifies that engines must remain running (idle) while refueling using the R-12 model Hydrant Servicing Vehicle (HSV). [Page 1] However, it does not explicitly mention engine shutdowns as a priority for fire prevention.",
+      "reference_answer": "Yes\u2014TO 00-25-172CL-3 prioritizes fire prevention through engine shutdowns and other safety procedures during hot refueling operations, consistent with USAF technical manuals and orders, though Halon extinguishers are not mentioned.",
+      "latency_ms": 2789.5,
+      "prompt_tokens": 4829,
+      "completion_tokens": 101,
+      "retrieval": null
+    },
+    {
+      "query_id": 208,
+      "query": "When should the Repaired Conductor Encapsulation Procedure be applied in the middle of a conductor delamination repair procedure?",
+      "shown_pages": [
+        1907,
+        1866,
+        1857
+      ],
+      "gold_shown": [
+        1907
+      ],
+      "cited_pages": [
+        1907
+      ],
+      "cited_gold": [
+        1907
+      ],
+      "refused": false,
+      "answer": "The Repaired Conductor Encapsulation Procedure should be applied after step 15, when encapsulating the repair area with epoxy, if the repair area was not originally conformally coated [Page 1].",
+      "reference_answer": "The Repaired Conductor Encapsulation Procedure should be applied if the repair area was not originally conformally coated.",
+      "latency_ms": 2246.1,
+      "prompt_tokens": 4711,
+      "completion_tokens": 42,
+      "retrieval": null
+    },
+    {
+      "query_id": 216,
+      "query": "What are three environmental challenges facing the United States Air Force?",
+      "shown_pages": [
+        4895,
+        4867,
+        4924
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "The three environmental challenges faced by the United States Air Force are: 1) Contamination of air, water, and soil from paint and chemical waste; 2) Managing corrosive or deteriorating chemical removers due to improper storage or extreme temperatures; 3) Compliance with environmental regulations for solvents and removers to reduce hazardous waste and occupational hazards.",
+      "latency_ms": 1898.9,
+      "prompt_tokens": 4697,
+      "completion_tokens": 4,
+      "retrieval": null
+    },
+    {
+      "query_id": 230,
+      "query": "Can MIL-A-46146 sealant be used in high-temperature areas above 250\u00b0F?",
+      "shown_pages": [
+        3436,
+        3407,
+        3336
+      ],
+      "gold_shown": [
+        3336,
+        3407,
+        3436
+      ],
+      "cited_pages": [
+        3407
+      ],
+      "cited_gold": [
+        3407
+      ],
+      "refused": false,
+      "answer": "Yes, MIL-A-46146 sealant can be used in high-temperature areas above 250\u00b0F. According to Table 12-1 on Page 2 (document TO_1-1-700, page 252), it specifies a service temperature range of -70 to +400\u00b0F (-57 to +204\u00b0C) for Groups I and II, and -70 to +600\u00b0F (-57 to +316\u00b0C) for Group III.",
+      "reference_answer": "Yes, MIL-A-46146 sealant can be used in high-temperature areas above 250\u00b0F. The service temperature range for MIL-A-46146 adhesive sealant is -70 to +400\u00b0F, and it is used in areas where temperatures are between 250\u00b0F to 350\u00b0F.",
+      "latency_ms": 2833.5,
+      "prompt_tokens": 4707,
+      "completion_tokens": 114,
+      "retrieval": null
+    },
+    {
+      "query_id": 231,
+      "query": "What is the minimum temperature above which a hot brake is considered an anomaly as per the U.S. Air Force technical manuals?",
+      "shown_pages": [
+        595,
+        552,
+        1218
+      ],
+      "gold_shown": [
+        552,
+        595
+      ],
+      "cited_pages": [
+        552
+      ],
+      "cited_gold": [
+        552
+      ],
+      "refused": false,
+      "answer": "The minimum temperature above which a hot brake is considered an anomaly is 750 degrees Fahrenheit (\u00b0F), as stated on Page 2 of document TO_00-25-172, page 103.",
+      "reference_answer": "The minimum temperature above which a hot brake is considered an anomaly, as per the U.S. Air Force technical manuals, is 750 degrees Fahrenheit.",
+      "latency_ms": 2330.2,
+      "prompt_tokens": 4800,
+      "completion_tokens": 50,
+      "retrieval": null
+    },
+    {
+      "query_id": 232,
+      "query": "HVLP paint gun regulator pressure vs paint pot pressure",
+      "shown_pages": [
+        3525,
+        3734,
+        5217
+      ],
+      "gold_shown": [
+        3525
+      ],
+      "cited_pages": [
+        3525
+      ],
+      "cited_gold": [
+        3525
+      ],
+      "refused": false,
+      "answer": "The HVLP paint gun regulator pressure shall be adjusted to a lower level to ensure the nozzle pressure does not exceed a maximum of 10 PSI in accordance with Paragraph 4.2.1. Pressure on the paint pot is usually adjusted to a range of 25 to 40 PSI but may vary more widely, depending on the density of the paint and the elevation of the surface being painted above the pressure tank. [Page 1]",
+      "reference_answer": "For HVLP paint guns, the regulator pressure is adjusted to a maximum of 10 PSI to ensure proper atomization without exceeding nozzle pressure limits, while the paint pot pressure is typically set between 25 and 40 PSI, depending on paint density and surface elevation.",
+      "latency_ms": 2668.6,
+      "prompt_tokens": 4687,
+      "completion_tokens": 92,
+      "retrieval": null
+    },
+    {
+      "query_id": 239,
+      "query": "Where is the 25mm gun safety pin stored when not in use per the Summary of USAF Technical Manual Sections?",
+      "shown_pages": [
+        366,
+        1555,
+        367
+      ],
+      "gold_shown": [
+        366
+      ],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The 25mm gun safety pin is stored in the safety pin stowage bracket when not in use, as shown in Figure 7-4 on Page 65 of document TO_00-25-172CL-3.",
+      "reference_answer": "The 25mm gun safety pin is stored in the Safety Pin Stowage Bracket when not in use.",
+      "latency_ms": 2367.3,
+      "prompt_tokens": 4749,
+      "completion_tokens": 54,
+      "retrieval": null
+    },
+    {
+      "query_id": 245,
+      "query": "What is the minimum brake lining thickness specified in the safety systems for Air Force vehicle maintenance standards?",
+      "shown_pages": [
+        1040,
+        4924,
+        1554
+      ],
+      "gold_shown": [],
+      "cited_pages": [],
+      "cited_gold": [],
+      "refused": true,
+      "answer": "NOT_IN_PAGES",
+      "reference_answer": "The minimum brake lining thickness specified is 50 percent of the original lining thickness remaining.",
+      "latency_ms": 1899.9,
+      "prompt_tokens": 4704,
+      "completion_tokens": 4,
+      "retrieval": null
+    },
+    {
+      "query_id": 250,
+      "query": "Can both the R-9 and R-11 be used for aircraft fuel servicing?",
+      "shown_pages": [
+        372,
+        623,
+        413
+      ],
+      "gold_shown": [
+        372,
+        413
+      ],
+      "cited_pages": [
+        372
+      ],
+      "cited_gold": [
+        372
+      ],
+      "refused": false,
+      "answer": "[Page 1] The document specifies that \"AIRCRAFT FUEL SERVICING WITH R-9, R-11, AND COMMERCIAL FUEL SERVICING TRUCKS AND WITH FUELS OPERATIONAL READINESS CAPABILITY EQUIPMENT (FORCE)\" is covered by this technical manual.",
+      "reference_answer": "Yes, both the R-9 and R-11 can be used for aircraft fuel servicing.",
+      "latency_ms": 2499.4,
+      "prompt_tokens": 4784,
+      "completion_tokens": 64,
+      "retrieval": null
+    },
+    {
+      "query_id": 259,
+      "query": "Discuss the cleanliness level class range required by the US Air Force contamination control standard for aerospace facilities.",
+      "shown_pages": [
+        660,
+        716,
+        705
+      ],
+      "gold_shown": [],
+      "cited_pages": [
+        716
+      ],
+      "cited_gold": [],
+      "refused": false,
+      "answer": "The US Air Force contamination control standard for aerospace facilities requires a cleanliness level class range of Class 100,000. This is specified in the Technical Order, which lists guidelines for selecting environmental facilities and achieving operating standards necessary for contamination control during overhaul or repair of critical Air Force system hardware. [Page 2]",
+      "reference_answer": "The US Air Force contamination control standard for aerospace facilities requires cleanliness levels classified as Class 100, 1,000, 10,000, 100,000, and Controlled Area (Class 300,000) to ensure appropriate air quality and minimize particle contamination.",
+      "latency_ms": 2493.5,
+      "prompt_tokens": 4701,
+      "completion_tokens": 67,
+      "retrieval": null
+    }
+  ]
+}

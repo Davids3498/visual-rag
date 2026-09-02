@@ -71,3 +71,33 @@ def test_exact_search_agrees_with_the_index(conn):
 def test_unsafe_table_names_are_rejected():
     with pytest.raises(ValueError):
         pgvector_store.VectorTable("pages; DROP TABLE users", 8)
+
+
+CENTROIDS = pgvector_store.VectorTable("test_centroids_roundtrip", 8)
+
+
+def test_centroid_search_unions_pages_across_query_tokens(conn):
+    """Stage-1 candidate generation: each query token retrieves, pages are unioned."""
+    pgvector_store.create_centroid_table(conn, CENTROIDS, drop=True)
+    # page 1's two centroids each match a different query token; page 2 matches neither.
+    centroids = np.stack(
+        [
+            np.stack([_unit([1, 0, 0, 0, 0, 0, 0, 0]), _unit([0, 1, 0, 0, 0, 0, 0, 0])]),
+            np.stack([_unit([0, 0, 1, 0, 0, 0, 0, 0]), _unit([0, 0, 0, 1, 0, 0, 0, 0])]),
+        ]
+    )
+    pgvector_store.insert_centroids(conn, CENTROIDS, [1, 2], centroids)
+    assert pgvector_store.count(conn, CENTROIDS) == 4
+
+    query = np.stack([_unit([1, 0, 0, 0, 0, 0, 0, 0]), _unit([0, 1, 0, 0, 0, 0, 0, 0])])
+    hits = pgvector_store.search_centroids(conn, CENTROIDS, query, per_token_k=1, limit=10)
+    assert hits[0][0] == 1
+    assert hits[0][1] == pytest.approx(2.0, abs=1e-4)  # both tokens matched page 1 exactly
+    conn.execute(f"DROP TABLE IF EXISTS {CENTROIDS.name}")
+
+
+def test_centroid_shape_is_validated(conn):
+    pgvector_store.create_centroid_table(conn, CENTROIDS, drop=True)
+    with pytest.raises(ValueError):
+        pgvector_store.insert_centroids(conn, CENTROIDS, [1], np.zeros((1, 2, 4), dtype=np.float32))
+    conn.execute(f"DROP TABLE IF EXISTS {CENTROIDS.name}")

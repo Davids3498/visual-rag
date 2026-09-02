@@ -1,0 +1,345 @@
+{
+  "retriever": "visual",
+  "model": "vidore/colqwen2-v1.0",
+  "dim": 128,
+  "corpus_pages": 5244,
+  "eval_queries": 283,
+  "smoke_test": false,
+  "primary_stage1": "centroids",
+  "candidates": 100,
+  "patches": {
+    "total": 3963378,
+    "mean_per_page": 755.8,
+    "min": 746,
+    "max": 771
+  },
+  "storage": {
+    "multivector_mb": 1014.7,
+    "bytes_per_page": 193499.0
+  },
+  "embedding": null,
+  "query_encode_ms": 10.63,
+  "stage1_variants": {
+    "pooled": {
+      "index": {
+        "rows": 5244,
+        "copy_seconds": 0.04,
+        "hnsw_build_seconds": 0.49,
+        "hnsw_m": 16,
+        "hnsw_ef_construction": 64,
+        "ef_search": 200,
+        "total_bytes": 7.5,
+        "table_bytes": 3.1,
+        "index_bytes": 4.2
+      },
+      "latency_ms": {
+        "mean": 0.84,
+        "p50": 0.83,
+        "p95": 0.92,
+        "p99": 1.08
+      },
+      "rerank_ms": {
+        "mean": 4.12,
+        "p50": 4.02,
+        "p95": 4.75,
+        "p99": 5.49
+      },
+      "sweep": [
+        {
+          "shortlist": 10,
+          "stage1_gold_recall": 0.233,
+          "ndcg@10": 0.2504,
+          "recall@10": 0.233
+        },
+        {
+          "shortlist": 25,
+          "stage1_gold_recall": 0.3489,
+          "ndcg@10": 0.3313,
+          "recall@10": 0.3196
+        },
+        {
+          "shortlist": 50,
+          "stage1_gold_recall": 0.4238,
+          "ndcg@10": 0.3707,
+          "recall@10": 0.3652
+        },
+        {
+          "shortlist": 100,
+          "stage1_gold_recall": 0.5325,
+          "ndcg@10": 0.4249,
+          "recall@10": 0.4273
+        },
+        {
+          "shortlist": 200,
+          "stage1_gold_recall": 0.6383,
+          "ndcg@10": 0.4584,
+          "recall@10": 0.4654
+        }
+      ],
+      "metrics": {
+        "ndcg@1": 0.4258,
+        "recall@1": 0.2376,
+        "precision@1": 0.4417,
+        "success@1": 0.4417,
+        "ndcg@5": 0.4193,
+        "recall@5": 0.3723,
+        "precision@5": 0.2042,
+        "success@5": 0.6502,
+        "ndcg@10": 0.4249,
+        "recall@10": 0.4273,
+        "precision@10": 0.1353,
+        "success@10": 0.6961,
+        "mrr@10": 0.5235,
+        "map": 0.3606
+      }
+    },
+    "centroids": {
+      "index": {
+        "rows": 83904,
+        "copy_seconds": 0.15,
+        "hnsw_build_seconds": 3.27,
+        "hnsw_m": 16,
+        "hnsw_ef_construction": 64,
+        "ef_search": 200,
+        "total_bytes": 118.6,
+        "table_bytes": 49.3,
+        "index_bytes": 67.4,
+        "centroids_per_page": 16,
+        "clustering_seconds": 1.9,
+        "per_token_k": 50
+      },
+      "latency_ms": {
+        "mean": 22.97,
+        "p50": 22.42,
+        "p95": 33.9,
+        "p99": 41.59
+      },
+      "rerank_ms": {
+        "mean": 4.06,
+        "p50": 3.96,
+        "p95": 4.72,
+        "p99": 5.62
+      },
+      "sweep": [
+        {
+          "shortlist": 10,
+          "stage1_gold_recall": 0.4095,
+          "ndcg@10": 0.4266,
+          "recall@10": 0.4095
+        },
+        {
+          "shortlist": 25,
+          "stage1_gold_recall": 0.5206,
+          "ndcg@10": 0.4607,
+          "recall@10": 0.4516
+        },
+        {
+          "shortlist": 50,
+          "stage1_gold_recall": 0.5972,
+          "ndcg@10": 0.4808,
+          "recall@10": 0.4777
+        },
+        {
+          "shortlist": 100,
+          "stage1_gold_recall": 0.6679,
+          "ndcg@10": 0.4982,
+          "recall@10": 0.4958
+        },
+        {
+          "shortlist": 200,
+          "stage1_gold_recall": 0.7214,
+          "ndcg@10": 0.5062,
+          "recall@10": 0.5051
+        }
+      ],
+      "metrics": {
+        "ndcg@1": 0.5106,
+        "recall@1": 0.2827,
+        "precision@1": 0.5265,
+        "success@1": 0.5265,
+        "ndcg@5": 0.4911,
+        "recall@5": 0.4388,
+        "precision@5": 0.2389,
+        "success@5": 0.7456,
+        "ndcg@10": 0.4982,
+        "recall@10": 0.4958,
+        "precision@10": 0.1604,
+        "success@10": 0.7951,
+        "mrr@10": 0.6126,
+        "map": 0.433
+      }
+    }
+  },
+  "exhaustive": {
+    "metrics": {
+      "ndcg@1": 0.5159,
+      "recall@1": 0.2854,
+      "precision@1": 0.5336,
+      "success@1": 0.5336,
+      "ndcg@5": 0.5086,
+      "recall@5": 0.4606,
+      "precision@5": 0.2466,
+      "success@5": 0.7739,
+      "ndcg@10": 0.5192,
+      "recall@10": 0.5276,
+      "precision@10": 0.1675,
+      "success@10": 0.8339,
+      "mrr@10": 0.6322,
+      "map": 0.4597
+    },
+    "latency_ms": {
+      "mean": 4.39,
+      "p50": 4.26,
+      "p95": 5.78,
+      "p99": 6.54
+    },
+    "gpu_resident_gb": 1.01,
+    "note": "At 5,244 pages brute-force MaxSim on GPU beats the two-stage path on both quality and latency, because the whole multi-vector corpus (1 GB) fits in VRAM. The two-stage path is not a speed optimisation at this size - it is what keeps the design viable when the corpus no longer fits, and it costs 3% of the ceiling to get there."
+  },
+  "metrics": {
+    "ndcg@1": 0.5106,
+    "recall@1": 0.2827,
+    "precision@1": 0.5265,
+    "success@1": 0.5265,
+    "ndcg@5": 0.4911,
+    "recall@5": 0.4388,
+    "precision@5": 0.2389,
+    "success@5": 0.7456,
+    "ndcg@10": 0.4982,
+    "recall@10": 0.4958,
+    "precision@10": 0.1604,
+    "success@10": 0.7951,
+    "mrr@10": 0.6126,
+    "map": 0.433
+  },
+  "metrics_pytrec_eval": {
+    "map": 0.433,
+    "ndcg_cut_1": 0.5141,
+    "ndcg_cut_10": 0.4982,
+    "ndcg_cut_5": 0.4908,
+    "recall_1": 0.2832,
+    "recall_10": 0.496,
+    "recall_5": 0.4379
+  },
+  "breakdown": {
+    "all": {
+      "queries": 283,
+      "ndcg@1": 0.5106,
+      "recall@1": 0.2827,
+      "precision@1": 0.5265,
+      "success@1": 0.5265,
+      "ndcg@5": 0.4911,
+      "recall@5": 0.4388,
+      "precision@5": 0.2389,
+      "success@5": 0.7456,
+      "ndcg@10": 0.4982,
+      "recall@10": 0.4958,
+      "precision@10": 0.1604,
+      "success@10": 0.7951,
+      "mrr@10": 0.6126,
+      "map": 0.433
+    },
+    "human_written": {
+      "queries": 177,
+      "ndcg@1": 0.661,
+      "recall@1": 0.369,
+      "precision@1": 0.678,
+      "success@1": 0.678,
+      "ndcg@5": 0.6182,
+      "recall@5": 0.5389,
+      "precision@5": 0.2859,
+      "success@5": 0.8531,
+      "ndcg@10": 0.6217,
+      "recall@10": 0.603,
+      "precision@10": 0.1859,
+      "success@10": 0.887,
+      "mrr@10": 0.7516,
+      "map": 0.5451
+    },
+    "synthetic": {
+      "queries": 106,
+      "ndcg@1": 0.2594,
+      "recall@1": 0.1386,
+      "precision@1": 0.2736,
+      "success@1": 0.2736,
+      "ndcg@5": 0.2789,
+      "recall@5": 0.2716,
+      "precision@5": 0.1604,
+      "success@5": 0.566,
+      "ndcg@10": 0.2918,
+      "recall@10": 0.3167,
+      "precision@10": 0.1179,
+      "success@10": 0.6415,
+      "mrr@10": 0.3804,
+      "map": 0.2459
+    },
+    "visual_only": {
+      "queries": 23,
+      "ndcg@1": 0.7826,
+      "recall@1": 0.6329,
+      "precision@1": 0.7826,
+      "success@1": 0.7826,
+      "ndcg@5": 0.7973,
+      "recall@5": 0.8092,
+      "precision@5": 0.2174,
+      "success@5": 0.913,
+      "ndcg@10": 0.7929,
+      "recall@10": 0.8116,
+      "precision@10": 0.113,
+      "success@10": 0.913,
+      "mrr@10": 0.8333,
+      "map": 0.7425
+    },
+    "any_visual_gold": {
+      "queries": 126,
+      "ndcg@1": 0.4643,
+      "recall@1": 0.1885,
+      "precision@1": 0.4841,
+      "success@1": 0.4841,
+      "ndcg@5": 0.4404,
+      "recall@5": 0.3432,
+      "precision@5": 0.2683,
+      "success@5": 0.7698,
+      "ndcg@10": 0.4459,
+      "recall@10": 0.4127,
+      "precision@10": 0.1944,
+      "success@10": 0.8333,
+      "mrr@10": 0.5964,
+      "map": 0.3626
+    },
+    "text_only_gold": {
+      "queries": 157,
+      "ndcg@1": 0.5478,
+      "recall@1": 0.3583,
+      "precision@1": 0.5605,
+      "success@1": 0.5605,
+      "ndcg@5": 0.5318,
+      "recall@5": 0.5155,
+      "precision@5": 0.2153,
+      "success@5": 0.7261,
+      "ndcg@10": 0.5401,
+      "recall@10": 0.5624,
+      "precision@10": 0.1331,
+      "success@10": 0.7643,
+      "mrr@10": 0.6256,
+      "map": 0.4895
+    },
+    "multi_doc": {
+      "queries": 23,
+      "ndcg@1": 0.2174,
+      "recall@1": 0.0364,
+      "precision@1": 0.2174,
+      "success@1": 0.2174,
+      "ndcg@5": 0.1579,
+      "recall@5": 0.0876,
+      "precision@5": 0.1217,
+      "success@5": 0.4783,
+      "ndcg@10": 0.1603,
+      "recall@10": 0.1319,
+      "precision@10": 0.0957,
+      "success@10": 0.5652,
+      "mrr@10": 0.3366,
+      "map": 0.1145
+    }
+  }
+}

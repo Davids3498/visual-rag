@@ -1387,6 +1387,7 @@ dependencies = [
     { name = "pandas" },
     { name = "pillow" },
     { name = "pyarrow" },
+    { name = "requests" },
     { name = "rich" },
     { name = "tqdm" },
 ]
@@ -1420,6 +1421,7 @@ requires-dist = [
     { name = "psycopg", extras = ["binary"], marker = "extra == 'retrieval'", specifier = ">=3.2" },
     { name = "pyarrow", specifier = ">=17.0" },
     { name = "pytrec-eval-terrier", marker = "extra == 'retrieval'", specifier = ">=0.5.6" },
+    { name = "requests", specifier = ">=2.32" },
     { name = "rich", specifier = ">=13.7" },
     { name = "sentence-transformers", marker = "extra == 'retrieval'", specifier = ">=3.3" },
     { name = "torch", marker = "extra == 'retrieval'", specifier = ">=2.5" },

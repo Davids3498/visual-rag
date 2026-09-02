@@ -120,18 +120,6 @@ def percentiles(values: list[float]) -> dict[str, float]:
     }
 
 
-def subsets(eval_queries) -> dict[str, list[int]]:
-    """Slices the calibration in step 4 will want, defined once here."""
-    q = eval_queries
-    return {
-        "all": q["query_id"].tolist(),
-        "visual_only": q.loc[q["visual_only"], "query_id"].tolist(),
-        "any_visual_gold": q.loc[q["n_visual_gold"] > 0, "query_id"].tolist(),
-        "text_only_gold": q.loc[q["n_visual_gold"] == 0, "query_id"].tolist(),
-        "multi_doc": q.loc[q["n_docs"] > 1, "query_id"].tolist(),
-    }
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", default=text_encoder.DEFAULT_MODEL)
@@ -217,7 +205,7 @@ def main() -> int:
 
     breakdown = {
         name: {"queries": len(qids), **metrics.evaluate(run, metrics.subset(gold, qids), ks=ks)}
-        for name, qids in subsets(eval_set.queries).items()
+        for name, qids in data.query_slices(eval_set.queries).items()
         if qids
     }
 

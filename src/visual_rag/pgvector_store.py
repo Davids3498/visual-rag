@@ -60,6 +60,84 @@ def create_table(conn: psycopg.Connection, table: VectorTable, drop: bool = Fals
     )
 
 
+def create_centroid_table(conn: psycopg.Connection, table: VectorTable, drop: bool = False) -> None:
+    """Schema for several vectors per page — the multi-vector stage-1 index.
+
+    One row per (page, centroid) instead of one per page, because a page that contains both a
+    pin table and a wiring diagram is two different things to a query, and a single averaged
+    vector represents neither.
+    """
+    if drop:
+        conn.execute(f"DROP TABLE IF EXISTS {table.name}")
+    conn.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS {table.name} (
+            corpus_id   INTEGER NOT NULL,
+            centroid_id SMALLINT NOT NULL,
+            embedding   vector({table.dim}) NOT NULL,
+            PRIMARY KEY (corpus_id, centroid_id)
+        )
+        """
+    )
+
+
+def insert_centroids(
+    conn: psycopg.Connection,
+    table: VectorTable,
+    corpus_ids: Sequence[int],
+    centroids: np.ndarray,
+) -> float:
+    """Binary COPY `[n_pages, k, dim]` centroids in. Returns seconds elapsed."""
+    if centroids.ndim != 3 or centroids.shape[2] != table.dim:
+        raise ValueError(f"expected (n, k, {table.dim}), got {centroids.shape}")
+    started = time.perf_counter()
+    with (
+        conn.cursor() as cur,
+        cur.copy(
+            f"COPY {table.name} (corpus_id, centroid_id, embedding) FROM STDIN WITH (FORMAT BINARY)"
+        ) as copy,
+    ):
+        copy.set_types(["integer", "smallint", "vector"])
+        for cid, page in zip(corpus_ids, centroids, strict=True):
+            for centroid_id, vector in enumerate(page):
+                copy.write_row([int(cid), centroid_id, vector])
+    return time.perf_counter() - started
+
+
+def search_centroids(
+    conn: psycopg.Connection,
+    table: VectorTable,
+    query_vectors: np.ndarray,
+    per_token_k: int = 20,
+    limit: int = 100,
+) -> list[tuple[int, float]]:
+    """Late-interaction candidate generation: ANN per query token, then union by page.
+
+    One round trip: the query tokens go in as a `vector[]` and a LATERAL join runs one indexed
+    top-k per token. Pages are ranked by the sum of the token similarities they were retrieved
+    for — an approximation that only has to get *membership* right, since stage 2 rescores the
+    shortlist exactly.
+    """
+    vectors = [np.asarray(v, dtype=np.float32) for v in query_vectors]
+    rows = conn.execute(
+        f"""
+        SELECT corpus_id, sum(sim) AS score
+        FROM unnest(%s::vector[]) AS q(v)
+        CROSS JOIN LATERAL (
+            SELECT corpus_id, 1 - (embedding <=> q.v) AS sim
+            FROM {table.name}
+            ORDER BY embedding <=> q.v
+            LIMIT %s
+        ) AS hits
+        GROUP BY corpus_id
+        ORDER BY score DESC
+        LIMIT %s
+        """,
+        (vectors, int(per_token_k), int(limit)),
+    ).fetchall()
+    return [(int(cid), float(score)) for cid, score in rows]
+
+
 def count(conn: psycopg.Connection, table: VectorTable) -> int:
     return conn.execute(f"SELECT count(*) FROM {table.name}").fetchone()[0]
 

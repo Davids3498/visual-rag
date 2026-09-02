@@ -1,0 +1,162 @@
+# The generator: Qwen2.5-VL-7B AWQ on vLLM, scheduled onto the node's GPU.
+#
+# This is the manifest that makes the project a Kubernetes one rather than a docker-compose one:
+# a real GPU resource request, a startup probe sized for model loading, and a memory cap that
+# leaves room on the card for the retriever.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vllm-config
+  namespace: visual-rag
+data:
+  MODEL: Qwen/Qwen2.5-VL-7B-Instruct-AWQ
+  SERVED_NAME: qwen2.5-vl-7b-awq
+  # The whole card is 24 GB. vLLM would take ~90% by default and the retriever, which has to
+  # answer first, would have nowhere to load. 0.55 leaves ~9 GB — measured at 19.6 GB total
+  # with ColQwen2 and vLLM both resident.
+  GPU_MEMORY_UTILIZATION: "0.55"
+  MAX_MODEL_LEN: "8192"
+  # Three retrieved pages per answer, capped client-side at 1.2 MP each (~1,700 tokens).
+  LIMIT_MM_PER_PROMPT: '{"image": 3}'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm
+  namespace: visual-rag
+  labels:
+    app: vllm
+spec:
+  selector:
+    app: vllm
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-external
+  namespace: visual-rag
+spec:
+  type: NodePort
+  selector:
+    app: vllm
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
+      nodePort: 30800
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vllm
+  namespace: visual-rag
+  labels:
+    app: vllm
+spec:
+  replicas: 1
+  # One GPU, one replica: a rolling update would need a second card, so replace instead of
+  # deadlocking on a Pending pod that can never schedule.
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: vllm
+  template:
+    metadata:
+      labels:
+        app: vllm
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: /metrics
+    spec:
+      # Kubernetes injects an env var per Service into every pod in the namespace. The Service
+      # here is called `vllm`, so the pod gets VLLM_PORT=tcp://10.x.x.x:8000 — and vLLM reads
+      # VLLM_PORT as its own integer config, so engine startup dies on it. Turning the legacy
+      # service links off removes the whole class of collision; DNS still resolves Services.
+      enableServiceLinks: false
+      containers:
+        - name: vllm
+          image: vllm/vllm-openai:v0.28.0
+          args:
+            - $(MODEL)
+            - --served-model-name
+            - $(SERVED_NAME)
+            - --gpu-memory-utilization
+            - $(GPU_MEMORY_UTILIZATION)
+            - --max-model-len
+            - $(MAX_MODEL_LEN)
+            - --limit-mm-per-prompt
+            - $(LIMIT_MM_PER_PROMPT)
+          envFrom:
+            - configMapRef:
+                name: vllm-config
+          env:
+            - name: HUGGING_FACE_HUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: huggingface
+                  key: token
+                  optional: true      # the model is public; a token only lifts rate limits
+            # WSL2 only: vLLM keeps pinned memory off under WSL even on kernels that support
+            # it, and its UVA buffers then fail with "UVA is not available" at startup.
+            - name: VLLM_WSL2_ENABLE_PIN_MEMORY
+              value: "1"
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "2"
+              memory: 8Gi
+              nvidia.com/gpu: 1
+            limits:
+              # GPUs are not divisible by the device plugin: requests and limits must match,
+              # and the pod owns the whole card unless time-slicing is configured (see
+              # 30-nvidia-device-plugin.yaml).
+              nvidia.com/gpu: 1
+              memory: 24Gi
+          volumeMounts:
+            - name: model-cache
+              mountPath: /root/.cache/huggingface
+            - name: dshm
+              mountPath: /dev/shm
+          # Loading and compiling 7B of AWQ weights takes ~3 minutes on this card. The startup
+          # probe buys that time without a liveness probe killing the pod mid-load.
+          startupProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 60          # up to 10 minutes
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 30
+            failureThreshold: 5
+      volumes:
+        # The model repository. On this single-node cluster it is the host's HuggingFace cache,
+        # so the 6.5 GB of weights are not downloaded a second time. A multi-node cluster would
+        # point this at a ReadWriteMany PVC or pull the weights from object storage in an init
+        # container — the mount path is the only thing that would change.
+        - name: model-cache
+          hostPath:
+            # Overlays point this at the real location: the host cache on k3s, the mounted
+            # path inside the node VM on minikube.
+            path: /var/cache/huggingface
+            type: DirectoryOrCreate
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 8Gi

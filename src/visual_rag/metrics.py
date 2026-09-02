@@ -126,6 +126,58 @@ def evaluate_pytrec(run: Run, gold: Gold, ks: Sequence[int] = (1, 5, 10)) -> dic
     }
 
 
+# --- uncertainty ---------------------------------------------------------------------------
+#
+# 283 queries is a small evaluation set: differences of a few points are not necessarily real.
+# Every headline number in the calibration report carries a bootstrap interval so that
+# "my number is close to the published one" is a claim with a width, not a vibe.
+
+
+def bootstrap_ci(
+    values: Sequence[float], resamples: int = 10000, alpha: float = 0.05, seed: int = 0
+) -> tuple[float, float]:
+    """Percentile bootstrap CI for the mean of per-query scores."""
+    import numpy as np
+
+    array = np.asarray(values, dtype=float)
+    if len(array) == 0:
+        return (0.0, 0.0)
+    rng = np.random.default_rng(seed)
+    means = array[rng.integers(0, len(array), size=(resamples, len(array)))].mean(axis=1)
+    return (
+        float(np.percentile(means, 100 * alpha / 2)),
+        float(np.percentile(means, 100 * (1 - alpha / 2))),
+    )
+
+
+def paired_delta_ci(
+    a: Sequence[float], b: Sequence[float], resamples: int = 10000, seed: int = 0
+) -> tuple[float, tuple[float, float]]:
+    """Mean of (a - b) with a paired bootstrap CI.
+
+    Paired because both retrievers answer the *same* queries: query-to-query variation is huge
+    compared with the difference between systems, and pairing removes it.
+    """
+    import numpy as np
+
+    differences = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+    return float(differences.mean()), bootstrap_ci(differences, resamples=resamples, seed=seed)
+
+
+def permutation_p_value(
+    a: Sequence[float], b: Sequence[float], resamples: int = 10000, seed: int = 0
+) -> float:
+    """Two-sided paired randomisation test: how often does flipping signs beat the observed gap?"""
+    import numpy as np
+
+    rng = np.random.default_rng(seed)
+    differences = np.asarray(a, dtype=float) - np.asarray(b, dtype=float)
+    observed = abs(differences.mean())
+    signs = rng.choice([-1.0, 1.0], size=(resamples, len(differences)))
+    null = np.abs((signs * differences).mean(axis=1))
+    return float((np.sum(null >= observed) + 1) / (resamples + 1))
+
+
 def subset(gold: Gold, query_ids: Iterable[int]) -> Gold:
     keep = set(query_ids)
     return {qid: rels for qid, rels in gold.items() if qid in keep}

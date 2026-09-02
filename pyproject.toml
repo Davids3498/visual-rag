@@ -16,6 +16,7 @@ dependencies = [
     "pillow>=10.4",
     "tqdm>=4.66",
     "rich>=13.7",
+    "requests>=2.32",
 ]
 
 [project.optional-dependencies]
