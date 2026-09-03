@@ -73,6 +73,11 @@ MCU_TARGET_PIXELS = 1_200_000
 # glance and never collides (the longest document in the corpus is 1,741 pages).
 PAGE_ID_STRIDE = 10_000
 
+# The Part 2 stage-1 index. Separate table from Part 1's `visual_page_centroids` so the
+# calibration corpus and the MCU corpus can coexist in one database and neither run can
+# quietly score against the other's pages.
+MCU_CENTROID_TABLE = "mcu_page_centroids"
+
 
 def ensure_dirs() -> None:
     for d in (DATA_DIR, EVAL_DIR, REPORTS_DIR, SANITY_DIR, MCU_DIR, MCU_PDF_DIR):

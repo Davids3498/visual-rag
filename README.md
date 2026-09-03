@@ -24,6 +24,10 @@ Plan documents: [part1-pipeline-and-serving.md](part1-pipeline-and-serving.md),
 | 5 | Generation on self-hosted quantized Qwen2.5-VL (vLLM) | done — AWQ int4, 14.3 GB |
 | 6 | Serving on k3s with GPU scheduling | done — **verified on k3s**, `reports/k8s.json` |
 | 7 | Latency / throughput / GPU-util / cost-per-1k | done — **$0.58/1k vs $5.39 hosted** |
+| 9 | Part 2: MCU corpus, manifest + hash-pinned fetch | done — 10 documents, 3 vendors |
+| 10 | Part 2: render the selected pages | done — **1,201 pages** at 1.2 MP |
+| 11 | Part 2: embed + index the corpus | done — 5.0 pages/s, 19,216 index rows |
+| 12 | Part 2: question set from the errata, refusal path | next |
 
 ## Results
 
@@ -568,6 +572,65 @@ the hosted figures are estimates but not loose ones.
 vLLM exposes `vllm:num_requests_waiting` and `vllm:request_queue_time_seconds`. Those — not CPU
 utilisation — are the autoscaling signal for this workload: at concurrency 16 the GPU sits at
 100% and CPU tells you nothing, while queue depth is what actually tracks user-visible latency.
+
+## Part 2 — a corpus where OCR actually breaks
+
+Part 1 proves the pipeline is right by reproducing published numbers. Part 2 keeps that
+pipeline *unchanged* and points it at a corpus built here: microcontroller documentation —
+pin tables, register maps, alternate-function matrices, electrical-characteristic graphs.
+The domain is not a theme, it is the requirement: the whole thesis rests on the text-vs-visual
+delta, so the corpus has to be one where flattening a page to text demonstrably loses
+information.
+
+| vendor | family | documents | pages taken |
+|---|---|---|---|
+| ST | STM32F103 | DS5319, ES096, RM0008 | 114 + 31 + 185 |
+| ST | STM32F407 | DS8626, ES0182, RM0090 | 206 + 45 + 200 |
+| Espressif | ESP32 | datasheet, errata, TRM | 78 + 36 + 146 |
+| Raspberry Pi | RP2040 | datasheet (manual + errata in one) | 160 |
+
+**1,201 pages of 4,813.** Datasheets and errata are taken whole — table-dense end to end.
+Reference manuals are sliced, because they are mostly running prose where the visual advantage
+is near zero and two full manuals would be two-thirds of the corpus. The ranges were chosen by
+reading each errata first and keeping the chapters its limitations point at, plus clocks and
+GPIO, which nearly every limitation touches. Two chapter-level traps were avoided and are worth
+naming: RM0008 has two reset-and-clock chapters (ch7 is medium-density, ch8 is connectivity
+line) and RM0090 has two (ch7 is F405/407, ch6 is F42x/43x). Picking the wrong one puts another
+chip's clock tree in the corpus, and no hash or test would ever notice.
+
+### The corpus is a manifest, not a directory of PDFs
+
+Vendor documentation is not redistributable, so `corpus/mcu_manifest.json` carries URL, sha256,
+revision, licence and page selection per document, and `make corpus` rebuilds `data/mcu/pdfs/`
+from the vendors' own copies. Three things that only showed up by running it:
+
+- **st.com refuses scripted clients.** HTTP/2 dies with `INTERNAL_ERROR` in 0.3 s, HTTP/1.1
+  read-times-out, with and without a full browser header set. Rather than impersonate a
+  browser's TLS fingerprint — fragile, and the wrong thing to have in a reproducible download
+  path — ST documents are `fetch_mode: manual`: downloaded once by hand, then pinned and
+  verified exactly like every other document.
+- **The ESP32 errata PDF was retired** mid-project for an HTML documentation site. The manifest
+  now points at that site's PDF build, with the rolling-build caveat recorded.
+- **A hash cannot catch a wrong file at the moment the pin is created.** It caught nothing when
+  the F103 datasheet was saved under the errata's filename — the page-count warning did, and
+  only because someone read it. Documents now carry an `identity_hint` that must appear in the
+  first three pages before a pin is written.
+
+### Rendering and indexing
+
+Pages render at **1.2 MP**, the figure step 5 measured rather than assumed: on a dense
+stock-number table 1.2 MP recovered 10/10 values where the native 3.3-4.1 MP page recovered
+9/10 at three times the tokens. 12.9 pages/s, 213 MB of images. Embedding is **5.0 pages/s**
+(ColQwen2, batch 8) for 232 MB of multi-vectors, clustered into 16 centroids per page —
+19,216 rows and 28 MB in pgvector, HNSW built in 1.1 s. A cold query runs encode 70-180 ms,
+stage 1 13-17 ms, stage 2 6-77 ms.
+
+Sanity queries land where they should: "workaround for the I2C analog filter limitation"
+returns ES096's I2C workaround page (`NOSTRETCH=0 in I2C_CR1`) first, and "maximum current
+sunk by an I/O pin" returns the datasheets' electrical-characteristics pages. One artefact
+already visible: an errata's **table of contents** ranks second, because it names every
+peripheral in the document and so partially matches almost any query. Worth measuring before
+deciding whether to exclude such pages — they are legitimately part of the document.
 
 ## Development
 
