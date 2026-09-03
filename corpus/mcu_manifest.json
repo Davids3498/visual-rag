@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "corpus_id": "mcu",
+  "description": "Microcontroller documentation: datasheets, errata and reference-manual chapters from three vendors (ST, Espressif, Raspberry Pi) across four families. Chosen because OCR demonstrably breaks on this material -- pin tables, register maps, wiring diagrams, electrical-characteristic graphs -- which is the ground the text-vs-visual delta is measured on. Datasheets and errata are taken whole; reference manuals are sliced, because they are mostly running prose where the visual advantage is near zero. Slice ranges are chosen by reading the errata first: keep the peripherals its limitations touch, plus RCC/clocks and GPIO, which nearly every limitation involves. The PDFs are never re-hosted; this file plus scripts/09_fetch_corpus.py reproduces the corpus from the vendors' own copies.",
+  "fetch": {
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "accept": "application/pdf,*/*;q=0.8",
+    "min_delay_s": 1.0,
+    "max_delay_s": 2.0,
+    "timeout_s": 120.0,
+    "retries": 3
+  },
+  "licenses": {
+    "st": {
+      "terms": "ST's documentation boilerplate reserves all intellectual property and grants no licence; it is ambiguous on redistribution. This project therefore points at ST's own copy and never re-hosts the file, which sidesteps the question entirely.",
+      "redistribute": false,
+      "url": "https://www.st.com/content/st_com/en/common/terms-of-use.html"
+    },
+    "espressif": {
+      "terms": "Espressif documentation is copyrighted with no redistribution licence stated. Same treatment as ST: link, fetch locally, do not re-host.",
+      "redistribute": false,
+      "url": "https://www.espressif.com/en/legal"
+    },
+    "raspberrypi": {
+      "terms": "RP2040 documentation is CC BY-ND 4.0: verbatim redistribution is permitted with attribution, but NO DERIVATIVES -- so a trimmed or sliced PDF may not be distributed. Slicing happens in-process at ingestion and is never written back out as a file. Fetched rather than re-hosted for uniformity with the other vendors.",
+      "redistribute": true,
+      "url": "https://creativecommons.org/licenses/by-nd/4.0/"
+    }
+  },
+  "documents": [
+    {
+      "doc_id": "st_stm32f103_datasheet_ds5319",
+      "vendor": "st",
+      "family": "stm32f103",
+      "doc_type": "datasheet",
+      "title": "DS5319 - STM32F103x8/xB medium-density performance line datasheet",
+      "identity_hint": "DS5319",
+      "url": "https://www.st.com/resource/en/datasheet/stm32f103c8.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "Table-dense end to end: pinouts per package, alternate-function mapping, electrical characteristics with graphs. This is the material the thesis rests on."
+      },
+      "expected_pages": 114,
+      "revision": null,
+      "notes": "Cortex-M3. Pairs with ES096 and RM0008 for genuine two-document questions. ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "1e54ce18e6c34c5b4a78986f26e245e143748c721009fc9af5953795c30686bc",
+      "bytes": 1965230,
+      "page_count": 114,
+      "retrieved_at": "2026-09-03T16:55:54+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "st_stm32f103_errata_es096",
+      "vendor": "st",
+      "family": "stm32f103",
+      "doc_type": "errata",
+      "title": "ES096 - STM32F101x8/B, STM32F102x8/B, STM32F103x8/B device limitations",
+      "identity_hint": "ES096",
+      "url": "https://www.st.com/resource/en/errata_sheet/es096-stm32f101x8b-stm32f102x8b-and-stm32f103x8b-mediumdensity-device-limitations-stmicroelectronics.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "Every entry is a documented silicon bug with conditions plus a workaround: the primary question source, and answering one usually needs the reference manual too."
+      },
+      "expected_pages": 31,
+      "revision": null,
+      "notes": "Read this BEFORE choosing RM0008's slice ranges -- the limitations name which peripherals matter. ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "7bcdf58d8b602292d68abb59e181a4f44a038f215d8b01b0167f6d7139285490",
+      "bytes": 956332,
+      "page_count": 31,
+      "retrieved_at": "2026-09-03T17:05:50+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "st_stm32f103_refman_rm0008",
+      "vendor": "st",
+      "family": "stm32f103",
+      "doc_type": "reference_manual",
+      "title": "RM0008 - STM32F101xx/102xx/103xx/105xx/107xx reference manual",
+      "identity_hint": "RM0008",
+      "url": "https://www.st.com/resource/en/reference_manual/rm0008-stm32f101xx-stm32f102xx-stm32f103xx-stm32f105xx-and-stm32f107xx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "slice",
+        "ranges": [
+          [
+            67,
+            80
+          ],
+          [
+            90,
+            122
+          ],
+          [
+            159,
+            196
+          ],
+          [
+            274,
+            291
+          ],
+          [
+            494,
+            499
+          ],
+          [
+            752,
+            827
+          ]
+        ],
+        "why": "185 of 1,136 pages, chosen from ES096's limitation table (groups: Core, System, GPIO, DMA, ADC, TIM, IWDG, I2C, USART, SPI, bxCAN, USB). Kept: PWR ch5 (67-80, the Stop/Standby wake-up limitations 2.2.3-2.2.5), RCC ch7 (90-122 \u2014 the low/medium/high/XL-density chapter, NOT ch8 which is connectivity-line and the wrong family), GPIO/AFIO ch9 (159-196, the alternate-function remap tables and errata 2.3.x), DMA ch13 (274-291), IWDG ch19 (494-499), and I2C+USART ch26-27 (752-827, contiguous). Dropped the prose-heavy and out-of-family chapters: Core errata live in Arm's Cortex-M3 TRM, not here; OTG_FS and Ethernet (248pp) do not exist on this part."
+      },
+      "expected_pages": 1136,
+      "revision": null,
+      "notes": "Register-map pages here are the visual-retrieval sweet spot; the prose chapters are not. ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "4c1b8ac2729cc1f45a4685eea9e91e6139e24e58804fba21e27201dfcc2ad149",
+      "bytes": 13119424,
+      "page_count": 1136,
+      "retrieved_at": "2026-09-03T16:53:53+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "st_stm32f407_datasheet_ds8626",
+      "vendor": "st",
+      "family": "stm32f407",
+      "doc_type": "datasheet",
+      "title": "DS8626 - STM32F405/415, STM32F407/417 datasheet",
+      "identity_hint": "DS8626",
+      "url": "https://www.st.com/resource/en/datasheet/dm00037051.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "As DS5319, and larger: more packages, so more alternate-function tables per pin."
+      },
+      "expected_pages": 206,
+      "revision": null,
+      "notes": "Cortex-M4. Second ST family so the corpus is not one silicon generation. ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "1f41b4fa49a9960215ebb76cd0a75f20241db82eed60d308345a80463caeed22",
+      "bytes": 2792056,
+      "page_count": 206,
+      "retrieved_at": "2026-09-03T16:53:53+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "st_stm32f407_errata_es0182",
+      "vendor": "st",
+      "family": "stm32f407",
+      "doc_type": "errata",
+      "title": "ES0182 - STM32F405/407xx and STM32F415/417xx device errata",
+      "identity_hint": "ES0182",
+      "url": "https://www.st.com/resource/en/errata_sheet/es0182-stm32f405407xx-and-stm32f415417xx-device-errata-stmicroelectronics.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "Question source, as ES096. Newer part than the F103, so the model's parametric knowledge of it is thinner."
+      },
+      "expected_pages": 45,
+      "revision": null,
+      "notes": "Read before choosing RM0090's slice ranges. ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "1d3da0f99b85013548d17df07919516bf862f8f38cbd1a61f08e75abb8e4c54f",
+      "bytes": 2231932,
+      "page_count": 45,
+      "retrieved_at": "2026-09-03T16:53:53+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "st_stm32f407_refman_rm0090",
+      "vendor": "st",
+      "family": "stm32f407",
+      "doc_type": "reference_manual",
+      "title": "RM0090 - STM32F405/415, STM32F407/417, STM32F427/437, STM32F429/439 reference manual",
+      "identity_hint": "RM0090",
+      "url": "https://www.st.com/resource/en/reference_manual/dm00031020.pdf",
+      "fetch_mode": "manual",
+      "pages": {
+        "mode": "slice",
+        "ranges": [
+          [
+            116,
+            150
+          ],
+          [
+            214,
+            340
+          ],
+          [
+            704,
+            708
+          ],
+          [
+            835,
+            867
+          ]
+        ],
+        "why": "200 of 1,741 pages, chosen from ES0182's limitation table. Kept: PWR ch5 (116-150), then one contiguous run 214-340 covering RCC ch7 (the STM32F405xx/07xx chapter \u2014 ch6 is F42x/43x and would be the wrong silicon), GPIO ch8, SYSCFG ch9 and DMA ch10; plus IWDG ch21 (704-708) and I2C ch27 (835-867, where the well-known I2C errata 2.10.x land). Deliberately parallel to RM0008's selection so the two ST families answer the same shape of question. Dropped OTG_FS/OTG_HS/ETH/CRYP (466pp)."
+      },
+      "expected_pages": 1741,
+      "revision": null,
+      "notes": "ACQUISITION: st.com's edge refuses scripted clients from this machine \u2014 HTTP/2 dies with INTERNAL_ERROR in 0.3 s and HTTP/1.1 read-times-out, with or without a full browser header set, so fetch_mode is 'manual': download once in a browser, save it at the path the fetch script prints, then --record pins the hash.",
+      "sha256": "f3ff2322eec21f4e49081f68481b764506eee81dba6031bc767e2f8955b27cca",
+      "bytes": 21385881,
+      "page_count": 1741,
+      "retrieved_at": "2026-09-03T16:53:54+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "espressif_esp32_datasheet",
+      "vendor": "espressif",
+      "family": "esp32",
+      "doc_type": "datasheet",
+      "title": "ESP32 series datasheet",
+      "identity_hint": "ESP32 Series Datasheet",
+      "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+      "fetch_mode": "http",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "A second layout convention: Espressif lays out pin and characteristic tables differently from ST, so the retriever is not learning one publisher's template."
+      },
+      "expected_pages": 78,
+      "revision": null,
+      "notes": "Layout diversity is the reason this vendor is here. The www.espressif.com URL 301s to documentation.espressif.com and still serves the PDF; the resolved URL is recorded on fetch.",
+      "sha256": "a7917e6b47528c9dcab06837a49d452e582751335797db879f1cf2d17cd29adf",
+      "bytes": 989523,
+      "page_count": 78,
+      "retrieved_at": "2026-09-03T16:32:52+00:00",
+      "resolved_url": "https://documentation.espressif.com/esp32_datasheet_en.pdf"
+    },
+    {
+      "doc_id": "espressif_esp32_errata",
+      "vendor": "espressif",
+      "family": "esp32",
+      "doc_type": "errata",
+      "title": "ESP32 chip errata",
+      "identity_hint": "SoC Errata",
+      "url": "https://docs.espressif.com/projects/esp-chip-errata/en/latest/esp32/esp-chip-errata-en-master-esp32.pdf",
+      "fetch_mode": "http",
+      "pages": {
+        "mode": "whole",
+        "ranges": [],
+        "why": "Question source, and the cross-document partner for the technical reference manual."
+      },
+      "expected_pages": 36,
+      "revision": null,
+      "notes": "The old www.espressif.com/sites/default/files/documentation/esp32_errata_en.pdf now redirects to an HTML documentation site; this is that site's PDF build (710 KB, verified %PDF-). Caveat: the path says 'latest'/'master', so it is a rolling build that will change under the pin \u2014 expect an occasional deliberate re-pin, which is exactly what the hash check is for.",
+      "sha256": "a343b595683cad1c9f33ef90d11fa0404257041f624d782c7791e434a94b051f",
+      "bytes": 710477,
+      "page_count": 36,
+      "retrieved_at": "2026-09-03T16:32:56+00:00",
+      "resolved_url": null
+    },
+    {
+      "doc_id": "espressif_esp32_refman",
+      "vendor": "espressif",
+      "family": "esp32",
+      "doc_type": "reference_manual",
+      "title": "ESP32 technical reference manual",
+      "identity_hint": "Technical Reference Manual",
+      "url": "https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf",
+      "fetch_mode": "http",
+      "pages": {
+        "mode": "slice",
+        "ranges": [
+          [
+            115,
+            222
+          ],
+          [
+            525,
+            562
+          ]
+        ],
+        "why": "146 of 784 pages. The errata's 32 items cluster on CPU, ULP, GPIO, reset/brown-out, clocks, RTC, watchdog, UART, TWAI and LEDC. Kept one contiguous run 115-222 \u2014 IO MUX and GPIO Matrix ch6 (the pin-mux matrix, the densest visual material in the book), Reset and Clock ch7, and Low-Power Management ch9 (RTC_CNTL, where the ULP and deep-sleep limitations live) \u2014 plus TWAI ch25 (525-562), which alone carries 11 of the 32 errata items. Judgement call: UART ch19 (43pp) and LEDC ch28 (18pp) each have one erratum and were left out to stay near the page target."
+      },
+      "expected_pages": 784,
+      "revision": null,
+      "notes": "The IO_MUX / GPIO matrix chapter is a strong visual-retrieval candidate. The www.espressif.com URL 301s to documentation.espressif.com and still serves the PDF; the resolved URL is recorded on fetch.",
+      "sha256": "4ba58e9fa0405ec2bf80b912a29b483f6edc8c4b2b1058201913a2fe37e582f0",
+      "bytes": 10173126,
+      "page_count": 784,
+      "retrieved_at": "2026-09-03T16:32:58+00:00",
+      "resolved_url": "https://documentation.espressif.com/esp32_technical_reference_manual_en.pdf"
+    },
+    {
+      "doc_id": "rpi_rp2040_datasheet",
+      "vendor": "raspberrypi",
+      "family": "rp2040",
+      "doc_type": "datasheet",
+      "title": "RP2040 datasheet (datasheet, reference manual and errata in one document)",
+      "identity_hint": "RP2040",
+      "url": "https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf",
+      "fetch_mode": "http",
+      "pages": {
+        "mode": "slice",
+        "ranges": [
+          [
+            11,
+            14
+          ],
+          [
+            173,
+            216
+          ],
+          [
+            237,
+            305
+          ],
+          [
+            384,
+            417
+          ],
+          [
+            628,
+            636
+          ]
+        ],
+        "why": "160 of 642 pages. This file is datasheet, reference manual and errata in one, so the errata (Appendix B, 628-636) is sliced in alongside the chapters it points at. Kept: Pinout Reference 1.4 (11-14), Subsystem Resets + Clocks 2.14-2.15 (173-216), GPIO 2.19 (237-305 \u2014 the pad/function tables, and the reason this part is in the corpus), and USB 4.1 (384-417), which is what most of Appendix B is about. Dropped PIO ch3 (72pp) and the remaining peripherals: no errata point at them."
+      },
+      "expected_pages": 642,
+      "revision": null,
+      "notes": "Third layout convention, and the monster tables. No separate errata document exists -- Appendix B is it, so cross-document questions for this family are intra-document and cannot test the multi-document weakness. Resolves to pip-assets.raspberrypi.com/.../RP-008371-DS-1-rp2040-datasheet.pdf, whose filename encodes the document revision \u2014 recorded as resolved_url.",
+      "sha256": "be56fbb75ba0ae9e26558a73c93ac3e75c2ad4e6878d3b6703de2a76d886ea8c",
+      "bytes": 5301205,
+      "page_count": 642,
+      "retrieved_at": "2026-09-03T16:33:10+00:00",
+      "resolved_url": "https://pip-assets.raspberrypi.com/categories/814-rp2040/documents/RP-008371-DS-1-rp2040-datasheet.pdf"
+    }
+  ]
+}

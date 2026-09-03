@@ -45,6 +45,22 @@ MIN_RELEVANT_SCORE = 1
 NDCG_K = 10
 
 
+# --- Part 2: the MCU-datasheet corpus ----------------------------------------------------
+# The corpus *definition* is version-controlled (CORPUS_DIR); the PDFs are not. Vendor terms
+# grant no redistribution right, so the manifest points at each vendor's own copy and the
+# fetch script rebuilds data/mcu/pdfs/ locally.
+CORPUS_DIR = PROJECT_ROOT / "corpus"
+MCU_MANIFEST = CORPUS_DIR / "mcu_manifest.json"
+MCU_DIR = DATA_DIR / "mcu"
+MCU_PDF_DIR = MCU_DIR / "pdfs"
+
+# Target page budget, from the Part 1 finding that the *page* is the retrieval unit: pages
+# drive index size, embed time (~4.5 pages/s) and retrieval difficulty, not document count.
+# Advisory only — the 24 GB card fits far more; below this the corpus is thin, above it every
+# reindex costs iteration speed and the prose-heavy reference manuals start to dominate.
+MCU_PAGE_TARGET = (1500, 2500)
+
+
 def ensure_dirs() -> None:
-    for d in (DATA_DIR, EVAL_DIR, REPORTS_DIR, SANITY_DIR):
+    for d in (DATA_DIR, EVAL_DIR, REPORTS_DIR, SANITY_DIR, MCU_DIR, MCU_PDF_DIR):
         d.mkdir(parents=True, exist_ok=True)

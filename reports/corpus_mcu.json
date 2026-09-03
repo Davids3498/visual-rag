@@ -1,0 +1,130 @@
+{
+  "manifest": "/home/david/rag/corpus/mcu_manifest.json",
+  "pdf_dir": "/home/david/rag/data/mcu/pdfs",
+  "mode": "verify-only",
+  "page_target": [
+    1500,
+    2500
+  ],
+  "budget": {
+    "documents": 10,
+    "physical_pages": 4813,
+    "selected_pages": 1201,
+    "pending_documents": [],
+    "bytes": 59625186,
+    "by_doc_type": {
+      "datasheet": 558,
+      "errata": 112,
+      "reference_manual": 531
+    },
+    "by_vendor": {
+      "st": 781,
+      "espressif": 260,
+      "raspberrypi": 160
+    }
+  },
+  "documents": [
+    {
+      "doc_id": "st_stm32f103_datasheet_ds5319",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f103_datasheet_ds5319.pdf",
+      "sha256": "1e54ce18e6c34c5b4a78986f26e245e143748c721009fc9af5953795c30686bc",
+      "bytes": 1965230,
+      "page_count": 114,
+      "selected_pages": 114,
+      "message": ""
+    },
+    {
+      "doc_id": "st_stm32f103_errata_es096",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f103_errata_es096.pdf",
+      "sha256": "7bcdf58d8b602292d68abb59e181a4f44a038f215d8b01b0167f6d7139285490",
+      "bytes": 956332,
+      "page_count": 31,
+      "selected_pages": 31,
+      "message": ""
+    },
+    {
+      "doc_id": "st_stm32f103_refman_rm0008",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f103_refman_rm0008.pdf",
+      "sha256": "4c1b8ac2729cc1f45a4685eea9e91e6139e24e58804fba21e27201dfcc2ad149",
+      "bytes": 13119424,
+      "page_count": 1136,
+      "selected_pages": 185,
+      "message": ""
+    },
+    {
+      "doc_id": "st_stm32f407_datasheet_ds8626",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f407_datasheet_ds8626.pdf",
+      "sha256": "1f41b4fa49a9960215ebb76cd0a75f20241db82eed60d308345a80463caeed22",
+      "bytes": 2792056,
+      "page_count": 206,
+      "selected_pages": 206,
+      "message": ""
+    },
+    {
+      "doc_id": "st_stm32f407_errata_es0182",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f407_errata_es0182.pdf",
+      "sha256": "1d3da0f99b85013548d17df07919516bf862f8f38cbd1a61f08e75abb8e4c54f",
+      "bytes": 2231932,
+      "page_count": 45,
+      "selected_pages": 45,
+      "message": ""
+    },
+    {
+      "doc_id": "st_stm32f407_refman_rm0090",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/st_stm32f407_refman_rm0090.pdf",
+      "sha256": "f3ff2322eec21f4e49081f68481b764506eee81dba6031bc767e2f8955b27cca",
+      "bytes": 21385881,
+      "page_count": 1741,
+      "selected_pages": 200,
+      "message": ""
+    },
+    {
+      "doc_id": "espressif_esp32_datasheet",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/espressif_esp32_datasheet.pdf",
+      "sha256": "a7917e6b47528c9dcab06837a49d452e582751335797db879f1cf2d17cd29adf",
+      "bytes": 989523,
+      "page_count": 78,
+      "selected_pages": 78,
+      "message": ""
+    },
+    {
+      "doc_id": "espressif_esp32_errata",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/espressif_esp32_errata.pdf",
+      "sha256": "a343b595683cad1c9f33ef90d11fa0404257041f624d782c7791e434a94b051f",
+      "bytes": 710477,
+      "page_count": 36,
+      "selected_pages": 36,
+      "message": ""
+    },
+    {
+      "doc_id": "espressif_esp32_refman",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/espressif_esp32_refman.pdf",
+      "sha256": "4ba58e9fa0405ec2bf80b912a29b483f6edc8c4b2b1058201913a2fe37e582f0",
+      "bytes": 10173126,
+      "page_count": 784,
+      "selected_pages": 146,
+      "message": ""
+    },
+    {
+      "doc_id": "rpi_rp2040_datasheet",
+      "status": "cached",
+      "path": "/home/david/rag/data/mcu/pdfs/rpi_rp2040_datasheet.pdf",
+      "sha256": "be56fbb75ba0ae9e26558a73c93ac3e75c2ad4e6878d3b6703de2a76d886ea8c",
+      "bytes": 5301205,
+      "page_count": 642,
+      "selected_pages": 160,
+      "message": ""
+    }
+  ],
+  "failures": [],
+  "http_requests": 0
+}
