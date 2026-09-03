@@ -1,4 +1,4 @@
-.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench corpus corpus-record corpus-verify lint test clean
+.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench corpus corpus-record corpus-verify pages pages-rebuild index index-rebuild lint test clean
 
 help:
 	@grep -E '^[a-z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -64,6 +64,18 @@ corpus-record:  ## first collect: download and pin each document's hash into the
 
 corpus-verify:  ## offline: re-hash the local PDFs against the manifest, no network
 	uv run python scripts/09_fetch_corpus.py --verify-only
+
+pages:  ## step 10: render the selected pages to images -> data/mcu/pages/
+	uv run python scripts/10_build_pages.py
+
+pages-rebuild:  ## re-render every page (e.g. after changing the resolution)
+	uv run python scripts/10_build_pages.py --rebuild
+
+index:  ## step 11: embed the MCU pages, cluster, load pgvector -> reports/mcu_index.json
+	uv run python scripts/11_index_corpus.py
+
+index-rebuild:  ## re-embed from scratch (after re-rendering the pages)
+	uv run python scripts/11_index_corpus.py --rebuild
 
 lint:  ## ruff check + format check
 	uv run --group dev ruff check .

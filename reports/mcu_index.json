@@ -1,0 +1,136 @@
+{
+  "model": "vidore/colqwen2-v1.0",
+  "pages": 1201,
+  "dim": 128,
+  "patches_total": 897147,
+  "patches_per_page_mean": 747.0,
+  "embeddings_dir": "/home/david/rag/data/embeddings/mcu_vidore_colqwen2-v1.0",
+  "embeddings_bytes": 229688856,
+  "embed_seconds": 241.6,
+  "centroids_per_page": 16,
+  "centroid_seconds": 0.2,
+  "index_rows": 19216,
+  "index_insert_seconds": 0.0,
+  "index_build_seconds": 1.1,
+  "postgres": {
+    "total_bytes": 28033024,
+    "table_bytes": 11534336,
+    "index_bytes": 16015360
+  },
+  "smoke_queries": [
+    {
+      "query": "Which GPIO pins can be used for I2C1 SDA?",
+      "pages": [
+        {
+          "page_id": 10047,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 47,
+          "score": 17.94
+        },
+        {
+          "page_id": 70168,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 168,
+          "score": 17.53
+        },
+        {
+          "page_id": 10048,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 48,
+          "score": 16.66
+        },
+        {
+          "page_id": 70181,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 181,
+          "score": 16.66
+        },
+        {
+          "page_id": 40237,
+          "doc_id": "rpi_rp2040_datasheet",
+          "page_number": 237,
+          "score": 16.5
+        }
+      ],
+      "encode_ms": 183.7,
+      "stage1_ms": 16.7,
+      "stage2_ms": 77.1
+    },
+    {
+      "query": "What is the maximum current sunk by an I/O pin?",
+      "pages": [
+        {
+          "page_id": 80096,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 96,
+          "score": 17.02
+        },
+        {
+          "page_id": 50064,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 64,
+          "score": 15.76
+        },
+        {
+          "page_id": 80118,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 118,
+          "score": 15.48
+        },
+        {
+          "page_id": 80081,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 81,
+          "score": 14.59
+        },
+        {
+          "page_id": 50037,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 37,
+          "score": 14.54
+        }
+      ],
+      "encode_ms": 99.1,
+      "stage1_ms": 12.7,
+      "stage2_ms": 13.2
+    },
+    {
+      "query": "What is the workaround for the I2C analog filter limitation?",
+      "pages": [
+        {
+          "page_id": 60020,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 20,
+          "score": 17.83
+        },
+        {
+          "page_id": 60029,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 29,
+          "score": 16.91
+        },
+        {
+          "page_id": 80123,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 123,
+          "score": 16.47
+        },
+        {
+          "page_id": 50068,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 68,
+          "score": 14.89
+        },
+        {
+          "page_id": 60003,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 3,
+          "score": 14.79
+        }
+      ],
+      "encode_ms": 68.7,
+      "stage1_ms": 14.6,
+      "stage2_ms": 6.5
+    }
+  ]
+}

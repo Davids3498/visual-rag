@@ -60,6 +60,24 @@ MCU_PDF_DIR = MCU_DIR / "pdfs"
 # reindex costs iteration speed and the prose-heavy reference manuals start to dominate.
 MCU_PAGE_TARGET = (1500, 2500)
 
+# Rendered page images, and the table that says which document page each one is.
+MCU_PAGES_DIR = MCU_DIR / "pages"
+MCU_PAGE_TABLE = MCU_DIR / "pages.parquet"
+
+# Render target, in pixels per page. Step 5 measured this rather than assuming it: on a dense
+# stock-number table, 1.2 MP recovered 10/10 values while the native 3.3-4.1 MP page recovered
+# 9/10 at three times the tokens. Past a point extra pixels add tokens, not readable detail.
+MCU_TARGET_PIXELS = 1_200_000
+
+# Page ids are doc_ordinal * this + physical page number, so a page id is readable at a
+# glance and never collides (the longest document in the corpus is 1,741 pages).
+PAGE_ID_STRIDE = 10_000
+
+# The Part 2 stage-1 index. Separate table from Part 1's `visual_page_centroids` so the
+# calibration corpus and the MCU corpus can coexist in one database and neither run can
+# quietly score against the other's pages.
+MCU_CENTROID_TABLE = "mcu_page_centroids"
+
 
 def ensure_dirs() -> None:
     for d in (DATA_DIR, EVAL_DIR, REPORTS_DIR, SANITY_DIR, MCU_DIR, MCU_PDF_DIR):

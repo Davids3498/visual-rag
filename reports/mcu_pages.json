@@ -1,0 +1,35 @@
+{
+  "page_table": "/home/david/rag/data/mcu/pages.parquet",
+  "pages_dir": "/home/david/rag/data/mcu/pages",
+  "target_pixels": 1200000,
+  "render_seconds": 90.2,
+  "problems": [],
+  "pages": 1201,
+  "documents": 10,
+  "bytes": 213294897,
+  "megapixels_mean": 1.2,
+  "megapixels_min": 1.2,
+  "megapixels_max": 1.2,
+  "by_doc_type": {
+    "datasheet": 558,
+    "errata": 112,
+    "reference_manual": 531
+  },
+  "by_vendor": {
+    "espressif": 260,
+    "raspberrypi": 160,
+    "st": 781
+  },
+  "by_doc": {
+    "espressif_esp32_datasheet": 78,
+    "espressif_esp32_errata": 36,
+    "espressif_esp32_refman": 146,
+    "rpi_rp2040_datasheet": 160,
+    "st_stm32f103_datasheet_ds5319": 114,
+    "st_stm32f103_errata_es096": 31,
+    "st_stm32f103_refman_rm0008": 185,
+    "st_stm32f407_datasheet_ds8626": 206,
+    "st_stm32f407_errata_es0182": 45,
+    "st_stm32f407_refman_rm0090": 200
+  }
+}
