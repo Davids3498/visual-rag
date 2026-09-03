@@ -83,6 +83,8 @@ make serve-up   # step 5: Qwen2.5-VL (AWQ) on vLLM        -> http://localhost:80
 make generate   # step 5: grounded answers with citations -> reports/generation.json
 make k8s-up     # step 6: deploy to the cluster           (OVERLAY=minikube|k3s)
 make k8s-verify # step 6: prove GPU scheduling + serving  -> reports/k8s.json
+make bench      # step 7: latency/throughput/cost         -> reports/serving.json
+make corpus     # step 9: fetch the Part 2 MCU corpus     -> reports/corpus_mcu.json
 ```
 
 Each of those is a plain script under `scripts/` if you'd rather skip `make`.
@@ -92,9 +94,16 @@ Each of those is a plain script under `scripts/` if you'd rather skip `make`.
 ```
 src/visual_rag/      importable package (config, dataset loading, eval-set construction)
 scripts/             numbered entry points, one per build step
-data/                HF cache-backed artifacts (gitignored)
+corpus/              Part 2 corpus *definition*: URLs, content hashes, page selection
+data/                HF cache-backed artifacts and fetched PDFs (gitignored)
 reports/             generated reports, stats, sanity renders (gitignored)
 ```
+
+The split between `corpus/` and `data/` is deliberate: vendor documentation is not
+redistributable, so the repository carries only the manifest that identifies each document
+(URL, sha256, revision, which pages are in scope) and `make corpus` rebuilds `data/mcu/pdfs/`
+from the vendors' own copies. A hash mismatch fails the run rather than quietly re-scoring
+the retriever against a revision that changed underneath it.
 
 ## Dataset notes — what step 1 actually measured
 

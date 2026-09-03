@@ -1,4 +1,4 @@
-.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench lint test clean
+.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench corpus corpus-record corpus-verify lint test clean
 
 help:
 	@grep -E '^[a-z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -55,6 +55,15 @@ k8s-down:  ## remove the workloads (keeps the cluster and its volumes)
 
 bench:  ## step 7: latency/throughput/GPU/cost at concurrency 1,4,16 -> reports/serving.json
 	uv run python scripts/08_serving_bench.py
+
+corpus:  ## step 9: fetch the MCU corpus from the manifest, verify every pinned hash
+	uv run python scripts/09_fetch_corpus.py
+
+corpus-record:  ## first collect: download and pin each document's hash into the manifest
+	uv run python scripts/09_fetch_corpus.py --record
+
+corpus-verify:  ## offline: re-hash the local PDFs against the manifest, no network
+	uv run python scripts/09_fetch_corpus.py --verify-only
 
 lint:  ## ruff check + format check
 	uv run --group dev ruff check .

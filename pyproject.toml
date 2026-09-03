@@ -17,6 +17,8 @@ dependencies = [
     "tqdm>=4.66",
     "rich>=13.7",
     "requests>=2.32",
+    # Part 2: page counts and slice-range validation on the vendor PDFs
+    "pypdf>=5.1",
 ]
 
 [project.optional-dependencies]
