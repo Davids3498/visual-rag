@@ -19,6 +19,8 @@ dependencies = [
     "requests>=2.32",
     # Part 2: page counts and slice-range validation on the vendor PDFs
     "pypdf>=5.1",
+    # Part 2: rendering the selected pages to images (no system dependency, unlike poppler)
+    "pypdfium2>=4.30",
 ]
 
 [project.optional-dependencies]
