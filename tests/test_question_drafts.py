@@ -26,6 +26,14 @@ def test_committed_draft_references_current_selected_corpus(draft):
     prepare.validate(draft, corpus.load_manifest())
 
 
+def test_question_schema_separates_required_and_supporting_facts(draft):
+    assert draft["schema_version"] == 2
+    for question in draft["questions"]:
+        assert question["core_required_facts"]
+        assert isinstance(question["supporting_details"], list)
+        assert "required_answer_facts" not in question
+
+
 def test_repin_requires_question_review(draft):
     next(iter(draft["source_documents"].values()))["sha256"] = "0" * 64
     with pytest.raises(ValueError, match="Stale source pin"):
@@ -56,3 +64,5 @@ def test_review_links_use_physical_pages(draft):
     # ESP32 physical p16 is printed p13; never link using the printed label.
     assert "../data/mcu/pages/espressif_esp32_errata/p0016.png" in rendered
     assert "no no-context audit run" in rendered
+    assert "Core required facts:" in rendered
+    assert "Supporting details (useful, not required for correctness):" in rendered

@@ -1,13 +1,14 @@
 # MCU question pilot
 
 `errata_candidates.json` contains 12 assistant-authored draft questions: four each for
-STM32F103, STM32F407 and ESP32. Five currently require multiple documents; seven use a
-single document, sometimes across pages. Raspberry Pi coverage and independently collected
+STM32F103, STM32F407 and ESP32. Five include supporting evidence from multiple documents;
+seven use a single document, sometimes across pages. Raspberry Pi coverage and independently collected
 engineer questions remain future work. This batch establishes a review process, not the final
 60–80-question dataset.
 
-These scenarios were written while reading errata, with selected implementation details
-looked up in reference manuals. They are not verbatim questions from engineers and should
+These scenarios were written while reading errata and phrased as concise troubleshooting
+questions, with selected implementation details looked up in reference manuals. They are not
+verbatim questions from engineers and should
 not be presented as independently collected demand. Adding register lookups changes question
 selection; record that choice when reporting results. No retrieval rankings were used to
 choose the draft gold pages. A table/register-map label describes evidence, not proof that
@@ -36,8 +37,11 @@ current `pages.parquet` only when exporting approved annotations; document ordin
 
 1. Read each question without its answer. Check that part, package, silicon revision and
    operating conditions are sufficient, and that the requested details form a plausible task.
-2. Read the linked page images. Verify every required answer fact, including units, binary
-   encodings, revision applicability and multi-page continuations. Reference answers are
+2. Read the linked page images. Verify every core required fact and every supporting detail,
+   including units, binary encodings, revision applicability and multi-page continuations.
+   Only `core_required_facts` are mandatory when judging answer correctness;
+   `supporting_details` add sourced implementation detail but their omission is not an error.
+   Reference answers are
    paraphrases, not vendor quotations. Flag source contradictions rather than silently
    repairing them; draft 005 explicitly normalizes ambiguous errata notation using RM0090.
 3. Check whether each question needs all the claimed documents. A supporting manual page
@@ -55,14 +59,15 @@ current `pages.parquet` only when exporting approved annotations; document ordin
 
 ## Planned no-context audit (not run)
 
-Freeze reviewed wording and required facts before asking the deployed Qwen2.5-VL generator
-each question in an independent request containing only the question and a neutral instruction
+Freeze reviewed wording, core required facts and supporting details before asking the deployed
+Qwen2.5-VL generator each question in an independent request containing only the question and a neutral instruction
 to answer or state uncertainty. Do not include documents, source sections, answers, earlier
 questions, or retrieval results. Do not reuse the RAG instruction that requires page citations:
 that could cause automatic refusals when pages are absent. Record the exact model/revision,
 quantization, prompt, decoding parameters, timestamp and raw response.
 
-Judge responses against all required facts. Label them `correct`, `partial`, `incorrect`,
+Judge responses against all core required facts. Do not penalize omission of supporting details
+that the question did not request. Label responses `correct`, `partial`, `incorrect`,
 `abstained`, or `uncertain`; an uncertain judgment requires review. Correct paraphrases count.
 Exclude fully correct unaided answers from the retrieval-dependent answer subset, while
 retaining every candidate and response in the audit record. Partial responses do not count
