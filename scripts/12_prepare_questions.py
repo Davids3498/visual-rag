@@ -20,6 +20,8 @@ CANDIDATES = ROOT / "corpus/questions/errata_candidates.json"
 
 def validate(data: dict, manifest: corpus.Manifest) -> None:
     """Reject stale source pins, invalid evidence references and inconsistent draft labels."""
+    if data["schema_version"] != 2:
+        raise ValueError("Expected question schema version 2")
     if data["status"] != "draft_not_for_scoring":
         raise ValueError("This preparation script accepts drafts only")
     selected = {(p.doc_id, p.page_number) for p in ingest.plan_pages(manifest)}
@@ -33,9 +35,11 @@ def validate(data: dict, manifest: corpus.Manifest) -> None:
         if qid in ids:
             raise ValueError(f"Duplicate question: {qid}")
         ids.add(qid)
-        for field in ("question", "reference_answer", "required_answer_facts", "gold_pages"):
+        for field in ("question", "reference_answer", "core_required_facts", "gold_pages"):
             if not question[field]:
                 raise ValueError(f"{qid}: empty {field}")
+        if not isinstance(question["supporting_details"], list):
+            raise ValueError(f"{qid}: supporting_details must be a list")
         source = question["source_errata"]
         if documents[source["doc_id"]].doc_type != "errata":
             raise ValueError(f"{qid}: source is not an errata document")
@@ -75,8 +79,13 @@ def review_markdown(data: dict) -> str:
     for q in data["questions"]:
         lines += [f"## {q['question_id']} — {q['family']}", "", q["question"], ""]
         lines += [f"Scope: {q['part_scope']}; {q['retrieval_scope']}.", ""]
-        lines += ["Reference answer: " + q["reference_answer"], "", "Required facts:", ""]
-        lines += [f"- {fact}" for fact in q["required_answer_facts"]]
+        lines += ["Reference answer: " + q["reference_answer"], "", "Core required facts:", ""]
+        lines += [f"- {fact}" for fact in q["core_required_facts"]]
+        lines += ["", "Supporting details (useful, not required for correctness):", ""]
+        if q["supporting_details"]:
+            lines += [f"- {detail}" for detail in q["supporting_details"]]
+        else:
+            lines += ["- None."]
         source = q["source_errata"]
         links = [f"[p{n}]({image_link(source['doc_id'], n)})" for n in source["page_numbers"]]
         lines += [
