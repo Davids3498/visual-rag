@@ -1,4 +1,4 @@
-.PHONY: help setup setup-retrieval env data sanity db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench corpus corpus-record corpus-verify pages pages-rebuild index index-rebuild lint test clean
+.PHONY: help setup setup-retrieval env data sanity up down db-up db-down serve-up serve-down baseline visual calibrate generate k8s-up k8s-verify k8s-down bench corpus corpus-record corpus-verify pages pages-rebuild index index-rebuild lint test clean
 
 help:
 	@grep -E '^[a-z-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
@@ -17,6 +17,12 @@ data:  ## download ViDoRe V3, verify counts, build eval set -> data/eval/
 
 sanity:  ## render sample pages with gold spans -> reports/sanity/
 	uv run python scripts/02_sanity_render.py
+
+up:  ## start all services and wait until they are healthy
+	docker compose --profile serving up -d --wait
+
+down:  ## stop and remove all services (keeps the database volume)
+	docker compose --profile serving down
 
 db-up:  ## start the pgvector container (port 5434)
 	docker compose up -d --wait

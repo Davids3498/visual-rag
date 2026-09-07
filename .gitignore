@@ -13,6 +13,10 @@ data/
 reports/**/*.png
 reports/**/*.jpg
 
+# Local vendor-text extraction and regenerated question review (not source annotations)
+reports/mcu_errata_pages.jsonl
+reports/mcu_question_review.md
+
 
 part2-own-corpus-and-contribution.md
 part1-pipeline-and-serving.md

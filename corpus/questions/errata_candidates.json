@@ -1,0 +1,636 @@
+{
+  "schema_version": 1,
+  "status": "draft_not_for_scoring",
+  "batch": "errata-pilot-01",
+  "page_numbering": "physical_1_based",
+  "provenance_note": "Assistant-authored scenarios derived while reading errata, not independently collected user questions. Reference-manual implementation details were added to selected questions. Retrieval dependence and visual advantage remain hypotheses.",
+  "source_documents": {
+    "st_stm32f103_errata_es096": {
+      "sha256": "7bcdf58d8b602292d68abb59e181a4f44a038f215d8b01b0167f6d7139285490",
+      "revision": "ES096 Rev 15"
+    },
+    "st_stm32f103_refman_rm0008": {
+      "sha256": "4c1b8ac2729cc1f45a4685eea9e91e6139e24e58804fba21e27201dfcc2ad149",
+      "revision": "RM0008 Rev 21"
+    },
+    "st_stm32f407_errata_es0182": {
+      "sha256": "1d3da0f99b85013548d17df07919516bf862f8f38cbd1a61f08e75abb8e4c54f",
+      "revision": "ES0182 Rev 19"
+    },
+    "st_stm32f407_refman_rm0090": {
+      "sha256": "f3ff2322eec21f4e49081f68481b764506eee81dba6031bc767e2f8955b27cca",
+      "revision": "RM0090 Rev 22"
+    },
+    "espressif_esp32_errata": {
+      "sha256": "a343b595683cad1c9f33ef90d11fa0404257041f624d782c7791e434a94b051f",
+      "revision": "ESP32 Series SoC Errata v3.0"
+    }
+  },
+  "questions": [
+    {
+      "question_id": "mcu-draft-001",
+      "family": "stm32f103",
+      "part_scope": "STM32F103C8, ES096 Rev 15",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f103_errata_es096",
+        "section": "2.3.1",
+        "page_numbers": [
+          10
+        ]
+      },
+      "question": "On an STM32F103C8, USART1 is clocked and PA12 is an alternate-function output, but RTS does not work while CAN is unused and its clock is off. What configuration change is required, and which register field and bit positions implement it?",
+      "reference_answer": "The unclocked CAN alternate function can hold PA12 high. Select the unused CAN remapping, CAN_REMAP=0b01 in AFIO_MAPR bits 14:13. CAN need not be enabled merely to release USART1_RTS.",
+      "required_answer_facts": [
+        "Identifies the CAN/USART1_RTS conflict on PA12.",
+        "Specifies CAN_REMAP=0b01 when CAN is unused.",
+        "Names AFIO_MAPR bits 14:13."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 10,
+          "section": "2.3.1",
+          "grade": 1,
+          "support": "Conditions and unused-CAN workaround.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 184,
+          "section": "9.4.2",
+          "grade": 1,
+          "support": "Register identity and bit-field diagram.",
+          "evidence_type": "register_map"
+        },
+        {
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 185,
+          "section": "9.4.2",
+          "grade": 1,
+          "support": "CAN_REMAP encoding and bits 14:13.",
+          "evidence_type": "register_map"
+        }
+      ],
+      "retrieval_scope": "cross_document",
+      "retrieval_rationale": "Requires errata behavior plus manual register placement.",
+      "review_notes": "The manual calls 01 'Not used'; ES096 explicitly prescribes it. Pages 184 and 185 overlap in register evidence; review alternative sufficient page sets.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-002",
+      "family": "stm32f103",
+      "part_scope": "STM32F103x8/xB, ES096 Rev 15",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f103_errata_es096",
+        "section": "2.3.8",
+        "page_numbers": [
+          12
+        ]
+      },
+      "question": "On an STM32F103x8/xB, TIM3 is partially remapped and channel 2 is intended to output a waveform while I2C1 is clocked. Which pin and remap encoding are involved, why can the output remain high even when SMBus alert is unused, and what mode does the errata permit for this channel in that configuration?",
+      "reference_answer": "Partial TIM3 remap uses AFIO_MAPR.TIM3_REMAP bits 11:10=0b10, placing CH2 on PB5. With I2C1 and TIM3 clocked and PB5 configured for alternate-function output, I2C1_SMBA conflicts with TIM3_CH2 and can hold PB5 high even when SMBA is unused. ES096 permits CH2 only as an input in this configuration.",
+      "required_answer_facts": [
+        "Identifies PB5 and TIM3_REMAP=0b10, bits 11:10.",
+        "Explains the I2C1_SMBA conflict despite unused alert.",
+        "Restricts CH2 to input in the stated configuration."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 12,
+          "section": "2.3.8",
+          "grade": 1,
+          "support": "Clock/pin conditions, conflict and permitted input mode.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 185,
+          "section": "9.4.2",
+          "grade": 1,
+          "support": "Partial remap encoding and CH2/PB5 mapping.",
+          "evidence_type": "register_map"
+        }
+      ],
+      "retrieval_scope": "cross_document",
+      "retrieval_rationale": "Requires a remap lookup and a silicon limitation.",
+      "review_notes": "Do not generalize to all TIM3 pin mappings. The question deliberately asks for implementation detail; review whether this feels natural.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-003",
+      "family": "stm32f103",
+      "part_scope": "STM32F103x8/xB, ES096 Rev 15",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f103_errata_es096",
+        "section": "2.7.3",
+        "page_numbers": [
+          17
+        ]
+      },
+      "question": "An STM32F103x8/xB updates its independent-watchdog reload and prescaler immediately before Stop mode. After wake-up, the next update waits forever and the watchdog resets the MCU. Which status bits must be checked before Stop, what are their bit positions, and how does this qualify the manual's low-power-entry guidance?",
+      "reference_answer": "Wait for both IWDG_SR.RVU (bit 1) and PVU (bit 0) to clear before entering Stop. ES096 reports that entering Stop immediately after the writes can leave these flags set and block subsequent updates. This overrides RM0008's general note that code, including low-power entry, may continue without waiting for completion.",
+      "required_answer_facts": [
+        "Waits for RVU and PVU to clear before Stop.",
+        "Maps RVU to bit 1 and PVU to bit 0 of IWDG_SR.",
+        "Explains why the affected device cannot follow the manual's general low-power note."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 17,
+          "section": "2.7.3",
+          "grade": 1,
+          "support": "Failure mechanism and before-Stop workaround.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 498,
+          "section": "19.4.4, IWDG_SR continuation",
+          "grade": 1,
+          "support": "Bit definitions and conflicting low-power note.",
+          "evidence_type": "register_map"
+        }
+      ],
+      "retrieval_scope": "cross_document",
+      "retrieval_rationale": "Requires reconciling errata with the manual and looking up bits.",
+      "review_notes": "Strong document-conflict example. Register heading is on RM0008 p497, section 19.4.4; p498 supplies the bit definitions and low-power note.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-004",
+      "family": "stm32f103",
+      "part_scope": "STM32F103x8/xB, ES096 Rev 15",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f103_errata_es096",
+        "section": "2.4.1",
+        "page_numbers": [
+          13
+        ]
+      },
+      "question": "On an STM32F103x8/xB, firmware clears a DMA channel's global interrupt flag while that channel is active. If a transfer error occurs in the same clock cycle, can firmware rely on automatic channel disable and the transfer-error flag? What flag-clearing policy avoids the issue?",
+      "reference_answer": "No. A simultaneous GIFx clear via CGIFx in DMA_IFCR can prevent automatic channel disable and suppress TEIFx. Do not clear GIFx while the channel is active; use the individual HTIFx, TCIFx and TEIFx event flags and their corresponding clear bits.",
+      "required_answer_facts": [
+        "States that both automatic disable and TEIFx reporting can fail.",
+        "Identifies simultaneous global-flag clearing as the trigger.",
+        "Uses specific event flags and clear bits instead of clearing active-channel GIFx."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 13,
+          "section": "2.4.1",
+          "grade": 2,
+          "support": "Complete conditions, effects and flag-clearing workaround.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Tests a specific DMA failure condition rather than generic DMA knowledge.",
+      "review_notes": "Prose control; no visual advantage assumed.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-005",
+      "family": "stm32f407",
+      "part_scope": "STM32F407xx, ES0182 Rev 19",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f407_errata_es0182",
+        "section": "2.2.10",
+        "page_numbers": [
+          11
+        ]
+      },
+      "question": "On an STM32F407 package exposing PH10 and PH2, firmware routes PH10 to EXTI10 and wants EXTI2 to remain assigned to PA2. Is that combination supported by the documented silicon behavior? Give the required port selection and the register offsets and bit positions for the two EXTI fields.",
+      "reference_answer": "The errata requires EXTI10 and EXTI2 to select the same port to use PH10: PH10/PH2 both select port H, encoded 0b0111. PH10 with PA2 is therefore not supported as proposed. EXTI10 is SYSCFG_EXTICR3 bits 11:8 at offset 0x10; EXTI2 is SYSCFG_EXTICR1 bits 11:8 at offset 0x08. These are offsets from SYSCFG, not absolute addresses.",
+      "required_answer_facts": [
+        "Rejects independent PH10/PA2 routing for the stated limitation.",
+        "Sets both fields to port H, 0b0111.",
+        "Gives EXTICR3 offset 0x10 and EXTICR1 offset 0x08, both bits 11:8."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.10",
+          "grade": 1,
+          "support": "Coupled PH10/PH2 routing limitation.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 293,
+          "section": "9.2.3",
+          "grade": 1,
+          "support": "EXTICR1 offset, bit positions and H encoding.",
+          "evidence_type": "register_map"
+        },
+        {
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 294,
+          "section": "9.2.5",
+          "grade": 1,
+          "support": "EXTICR3 offset, bit positions and H encoding.",
+          "evidence_type": "register_map"
+        }
+      ],
+      "retrieval_scope": "cross_document",
+      "retrieval_rationale": "Needs the errata's routing constraint and two register diagrams.",
+      "review_notes": "ES0182 prints 0x0111/0x1000; manual bit encodings show binary 0111/1000. Answer normalizes explicitly to binary. Package availability is stipulated, not evaluated.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-006",
+      "family": "stm32f407",
+      "part_scope": "STM32F407xx, ES0182 Rev 19",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f407_errata_es0182",
+        "section": "2.2.11",
+        "page_numbers": [
+          11
+        ]
+      },
+      "question": "On an STM32F407, firmware changes APB1 from HCLK/1 to HCLK/4 while DMA is writing an APB1 peripheral, and the transfer stalls. What ordering prevents this failure, what recovery does the errata specify after it happens, and which prescaler field and encoding select HCLK/4?",
+      "reference_answer": "Wait for DMA transfers on that APB to finish before slowing its clock. The documented blocked-transfer condition requires a system reset for recovery. APB1 division by four is RCC_CFGR.PPRE1 bits 12:10=0b101.",
+      "required_answer_facts": [
+        "Waits for the DMA transfer on the affected APB to finish before slowing the clock.",
+        "Names system reset as the documented recovery.",
+        "Identifies PPRE1 bits 12:10=0b101 in RCC_CFGR."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.11",
+          "grade": 1,
+          "support": "Trigger, prevention and system-reset recovery.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 230,
+          "section": "7.3.3",
+          "grade": 1,
+          "support": "PPRE1 bit positions and divide-by-four encoding.",
+          "evidence_type": "register_map"
+        }
+      ],
+      "retrieval_scope": "cross_document",
+      "retrieval_rationale": "Combines a silicon failure sequence with its clock configuration.",
+      "review_notes": "Review wording to ensure the same APB is explicit; no claim about unrelated DMA transfers.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-007",
+      "family": "stm32f407",
+      "part_scope": "STM32F407 LQFP100, migration from revision A to Z",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f407_errata_es0182",
+        "section": "2.2.8",
+        "page_numbers": [
+          10,
+          11
+        ]
+      },
+      "question": "An STM32F407 LQFP100 board uses revision A with pin 99 tied to VDD to enable POR/PDR. What connection must change when migrating to revision Z, and can a 1.7 V supply still be used on the new revision?",
+      "reference_answer": "On revision Z, the former PDR_ON pin 99 is VSS and must be connected to VSS instead of VDD. POR/PDR is then always enabled; 1.7 V operation is no longer supported in this package, whose minimum VDD with POR/PDR enabled is 1.8 V.",
+      "required_answer_facts": [
+        "Changes pin 99 from VDD to VSS for revision Z.",
+        "Explains that POR/PDR is always enabled.",
+        "Rejects 1.7 V operation and gives the 1.8 V minimum."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 10,
+          "section": "2.2.8",
+          "grade": 1,
+          "support": "LQFP100 pin 99 replacement and always-enabled POR/PDR.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.8 continuation",
+          "grade": 1,
+          "support": "Migration wiring and minimum VDD.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Tests package- and revision-specific migration details across a page boundary.",
+      "review_notes": "Single document, multiple pages. Review whether page 11 alone suffices for the wording; do not finalize grades before that check.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-008",
+      "family": "stm32f407",
+      "part_scope": "STM32F407xx, ES0182 Rev 19",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "st_stm32f407_errata_es0182",
+        "section": "2.2.13",
+        "page_numbers": [
+          12
+        ]
+      },
+      "question": "On an STM32F407 with an AHB/APB prescaler of 4, firmware writes a peripheral register immediately after enabling that APB peripheral's RCC clock. If using the documented NOP workaround, how many NOPs are required, and name another documented way to account for the enable delay.",
+      "reference_answer": "The prescribed APB delay is 1 plus the AHB/APB prescaler, so insert five NOPs. Alternatively use DSB or a dummy read from the corresponding register after clock enable.",
+      "required_answer_facts": [
+        "Computes five NOPs from 1+4.",
+        "Names DSB or the documented post-enable dummy read."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 12,
+          "section": "2.2.13",
+          "grade": 2,
+          "support": "Delay rule and three workaround choices.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Tests the specific APB delay rule and its application.",
+      "review_notes": "Accept either documented alternative; do not require all three methods. Familiar issue may fail the no-context selection.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-009",
+      "family": "esp32",
+      "part_scope": "ESP32 chip revision v0.0, errata document v3.0",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "espressif_esp32_errata",
+        "section": "3.8 / CPU-3.3",
+        "page_numbers": [
+          15,
+          16
+        ]
+      },
+      "question": "On ESP32 chip revision v0.0, consecutive writes to the UART2 FIFO and GPIO_OUT1_W1TC can disappear. Which alternate bus addresses should these two writes use, may the UART FIFO also be read through that bus alias, and in which chip revision was the write issue fixed?",
+      "reference_answer": "Use the AHB aliases 0x6002E000 for UART2_FIFO_REG and 0x60004018 for GPIO_OUT1_W1TC_REG. Software must not use the AHB addresses to read a FIFO. The repeated-write issue was fixed in chip revision v1.0.",
+      "required_answer_facts": [
+        "Maps UART2_FIFO_REG to 0x6002E000.",
+        "Maps GPIO_OUT1_W1TC_REG to 0x60004018.",
+        "Disallows FIFO reads via AHB aliases.",
+        "Identifies chip revision v1.0 as the fix."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 16,
+          "section": "3.8 / CPU-3.3 continuation",
+          "grade": 2,
+          "support": "Two table rows, FIFO-read restriction and fixed revision.",
+          "evidence_type": "table"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Requires exact rows of the bus-address table and its caveat.",
+      "review_notes": "Page 15 supplies affected-revision provenance; page 16 answers the entire question. Do not confuse chip v0.0/v1.0 with document v3.0.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-010",
+      "family": "esp32",
+      "part_scope": "ESP32 chip revision v3.1, errata document v3.0",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "espressif_esp32_errata",
+        "section": "3.11 / GPIO-3.14",
+        "page_numbers": [
+          18,
+          19
+        ]
+      },
+      "question": "On ESP32 v3.1, an application wants a rising-edge interrupt on GPIO4 while other pins in GPIO0-31 also generate interrupts. What limitation applies within that group, and what level-triggered sequence does the errata prescribe to emulate a rising edge?",
+      "reference_answer": "If one pin in the group uses an edge-triggered interrupt, the errata disallows configuring other interrupts in the same group. With no edge-triggered interrupts, multiple level-triggered interrupts are allowed. Emulate rising-edge detection by selecting high-level triggering, then changing to low-level triggering after servicing; ignore the second interrupt described by the workaround.",
+      "required_answer_facts": [
+        "States the same-group edge/other-interrupt restriction.",
+        "Allows multiple level interrupts when no edge interrupt is configured.",
+        "Gives high then low triggering and ignores the second interrupt."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 18,
+          "section": "3.11 / GPIO-3.14",
+          "grade": 1,
+          "support": "Affected revisions, group restriction and first workaround step.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 19,
+          "section": "3.11 continuation",
+          "grade": 1,
+          "support": "Second rising-edge workaround step.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Tests group boundaries and a workaround spanning two pages.",
+      "review_notes": "Source wording for the second interrupt is terse. Validate the interpretation; do not invent a full driver or rearming procedure.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-011",
+      "family": "esp32",
+      "part_scope": "ESP32 chip revision v3.1, errata document v3.0",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "espressif_esp32_errata",
+        "section": "3.9 / ULP-3.19",
+        "page_numbers": [
+          16,
+          17
+        ]
+      },
+      "question": "On ESP32 v3.1, can a Deep-sleep configuration retain EXT0 wake-up while also using the ULP coprocessor and touch sensing? Explain the required RTC_PERIPH setting and the trade-off documented for this combination.",
+      "reference_answer": "The documented combination is not supported. EXT0 requires RTC_PERIPH powered up, but the errata requires it powered down in Deep-sleep to use the ULP coprocessor and touch sensors because of their wake-up clock sequencing. Choose EXT0 with the domain powered up, or ULP/touch with it powered down and EXT0 unavailable.",
+      "required_answer_facts": [
+        "Rejects simultaneous EXT0 and ULP/touch in the stated Deep-sleep setup.",
+        "Pairs EXT0 with RTC_PERIPH powered up.",
+        "Pairs ULP/touch with RTC_PERIPH powered down and EXT0 unavailable."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 17,
+          "section": "3.9 / ULP-3.19 continuation",
+          "grade": 2,
+          "support": "Clock-sequencing explanation and explicit power-domain trade-off.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Tests a concrete wake-source/power-domain incompatibility.",
+      "review_notes": "Affected revision v3.1 is on page 16; answer content is on page 17. May be known from common ESP-IDF usage.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    },
+    {
+      "question_id": "mcu-draft-012",
+      "family": "esp32",
+      "part_scope": "ESP32 chip revision v0.0 compared with v1.0, errata document v3.0",
+      "origin": "assistant_authored_from_errata",
+      "source_errata": {
+        "doc_id": "espressif_esp32_errata",
+        "section": "3.16 / CLK-3.7",
+        "page_numbers": [
+          21
+        ]
+      },
+      "question": "On ESP32 chip revision v0.0, why do changes to Audio PLL sdm0 and sdm1 fail to provide fine frequency adjustment? Give the effective output-frequency formula, the chip revision that fixes this, and whether using the newer I2S driver removes the hardware precision limit.",
+      "reference_answer": "Revision v0.0 ignores sdm0 and sdm1: fout = fxtal * (sdm2 + 4) / (2 * (odiv + 2)). The bug is fixed from chip revision v1.0. ESP-IDF v3.0 and newer I2S drivers account for the old calculation but cannot remove v0.0's frequency range and precision limits.",
+      "required_answer_facts": [
+        "Identifies ignored sdm0 and sdm1 on chip v0.0.",
+        "Gives fout=fxtal*(sdm2+4)/(2*(odiv+2)).",
+        "Identifies chip v1.0 as fixed.",
+        "Distinguishes driver accommodation from removal of the hardware limit."
+      ],
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 21,
+          "section": "3.16 / CLK-3.7",
+          "grade": 2,
+          "support": "Revision-specific equations and driver limitation.",
+          "evidence_type": "equation"
+        }
+      ],
+      "retrieval_scope": "single_document",
+      "retrieval_rationale": "Requires reading a revision-specific formula and separating software handling from hardware capability.",
+      "review_notes": "Formula was visually checked against the rendered page during drafting; independent human approval is still pending.",
+      "annotation_status": "draft",
+      "human_review": {
+        "status": "pending",
+        "reviewer": null
+      },
+      "no_context_audit": {
+        "status": "not_run",
+        "model": null,
+        "response": null,
+        "verdict": null
+      }
+    }
+  ]
+}

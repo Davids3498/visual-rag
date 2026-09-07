@@ -27,7 +27,7 @@ Plan documents: [part1-pipeline-and-serving.md](part1-pipeline-and-serving.md),
 | 9 | Part 2: MCU corpus, manifest + hash-pinned fetch | done — 10 documents, 3 vendors |
 | 10 | Part 2: render the selected pages | done — **1,201 pages** at 1.2 MP |
 | 11 | Part 2: embed + index the corpus | done — 5.0 pages/s, 19,216 index rows |
-| 12 | Part 2: question set from the errata, refusal path | next |
+| 12 | Part 2: question set from the errata, refusal path | in progress — 12 draft questions; human review, no-context audit and refusal pending |
 
 ## Results
 
@@ -76,6 +76,8 @@ pgvector instead of the Compose one. k3s writes its kubeconfig root-only, so
 ## Running
 
 ```bash
+make up         # start pgvector + vLLM and wait until both are healthy
+make down       # stop and remove all Compose services (keeps database data)
 make env        # environment + GPU report               -> reports/env_report.json
 make data       # download the 4 subsets, build eval set -> data/eval/*.parquet
 make sanity     # render sample pages + gold spans       -> reports/sanity/*.png
@@ -633,6 +635,12 @@ peripheral in the document and so partially matches almost any query. Worth meas
 deciding whether to exclude such pages — they are legitimately part of the document.
 
 ## Development
+
+Step 12 starts with [12 errata-derived candidates](corpus/questions/errata_candidates.json)
+and a [review/audit protocol](corpus/questions/README.md). These are authored scenarios with
+provisional gold pages, not scored or audited questions. Run
+`.venv/bin/python scripts/12_prepare_questions.py` to verify source hashes, extract the local
+errata, and generate `reports/mcu_question_review.md` with clickable evidence images.
 
 ```bash
 make lint    # ruff check + format check
