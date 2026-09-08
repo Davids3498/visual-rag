@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-006",
+  "started_at": "2026-09-08T13:41:06.790677+00:00",
+  "finished_at": "2026-09-08T13:41:10.115119+00:00",
+  "latency_seconds": 3.3244487570000274,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On an STM32F407, a DMA write to an APB1 peripheral stalls when the CPU changes the AHB/APB1 prescaler from 1 to 4 during the transfer. What causes this, how can it be prevented, and how can the MCU recover?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-8e424d08e3551762",
+    "object": "chat.completion",
+    "created": 1788874866,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The issue you're describing is related to the timing constraints of the STM32F407's DMA (Direct Memory Access) system when the AHB/APB1 prescaler is changed during a DMA transfer. Here’s a breakdown of what might cause the stall, how to prevent it, and how to recover:\n\n### Causes:\n1. **Timing Constraints**: When the AHB/APB1 prescaler is changed, the clock frequency of the peripheral changes. This change must be synchronized with the DMA transfer, which involves reading data from memory and writing it to the peripheral.\n2. **DMA Transfer Timing**: The DMA controller needs to ensure that the data transfer happens at the correct time relative to the new clock frequency. If the transfer is not properly aligned with the new clock, it can lead to a stall.\n\n### Prevention:\n1. **Avoid Changing Prescaler During Transfer**: To prevent this issue, avoid changing the AHB/APB1 prescaler while a DMA transfer is in progress. Ensure that any necessary changes to the prescaler occur before the DMA transfer starts or after it has completed.\n2. **Use Proper Synchronization**: Implement proper synchronization mechanisms within your code to ensure that the DMA transfer completes before the prescaler change occurs. This can involve checking the DMA status register to ensure the transfer is complete before making the prescaler change.\n\n### Recovery:\n1. **Check DMA Status**: After completing the DMA transfer, check the DMA status register to ensure the transfer is complete. If the transfer is still in progress, wait until it finishes.\n2. **Change Prescaler Safely**: Once the DMA transfer is confirmed to be complete, safely change the prescaler. Ensure that the new prescaler value is set up correctly and that the peripheral is re-enabled if necessary.\n3. **Monitor Clock Changes**: Monitor the clock changes closely to ensure that they do not affect ongoing operations. This might involve additional checks or delays to ensure that the new clock settings are stable before proceeding with further operations.\n\nBy following these guidelines, you can prevent the DMA transfer from stalling due to changes in the prescaler, ensuring smooth operation of your STM32F407-based system.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 87,
+      "total_tokens": 528,
+      "completion_tokens": 441,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-008",
+  "started_at": "2026-09-08T13:41:14.311721+00:00",
+  "finished_at": "2026-09-08T13:41:16.138861+00:00",
+  "latency_seconds": 1.827146915999947,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On an STM32F407, a write to an APB peripheral register immediately after enabling its RCC clock sometimes fails. How much delay is required, and what workaround does the errata recommend?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-a489213cb43cd513",
+    "object": "chat.completion",
+    "created": 1788874874,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The STM32F407 series microcontroller has a specific errata that recommends a minimum delay of 100 nanoseconds (ns) between enabling the clock for an APB peripheral and writing to its register. This delay ensures that the peripheral's registers are fully initialized before any writes are attempted.\n\nThe errata also suggests using a software delay function or a timer interrupt to ensure this minimum delay is respected. Here’s a simple example in C code:\n\n```c\n#include <stm32f4xx_hal.h>\n\nvoid Delay(uint32_t nsec)\n{\n    HAL_Delay(nsec);\n}\n\n// Example usage:\nHAL_RCC_OscConfig(&RCC_OscInitStruct); // Enable the clock\nHAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4); // Configure the clock\n\n// Wait for at least 100 ns\nDelay(100); // Adjust the value based on your system's requirements\n```\n\nThis code snippet demonstrates how to configure the clock and then wait for a minimum delay before attempting to write to the APB peripheral register. Adjust the `Delay` function call as necessary based on your specific timing requirements.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 70,
+      "total_tokens": 310,
+      "completion_tokens": 240,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

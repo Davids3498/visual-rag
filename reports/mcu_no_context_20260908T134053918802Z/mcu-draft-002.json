@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-002",
+  "started_at": "2026-09-08T13:40:57.132760+00:00",
+  "finished_at": "2026-09-08T13:40:59.753758+00:00",
+  "latency_seconds": 2.6210029329999998,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On an STM32F103x8/xB, TIM3 channel 2 on PB5 stays high with TIM3 and I2C1 both clocked and PB5 configured as an alternate-function output. SMBus Alert is unused. Why does this happen, and what use of CH2 does the errata permit in this configuration?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-98e191ca010a8c8d",
+    "object": "chat.completion",
+    "created": 1788874857,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The behavior you're describing could be due to a few potential issues or limitations:\n\n1. **Clock Configuration**: Ensure that the clocks for TIM3 and I2C1 are correctly enabled. The STM32F103x8/xB microcontroller requires specific clock configurations to ensure that peripherals like TIM3 and I2C1 function properly.\n\n2. **Pin Configuration**: Verify that pin PB5 is correctly configured as an alternate-function output (AFIO) for TIM3 Channel 2. This typically involves setting the appropriate bit in the GPIO port's alternate function register (AFR).\n\n3. **Errata Sheet**: Check the errata sheet for the STM32F103x8/xB microcontroller. Errata sheets often provide specific guidelines and limitations regarding the use of certain pins and peripherals in different configurations. They might specify that certain pins cannot be used for specific functions when other peripherals are active.\n\n4. **Channel Use**: According to the STM32F103x8/xB datasheet, TIM3 Channel 2 (CH2) can be used for various purposes such as PWM generation, pulse counting, or as a capture/compare input/output. However, the errata sheet might have specific notes about its use in conjunction with other peripherals or under certain conditions.\n\nTo resolve the issue:\n- Double-check the clock configuration.\n- Ensure that PB5 is correctly configured as AFIO for TIM3 Channel 2.\n- Refer to the errata sheet for any specific notes on the use of CH2 in your configuration.\n\nIf the problem persists after these checks, it may be necessary to consult the errata sheet more closely or seek additional support from the manufacturer or community forums.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 99,
+      "total_tokens": 447,
+      "completion_tokens": 348,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

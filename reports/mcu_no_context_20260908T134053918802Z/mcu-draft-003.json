@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-003",
+  "started_at": "2026-09-08T13:40:59.753931+00:00",
+  "finished_at": "2026-09-08T13:41:02.434206+00:00",
+  "latency_seconds": 2.6802809740001976,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On an STM32F103x8/xB, after updating the independent watchdog settings and immediately entering Stop mode, the next watchdog update hangs and eventually resets the MCU. How can this be prevented?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-ac5fa7697fd25bee",
+    "object": "chat.completion",
+    "created": 1788874859,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The issue you're encountering with the STM32F103x8/xB microcontroller hanging on a watchdog update when entering Stop mode could be due to several factors. Here are some steps to prevent this:\n\n1. **Check Watchdog Configuration**: Ensure that the watchdog is properly configured before entering Stop mode. The watchdog should not be enabled during Stop mode as it is not active in this state.\n\n2. **Disable Watchdog Before Entering Stop Mode**: Before entering Stop mode, disable the watchdog timer. This can be done by setting the appropriate bits in the watchdog control register (WDCR) to disable the watchdog.\n\n3. **Use a Different Watchdog Timer**: Consider using a different watchdog timer that is designed for use in Stop mode or ensure that the current watchdog timer is configured correctly for its intended use.\n\n4. **Check Power Management Settings**: Ensure that the power management settings do not inadvertently enable the watchdog timer during Stop mode. Check the power management registers to ensure they are set correctly.\n\n5. **Software Implementation**: Make sure your software implementation does not inadvertently re-enable the watchdog timer after entering Stop mode. This might happen if there is a loop or a function that re-enables the watchdog without proper checks.\n\n6. **Hardware Reset Prevention**: If the watchdog reset is causing issues, consider implementing a hardware reset prevention mechanism. This could involve using a separate reset source that is not affected by the watchdog.\n\n7. **Debugging**: Use debugging tools to trace the execution flow and identify where the watchdog is being re-enabled or where the reset occurs. This can help pinpoint the exact cause of the issue.\n\nBy following these steps, you should be able to prevent the watchdog from hanging and resetting the MCU when entering Stop mode.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 71,
+      "total_tokens": 424,
+      "completion_tokens": 353,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

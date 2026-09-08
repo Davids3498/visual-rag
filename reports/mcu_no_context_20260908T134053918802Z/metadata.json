@@ -1,0 +1,58 @@
+{
+  "run_id": "20260908T134053918802Z",
+  "started_at": "2026-09-08T13:40:53.927421+00:00",
+  "status": "collected_pending_review",
+  "protocol": "One independent request per question; no documents, tools, or conversation history.",
+  "candidate_sha256": "50bca6de4f487021a98135e564e7368006f8eba09bddaa2670d13098627a9c6b",
+  "base_url": "http://localhost:8000/v1",
+  "served_model": {
+    "id": "qwen2.5-vl-7b-awq",
+    "object": "model",
+    "created": 1788874853,
+    "owned_by": "vllm",
+    "root": "Qwen/Qwen2.5-VL-7B-Instruct-AWQ",
+    "parent": null,
+    "max_model_len": 8192,
+    "permission": [
+      {
+        "id": "modelperm-961577b151eb4535",
+        "object": "model_permission",
+        "created": 1788874853,
+        "allow_create_engine": false,
+        "allow_sampling": true,
+        "allow_logprobs": true,
+        "allow_search_indices": false,
+        "allow_view": true,
+        "allow_fine_tuning": false,
+        "organization": "*",
+        "group": null,
+        "is_blocking": false
+      }
+    ]
+  },
+  "quantization": "AWQ int4 (served model repository)",
+  "cached_model_revision": "536a35794df8831aa814970ee8f89eff577e7718",
+  "revision_note": "Local cache ref; server API does not attest the loaded commit. Container command is not revision-pinned.",
+  "container_command_and_image": "[\"Qwen/Qwen2.5-VL-7B-Instruct-AWQ\",\"--served-model-name\",\"qwen2.5-vl-7b-awq\",\"--gpu-memory-utilization\",\"0.55\",\"--max-model-len\",\"8192\",\"--limit-mm-per-prompt\",\"{\\\"image\\\": 3}\"] sha256:609a5b463503f663bedc6a8045ef2aae530bf59c6dc20371c84b1d302fb6f9ca",
+  "request_template": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "<question>"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "question_count": 12,
+  "grading": "Not performed by this collection script. Review every core required fact separately.",
+  "finished_at": "2026-09-08T13:41:22.451870+00:00"
+}

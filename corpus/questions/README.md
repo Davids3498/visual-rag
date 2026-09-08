@@ -1,8 +1,10 @@
 # MCU question pilot
 
 `errata_candidates.json` contains 12 assistant-authored draft questions: four each for
-STM32F103, STM32F407 and ESP32. Five include supporting evidence from multiple documents;
-seven use a single document, sometimes across pages. Raspberry Pi coverage and independently collected
+STM32F103, STM32F407 and ESP32. All 12 are single-document questions under their core-answer
+rubrics; five retain optional reference-manual pages separately from scored gold. Question 010
+requires two pages of the same errata; question 007 has a full-answer page plus a partial page.
+Raspberry Pi coverage and independently collected
 engineer questions remain future work. This batch establishes a review process, not the final
 60–80-question dataset.
 
@@ -13,6 +15,14 @@ not be presented as independently collected demand. Adding register lookups chan
 selection; record that choice when reporting results. No retrieval rankings were used to
 choose the draft gold pages. A table/register-map label describes evidence, not proof that
 OCR fails or visual retrieval wins.
+
+An assistant source review on 2026-09-08 checked the cited PDF text and rendered evidence,
+corrected wording, answers, scope and grades, and recorded the outcome in `assistant_review`.
+This is separate from `human_review` and `no_context_audit`. Existing Markdown
+approvals for questions 001 and 002 are preserved in `human_review.prior_review`. The user
+approved all 12 revised questions on 2026-09-08 before the first no-context audit.
+The retrieval annotations are still provisional, including
+alternate answering pages outside the checked references.
 
 ## Reproduce the review
 
@@ -46,7 +56,11 @@ current `pages.parquet` only when exporting approved annotations; document ordin
    repairing them; draft 005 explicitly normalizes ambiguous errata notation using RM0090.
 3. Check whether each question needs all the claimed documents. A supporting manual page
    does not automatically make a question cross-document. Draft 003 has a substantive
-   manual/errata conflict; other cross-document questions add register implementation detail.
+   manual/errata conflict, but discussing it is optional for the current question. All 12
+   currently have single-document scope. `supporting_pages` holds optional evidence without
+   relevance grades; it does not contribute to scope or qrels. `gold_pages` grades and
+   `evidence_type` describe the core answer, not optional embellishments: drafts 009 and 012
+   have prose core evidence even though their pages also contain a table or equation.
 4. Review grades: 2 means a page independently answers the entire question; 1 means it
    supplies part of the answer. The lists are provisional and not exhaustive. Search for
    alternate answering pages and equivalent evidence sets before freezing qrels. A contents
@@ -54,10 +68,28 @@ current `pages.parquet` only when exporting approved annotations; document ordin
    later report complete-evidence coverage alongside NDCG; ranking several partial pages
    from one document does not establish that all required facts were retrieved.
 5. Record the reviewer and decision in the source JSON; the generated Markdown checkboxes
-   are a reading aid and are overwritten when rebuilt. Unresolved or ambiguous candidates
+   reflect `human_review.status` (`approved` checks both boxes) and are overwritten when rebuilt.
+   Assistant source checks never imply human approval. Unresolved or ambiguous candidates
    should be revised or excluded before inference.
 
-## Planned no-context audit (not run)
+## No-context audit
+
+The first run, `20260908T134053918802Z`, is complete: **0 correct, 5 partial, 5 incorrect,
+2 abstained** under assistant review of the core facts. All 12 remain in the retrieval-dependent
+answer subset; no responses were truncated. The immutable
+[audit record](no_context_audits/20260908T134053918802Z.json) includes the frozen questions,
+rubrics, exact requests, raw responses, runtime metadata and fact-by-fact judgments.
+The readable response review is `reports/mcu_no_context_review.md`. Candidate JSON also
+contains each verdict and response. Abstention includes deferral to documentation without
+a concrete answer; it does not certify the truth of surrounding claims.
+
+With the model server running, `.venv/bin/python scripts/13_no_context_audit.py` collects a
+**new** run in a unique report directory. It does not grade responses or overwrite existing
+audit results. The first run used temperature 0, top_p 1, seed 0 and max_tokens 1536.
+The server identifies Qwen2.5-VL-7B-Instruct-AWQ; the recorded cached commit is not proof
+of the loaded revision because the running server command did not pin a commit.
+
+Protocol used for this run:
 
 Freeze reviewed wording, core required facts and supporting details before asking the deployed
 Qwen2.5-VL generator each question in an independent request containing only the question and a neutral instruction
