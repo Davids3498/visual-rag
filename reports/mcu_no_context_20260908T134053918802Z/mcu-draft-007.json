@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-007",
+  "started_at": "2026-09-08T13:41:10.115313+00:00",
+  "finished_at": "2026-09-08T13:41:14.311534+00:00",
+  "latency_seconds": 1.6929375459999392,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "I'm migrating an STM32F407 LQFP100 board from silicon revision A to revision Z. Does the PDR_ON connection need to change, and can I continue using a 1.7 V supply?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-9980c8bed6651426",
+    "object": "chat.completion",
+    "created": 1788874870,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "When migrating an STM32F407 LQFP100 board from silicon revision A to revision Z, it's important to check the datasheets for both revisions to ensure that the pin connections and voltage requirements remain compatible.\n\nFor the PDR_ON (Power Disable On) connection:\n- Check the datasheet of revision A to see where this pin is connected.\n- Check the datasheet of revision Z to see if the pin connection has changed.\n- If the pin connection has not changed, you can continue using the same connection.\n- If the pin connection has changed, you will need to update your design accordingly.\n\nRegarding the supply voltage:\n- Ensure that the minimum and maximum operating voltages specified in the datasheet of revision Z are within the range of 1.7V.\n- If the minimum or maximum operating voltage of revision Z falls outside the 1.7V range, you may need to adjust your power supply to meet the new specifications.\n\nIt's recommended to consult the specific datasheets for revisions A and Z to confirm these details before making any changes to your design.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 77,
+      "total_tokens": 300,
+      "completion_tokens": 223,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

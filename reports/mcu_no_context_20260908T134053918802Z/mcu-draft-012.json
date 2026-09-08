@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-012",
+  "started_at": "2026-09-08T13:41:20.908897+00:00",
+  "finished_at": "2026-09-08T13:41:22.451653+00:00",
+  "latency_seconds": 1.5427890529999786,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On ESP32 revision v0.0, changing Audio PLL sdm0 and sdm1 does not provide the expected frequency precision. Is this a hardware limitation, and was it fixed in later revisions?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-96bc1d49718dfb27",
+    "object": "chat.completion",
+    "created": 1788874880,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The issue you're describing with the ESP32's Audio PLL (Phase-Locked Loop) on revision v0.0 might be due to a hardware limitation or a software configuration issue that wasn't fully resolved until later revisions of the ESP32.\n\nIn the early stages of development for the ESP32, the Audio PLL's performance could vary depending on the specific hardware revision and the firmware version used. The SDM0 and SDM1 settings are part of the PLL configuration, which can affect the output frequency stability and precision.\n\nLater revisions of the ESP32, such as v1.0 and onwards, have seen improvements in the PLL's performance and stability. These revisions likely address the hardware limitations and improve the consistency of the audio output frequency across different boards.\n\nIt is recommended to use the latest firmware and hardware revisions when working with the ESP32 to ensure optimal performance and reliability. Always refer to the official documentation and community forums for the most up-to-date information and best practices.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 70,
+      "total_tokens": 272,
+      "completion_tokens": 202,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

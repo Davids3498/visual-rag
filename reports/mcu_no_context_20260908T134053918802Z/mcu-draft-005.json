@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-005",
+  "started_at": "2026-09-08T13:41:04.320504+00:00",
+  "finished_at": "2026-09-08T13:41:06.790434+00:00",
+  "latency_seconds": 2.469942541999899,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On an STM32F407 with PH10 available in the package, EXTI10 is mapped to PH10 while EXTI2 remains mapped to PA2, but the interrupts do not work correctly. Is this pin combination supported?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-b8183b167a87b572",
+    "object": "chat.completion",
+    "created": 1788874864,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The STM32F407 series microcontroller has a specific mapping of pins to external interrupt lines (EXTI). The STM32F407 has 16 EXTI lines, which can be mapped to various GPIO pins.\n\n- **EXTI10** is typically mapped to GPIO_PIN_10 of Port H (PH10).\n- **EXTI2** is typically mapped to GPIO_PIN_2 of Port A (PA2).\n\nGiven that your STM32F407 has PH10 available in the package, it means that the STM32F407 variant you have supports GPIO_PIN_10 on Port H. However, the fact that EXTI10 is mapped to PH10 and EXTI2 is mapped to PA2 suggests that the STM32F407 variant you are using might not support the combination where EXTI10 is mapped to PH10 and EXTI2 is mapped to PA2 simultaneously.\n\nThe STM32F407 series does not allow for such a direct mapping of EXTI lines to different ports without additional configuration or limitations. Typically, each EXTI line is associated with a specific GPIO pin, and these associations are fixed by the STM32F407's hardware design.\n\nTherefore, the pin combination you described (EXTI10 mapped to PH10 and EXTI2 mapped to PA2) is not supported by the STM32F407 series. You would need to ensure that the EXTI lines are mapped to compatible GPIO pins according to the STM32F407's hardware specifications.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 78,
+      "total_tokens": 405,
+      "completion_tokens": 327,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}

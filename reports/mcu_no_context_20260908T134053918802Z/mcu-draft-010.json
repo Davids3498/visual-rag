@@ -1,0 +1,64 @@
+{
+  "question_id": "mcu-draft-010",
+  "started_at": "2026-09-08T13:41:18.722124+00:00",
+  "finished_at": "2026-09-08T13:41:19.686243+00:00",
+  "latency_seconds": 0.9641230160000305,
+  "request": {
+    "model": "qwen2.5-vl-7b-awq",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Answer the question clearly and directly. If you are unsure, say so."
+      },
+      {
+        "role": "user",
+        "content": "On ESP32 chip revision v3.1, can GPIO4 use a rising-edge interrupt while other GPIO0-31 pins also have interrupts enabled? If not, what level-triggered workaround does the errata describe?"
+      }
+    ],
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1536,
+    "seed": 0,
+    "stream": false
+  },
+  "raw_response": {
+    "id": "chatcmpl-9942a8c48cbd8cef",
+    "object": "chat.completion",
+    "created": 1788874878,
+    "model": "qwen2.5-vl-7b-awq",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "The ESP32 chip revision v3.1 has a known limitation where GPIO4 cannot be used for rising-edge interrupts if other GPIO0-31 pins also have interrupts enabled. This is due to an erratum in the datasheet that describes this specific issue.\n\nTo work around this limitation, the erratum suggests using GPIO4 as a level-triggered input instead of a rising-edge interrupt. This means that instead of setting up a rising-edge interrupt on GPIO4, you would set it up as a level-triggered interrupt. This workaround allows GPIO4 to function correctly with other GPIO interrupts enabled without causing conflicts.",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null,
+        "routed_experts": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": "vllm-0.28.0-78f30a01",
+    "usage": {
+      "prompt_tokens": 74,
+      "total_tokens": 199,
+      "completion_tokens": 125,
+      "prompt_tokens_details": null,
+      "completion_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "prompt_text": null,
+    "kv_transfer_params": null,
+    "ec_transfer_params": null,
+    "metrics": null
+  }
+}
