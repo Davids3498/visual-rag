@@ -1,0 +1,2250 @@
+{
+  "evaluation_timestamp": "2026-09-08T16:12:23.801816+00:00",
+  "total_questions": 12,
+  "total_elapsed_seconds": 107.9,
+  "retrieval_metrics": {
+    "ndcg_at_10": {
+      "mean": 0.9369243868982112,
+      "median": 1.0,
+      "min": 0.3562071871080222,
+      "max": 1.0
+    },
+    "recall_at_10": {
+      "mean": 1.0,
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "recall_at_3": {
+      "mean": 0.875,
+      "median": 1.0,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "answer_verdicts": {
+    "partial": 8,
+    "correct": 3,
+    "incorrect": 1
+  },
+  "improved_from_no_context": 7,
+  "per_question": [
+    {
+      "question_id": "mcu-draft-001",
+      "question": "On an STM32F103C8, USART1 is clocked and PA12 is configured as an alternate-function output for USART1 RTS, but PA12 stays high. CAN is unused and its clock is disabled. What could cause this, and how can I fix it?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 10,
+          "section": "2.3.1",
+          "grade": 2,
+          "support": "Complete CAN/USART1_RTS conflict conditions and unused-CAN remapping workaround.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 60010,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 10,
+          "score": 44.2812
+        },
+        {
+          "corpus_id": 60013,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 13,
+          "score": 43.0625
+        },
+        {
+          "corpus_id": 60011,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 11,
+          "score": 42.75
+        },
+        {
+          "corpus_id": 60012,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 12,
+          "score": 41.4688
+        },
+        {
+          "corpus_id": 60022,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 22,
+          "score": 40.2812
+        },
+        {
+          "corpus_id": 60021,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 21,
+          "score": 40.0938
+        },
+        {
+          "corpus_id": 90026,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 26,
+          "score": 39.9062
+        },
+        {
+          "corpus_id": 60028,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 28,
+          "score": 39.875
+        },
+        {
+          "corpus_id": 90024,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 24,
+          "score": 39.875
+        },
+        {
+          "corpus_id": 50019,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 19,
+          "score": 39.5938
+        }
+      ],
+      "retrieval_timing_ms": 39184.3,
+      "retrieval_stages": {
+        "encode_ms": 1546.1,
+        "stage1_ms": 319.4,
+        "stage2_ms": 899.6
+      },
+      "generation": {
+        "answer": "[Page 1] The issue might be due to the fact that when CAN is not clocked, the signal on PA12 remains high by default if configured as an alternate function output for USART1 RTS.\n\n[Page 3] To fix this, remap the CAN to another IO configuration through the CAN_REMAP bits of the AFIO_MAPR register when using USART1 RTS.",
+        "cited_pages": [
+          60010,
+          60011
+        ],
+        "shown_pages": [
+          60010,
+          60013,
+          60011
+        ],
+        "refused": false,
+        "latency_ms": 25323.0,
+        "usage": {
+          "prompt_tokens": 4824,
+          "total_tokens": 4904,
+          "completion_tokens": 80,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Identifies the CAN/USART1_RTS conflict on PA12.",
+            "status": "met",
+            "assessment": "Links unclocked CAN and PA12 staying high in the stated RTS configuration."
+          },
+          {
+            "fact": "Specifies selecting the unused CAN remap when CAN is unused.",
+            "status": "partially_met",
+            "assessment": "Recommends CAN remapping but does not select the unused configuration when CAN is unused."
+          }
+        ],
+        "rationale": "The diagnosis is present; the mandatory unused-remap choice is missing.",
+        "citation_assessment": "The cause cites the correct page. The workaround cites slot 3 (ES096 p11), which does not contain the CAN workaround.",
+        "context_fact_coverage": [
+          {
+            "fact": "Identifies the CAN/USART1_RTS conflict on PA12.",
+            "covered": true,
+            "evidence_page_ids": [
+              60010
+            ]
+          },
+          {
+            "fact": "Specifies selecting the unused CAN remap when CAN is unused.",
+            "covered": true,
+            "evidence_page_ids": [
+              60010
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "incorrect",
+        "no_context_checks": [
+          {
+            "fact": "Identifies the CAN/USART1_RTS conflict on PA12.",
+            "status": "missing",
+            "assessment": "Does not identify CAN_TX holding PA12 high when CAN is unclocked."
+          },
+          {
+            "fact": "Specifies selecting the unused CAN remap when CAN is unused.",
+            "status": "missing",
+            "assessment": "Does not prescribe the unused CAN remap."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F103C8, USART1 is clocked and PA12 is configured as an alternate-function output for USART1 RTS, but PA12 stays high. CAN is unused and its clock is disabled. What could cause this, and how can I fix it?"
+      },
+      "citation_check": {
+        "labels": [
+          1,
+          3
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          60010,
+          60011
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-002",
+      "question": "On an STM32F103x8/xB, TIM3 channel 2 on PB5 stays high with TIM3 and I2C1 both clocked and PB5 configured as an alternate-function output. SMBus Alert is unused. Why does this happen, and what use of CH2 does the errata permit in this configuration?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 12,
+          "section": "2.3.8",
+          "grade": 2,
+          "support": "Complete clock/pin conditions, I2C1_SMBA conflict, high output and input-only workaround.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 60012,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 12,
+          "score": 54.7188
+        },
+        {
+          "corpus_id": 60013,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 13,
+          "score": 47.1562
+        },
+        {
+          "corpus_id": 90022,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 22,
+          "score": 45.625
+        },
+        {
+          "corpus_id": 50032,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 32,
+          "score": 45.5625
+        },
+        {
+          "corpus_id": 50011,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 11,
+          "score": 44.875
+        },
+        {
+          "corpus_id": 70178,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 178,
+          "score": 44.5625
+        },
+        {
+          "corpus_id": 50033,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 33,
+          "score": 44.375
+        },
+        {
+          "corpus_id": 50012,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 12,
+          "score": 44.125
+        },
+        {
+          "corpus_id": 100839,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 839,
+          "score": 44.0938
+        },
+        {
+          "corpus_id": 90011,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "score": 43.625
+        }
+      ],
+      "retrieval_timing_ms": 445.1,
+      "retrieval_stages": {
+        "encode_ms": 120.1,
+        "stage1_ms": 180.9,
+        "stage2_ms": 142.3
+      },
+      "generation": {
+        "answer": "[Page 1] When TIM3 and I2C1 are both clocked and PB5 is configured as an alternate function output, there is a conflict between the TIM3_CH2 signal and the I2C1 SMBA signal. [Page 1] To avoid this conflict, TIM3_CH2 can only be used in input mode.",
+        "cited_pages": [
+          60012
+        ],
+        "shown_pages": [
+          60012,
+          60013,
+          90022
+        ],
+        "refused": false,
+        "latency_ms": 3294.7,
+        "usage": {
+          "prompt_tokens": 4835,
+          "total_tokens": 4907,
+          "completion_tokens": 72,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "correct",
+        "core_fact_checks": [
+          {
+            "fact": "Explains the I2C1_SMBA conflict despite unused alert.",
+            "status": "met",
+            "assessment": "Identifies the TIM3_CH2/I2C1_SMBA conflict under the question's explicitly unused-SMBus-Alert premise; does not require SMBA to be enabled."
+          },
+          {
+            "fact": "Restricts CH2 to input in the stated configuration.",
+            "status": "met",
+            "assessment": "Explicitly restricts TIM3_CH2 to input mode."
+          }
+        ],
+        "rationale": "Both core facts are satisfied in the stated scenario. Exact underscore formatting is irrelevant.",
+        "citation_assessment": "Both claims cite slot 1, ES096 p12, which supports them.",
+        "context_fact_coverage": [
+          {
+            "fact": "Explains the I2C1_SMBA conflict despite unused alert.",
+            "covered": true,
+            "evidence_page_ids": [
+              60012
+            ]
+          },
+          {
+            "fact": "Restricts CH2 to input in the stated configuration.",
+            "covered": true,
+            "evidence_page_ids": [
+              60012
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "incorrect",
+        "no_context_checks": [
+          {
+            "fact": "Explains the I2C1_SMBA conflict despite unused alert.",
+            "status": "missing",
+            "assessment": "Does not identify the I2C1_SMBA/TIM3_CH2 conflict."
+          },
+          {
+            "fact": "Restricts CH2 to input in the stated configuration.",
+            "status": "missing",
+            "assessment": "Does not state that CH2 is restricted to input in this configuration."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F103x8/xB, TIM3 channel 2 on PB5 stays high with TIM3 and I2C1 both clocked and PB5 configured as an alternate-function output. SMBus Alert is unused. Why does this happen, and what use of CH2 does the errata permit in this configuration?"
+      },
+      "citation_check": {
+        "labels": [
+          1,
+          1
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          60012
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-003",
+      "question": "On an STM32F103x8/xB, after updating the independent watchdog settings and immediately entering Stop mode, the next watchdog update hangs and eventually resets the MCU. How can this be prevented?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 17,
+          "section": "2.7.3",
+          "grade": 2,
+          "support": "Failure mechanism and before-Stop workaround.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 60008,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 8,
+          "score": 33.9062
+        },
+        {
+          "corpus_id": 60007,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 7,
+          "score": 33.5
+        },
+        {
+          "corpus_id": 50018,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 18,
+          "score": 33.1875
+        },
+        {
+          "corpus_id": 90009,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 9,
+          "score": 33.0
+        },
+        {
+          "corpus_id": 60023,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 23,
+          "score": 32.4688
+        },
+        {
+          "corpus_id": 60017,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 17,
+          "score": 32.2812
+        },
+        {
+          "corpus_id": 80035,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 35,
+          "score": 32.1875
+        },
+        {
+          "corpus_id": 90019,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 19,
+          "score": 32.0938
+        },
+        {
+          "corpus_id": 100704,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 704,
+          "score": 32.0938
+        },
+        {
+          "corpus_id": 90010,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 10,
+          "score": 31.625
+        }
+      ],
+      "retrieval_timing_ms": 299.1,
+      "retrieval_stages": {
+        "encode_ms": 99.9,
+        "stage1_ms": 67.5,
+        "stage2_ms": 131.3
+      },
+      "generation": {
+        "answer": "To prevent this, ensure that the independent watchdog counter is frozen in debug mode before entering Stop mode. This can be achieved by setting the appropriate bits in the option bytes or through software configuration, as mentioned on Page 3 of the STM32F103x8/xB datasheet.",
+        "cited_pages": [
+          50018
+        ],
+        "shown_pages": [
+          60008,
+          60007,
+          50018
+        ],
+        "refused": false,
+        "latency_ms": 2738.4,
+        "usage": {
+          "prompt_tokens": 4838,
+          "total_tokens": 4899,
+          "completion_tokens": 61,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 0.3562071871080222,
+        "recall_at_10": 1.0,
+        "recall_at_3": 0.0
+      },
+      "assessment": {
+        "verdict": "incorrect",
+        "core_fact_checks": [
+          {
+            "fact": "Waits for RVU and PVU to clear before Stop.",
+            "status": "missing",
+            "assessment": "Does not wait for RVU/PVU to clear."
+          },
+          {
+            "fact": "Explains that entering Stop before the watchdog update completes can leave the flags set and block later updates.",
+            "status": "missing",
+            "assessment": "Does not explain the stuck update flags or subsequent blocked writes."
+          }
+        ],
+        "rationale": "Substitutes debug watchdog freezing for the erratum workaround. The gold page is rank 6 and was not shown.",
+        "citation_assessment": "The cited datasheet page cannot establish the required update-before-Stop workaround.",
+        "context_fact_coverage": [
+          {
+            "fact": "Waits for RVU and PVU to clear before Stop.",
+            "covered": false,
+            "evidence_page_ids": []
+          },
+          {
+            "fact": "Explains that entering Stop before the watchdog update completes can leave the flags set and block later updates.",
+            "covered": false,
+            "evidence_page_ids": []
+          }
+        ],
+        "complete_core_evidence_shown": false,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "incorrect",
+        "no_context_checks": [
+          {
+            "fact": "Waits for RVU and PVU to clear before Stop.",
+            "status": "missing",
+            "assessment": "Never says to wait for RVU and PVU to clear before Stop."
+          },
+          {
+            "fact": "Explains that entering Stop before the watchdog update completes can leave the flags set and block later updates.",
+            "status": "missing",
+            "assessment": "Does not explain the stuck update flags and subsequent blocked writes."
+          }
+        ],
+        "improved_from_no_context": false
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F103x8/xB, after updating the independent watchdog settings and immediately entering Stop mode, the next watchdog update hangs and eventually resets the MCU. How can this be prevented?"
+      },
+      "citation_check": {
+        "labels": [
+          3
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          50018
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-004",
+      "question": "On an STM32F103x8/xB, can clearing a DMA channel's global interrupt flag while the channel is active cause a transfer error to be missed or prevent automatic channel disable? How should software avoid this?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 13,
+          "section": "2.4.1",
+          "grade": 2,
+          "support": "Complete conditions, effects and flag-clearing workaround.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 60013,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 13,
+          "score": 38.7188
+        },
+        {
+          "corpus_id": 90016,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 16,
+          "score": 34.625
+        },
+        {
+          "corpus_id": 90030,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 30,
+          "score": 34.5938
+        },
+        {
+          "corpus_id": 90017,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 17,
+          "score": 34.2812
+        },
+        {
+          "corpus_id": 70280,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 280,
+          "score": 33.75
+        },
+        {
+          "corpus_id": 60003,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 3,
+          "score": 33.5625
+        },
+        {
+          "corpus_id": 70284,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 284,
+          "score": 33.3438
+        },
+        {
+          "corpus_id": 70287,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 287,
+          "score": 32.9688
+        },
+        {
+          "corpus_id": 100326,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 326,
+          "score": 32.9375
+        },
+        {
+          "corpus_id": 90029,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 29,
+          "score": 32.5
+        }
+      ],
+      "retrieval_timing_ms": 167.2,
+      "retrieval_stages": {
+        "encode_ms": 45.0,
+        "stage1_ms": 55.8,
+        "stage2_ms": 66.3
+      },
+      "generation": {
+        "answer": "On an STM32F103x8/xB, clearing a DMA channel's global interrupt flag while the channel is active can cause a transfer error to be missed or prevent automatic channel disable. To avoid this, software should not clear GIFx flags when the channel is active. Instead, use HTIFx, TCIFx, and TEIFx specific event flags and their corresponding clear bits [Page 1].",
+        "cited_pages": [
+          60013
+        ],
+        "shown_pages": [
+          60013,
+          90016,
+          90030
+        ],
+        "refused": false,
+        "latency_ms": 2377.4,
+        "usage": {
+          "prompt_tokens": 4812,
+          "total_tokens": 4899,
+          "completion_tokens": 87,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "States that both automatic disable and TEIFx reporting can fail.",
+            "status": "met",
+            "assessment": "Describes lost transfer-error reporting and failed automatic disable."
+          },
+          {
+            "fact": "Identifies clearing GIFx in the same clock cycle as a transfer error as the trigger.",
+            "status": "missing",
+            "assessment": "Does not identify coincidence of the GIFx clear and transfer error in the same clock cycle."
+          },
+          {
+            "fact": "Uses specific event flags and clear bits instead of clearing active-channel GIFx.",
+            "status": "met",
+            "assessment": "Explicitly uses HTIFx, TCIFx, TEIFx and their clear bits instead of active-channel GIFx clearing."
+          }
+        ],
+        "rationale": "Correct consequence and workaround, but the required same-clock-cycle trigger is absent.",
+        "citation_assessment": "The cited ES096 p13 supports the stated consequence and workaround; citation does not make the omitted trigger present.",
+        "context_fact_coverage": [
+          {
+            "fact": "States that both automatic disable and TEIFx reporting can fail.",
+            "covered": true,
+            "evidence_page_ids": [
+              60013
+            ]
+          },
+          {
+            "fact": "Identifies clearing GIFx in the same clock cycle as a transfer error as the trigger.",
+            "covered": true,
+            "evidence_page_ids": [
+              60013
+            ]
+          },
+          {
+            "fact": "Uses specific event flags and clear bits instead of clearing active-channel GIFx.",
+            "covered": true,
+            "evidence_page_ids": [
+              60013
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "partial",
+        "no_context_checks": [
+          {
+            "fact": "States that both automatic disable and TEIFx reporting can fail.",
+            "status": "met",
+            "assessment": "States that error reporting and automatic channel disable can fail."
+          },
+          {
+            "fact": "Identifies clearing GIFx in the same clock cycle as a transfer error as the trigger.",
+            "status": "contradicted",
+            "assessment": "Attributes the failure to interrupt timing/handling, not a GIFx clear coinciding with a transfer error in the same clock cycle."
+          },
+          {
+            "fact": "Uses specific event flags and clear bits instead of clearing active-channel GIFx.",
+            "status": "partially_met",
+            "assessment": "Disabling before clearing avoids an active-channel global clear, but the answer omits the required individual event flags and their clear bits."
+          }
+        ],
+        "improved_from_no_context": false
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F103x8/xB, can clearing a DMA channel's global interrupt flag while the channel is active cause a transfer error to be missed or prevent automatic channel disable? How should software avoid this?"
+      },
+      "citation_check": {
+        "labels": [
+          1
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          60013
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-005",
+      "question": "On an STM32F407 with PH10 available in the package, EXTI10 is mapped to PH10 while EXTI2 remains mapped to PA2, but the interrupts do not work correctly. Is this pin combination supported?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.10",
+          "grade": 2,
+          "support": "Coupled PH10/PH2 routing limitation.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 90011,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "score": 39.3438
+        },
+        {
+          "corpus_id": 100299,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 299,
+          "score": 34.2812
+        },
+        {
+          "corpus_id": 100294,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 294,
+          "score": 34.0625
+        },
+        {
+          "corpus_id": 80043,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 43,
+          "score": 34.0
+        },
+        {
+          "corpus_id": 80025,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 25,
+          "score": 33.5312
+        },
+        {
+          "corpus_id": 100301,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 301,
+          "score": 33.5
+        },
+        {
+          "corpus_id": 80048,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 48,
+          "score": 33.375
+        },
+        {
+          "corpus_id": 100295,
+          "doc_id": "st_stm32f407_refman_rm0090",
+          "page_number": 295,
+          "score": 33.125
+        },
+        {
+          "corpus_id": 70192,
+          "doc_id": "st_stm32f103_refman_rm0008",
+          "page_number": 192,
+          "score": 32.7812
+        },
+        {
+          "corpus_id": 80050,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 50,
+          "score": 32.3438
+        }
+      ],
+      "retrieval_timing_ms": 140.9,
+      "retrieval_stages": {
+        "encode_ms": 57.5,
+        "stage1_ms": 60.4,
+        "stage2_ms": 22.8
+      },
+      "generation": {
+        "answer": "No, this pin combination is not supported. According to Page 2 of document RM0090, bits EXT10[3:0] and EXT2[3:0] must be set to the same value when configuring PH10 and PI10 as external interrupt sources. Setting them differently would enable PH2 instead of PI2, which is incorrect for your requirement.",
+        "cited_pages": [
+          100299
+        ],
+        "shown_pages": [
+          90011,
+          100299,
+          100294
+        ],
+        "refused": false,
+        "latency_ms": 2636.1,
+        "usage": {
+          "prompt_tokens": 4884,
+          "total_tokens": 4964,
+          "completion_tokens": 80,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Rejects independent PH10/PA2 routing for the stated limitation.",
+            "status": "met",
+            "assessment": "Rejects the PH10/PA2 combination."
+          },
+          {
+            "fact": "Explains that using PH10 requires EXTI2 and EXTI10 to select the same GPIO port.",
+            "status": "partially_met",
+            "assessment": "Says EXTI10 and EXTI2 must match, but confuses PH10 with PI10 and PH2 with PI2 in the explanation."
+          }
+        ],
+        "rationale": "Recognizes the coupling but adds an incorrect port-routing explanation. Not fully correct.",
+        "citation_assessment": "Attributes the erratum to slot 2 (RM0090 p299); that page defines register encodings and does not establish the silicon limitation.",
+        "context_fact_coverage": [
+          {
+            "fact": "Rejects independent PH10/PA2 routing for the stated limitation.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          },
+          {
+            "fact": "Explains that using PH10 requires EXTI2 and EXTI10 to select the same GPIO port.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "partial",
+        "no_context_checks": [
+          {
+            "fact": "Rejects independent PH10/PA2 routing for the stated limitation.",
+            "status": "met",
+            "assessment": "Explicitly rejects the PH10/PA2 combination."
+          },
+          {
+            "fact": "Explains that using PH10 requires EXTI2 and EXTI10 to select the same GPIO port.",
+            "status": "missing",
+            "assessment": "Never states that EXTI2 and EXTI10 must select the same port to use PH10."
+          }
+        ],
+        "improved_from_no_context": false
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F407 with PH10 available in the package, EXTI10 is mapped to PH10 while EXTI2 remains mapped to PA2, but the interrupts do not work correctly. Is this pin combination supported?"
+      },
+      "citation_check": {
+        "labels": [
+          2
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          100299
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-006",
+      "question": "On an STM32F407, a DMA write to an APB1 peripheral stalls when the CPU changes the AHB/APB1 prescaler from 1 to 4 during the transfer. What causes this, how can it be prevented, and how can the MCU recover?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.11",
+          "grade": 2,
+          "support": "Trigger, prevention and system-reset recovery.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 90011,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "score": 47.6875
+        },
+        {
+          "corpus_id": 90013,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 13,
+          "score": 45.9062
+        },
+        {
+          "corpus_id": 90016,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 16,
+          "score": 40.9688
+        },
+        {
+          "corpus_id": 60024,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 24,
+          "score": 40.375
+        },
+        {
+          "corpus_id": 90019,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 19,
+          "score": 39.9688
+        },
+        {
+          "corpus_id": 90027,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 27,
+          "score": 39.75
+        },
+        {
+          "corpus_id": 50049,
+          "doc_id": "st_stm32f103_datasheet_ds5319",
+          "page_number": 49,
+          "score": 39.3438
+        },
+        {
+          "corpus_id": 90012,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 12,
+          "score": 39.1562
+        },
+        {
+          "corpus_id": 60016,
+          "doc_id": "st_stm32f103_errata_es096",
+          "page_number": 16,
+          "score": 38.4688
+        },
+        {
+          "corpus_id": 20015,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 15,
+          "score": 38.375
+        }
+      ],
+      "retrieval_timing_ms": 135.1,
+      "retrieval_stages": {
+        "encode_ms": 50.4,
+        "stage1_ms": 61.3,
+        "stage2_ms": 23.3
+      },
+      "generation": {
+        "answer": "[Page 1] The issue occurs due to a DMA transfer on the AHB while modifying the AHB/APB1 prescaler from 1 to 2, 1 to 4, 1 to 8 or 1 to 16. [Page 2] To prevent this, wait until the end of the DMA transfer on the affected APB before changing the prescaler. [Page 2] Recovery involves resetting through the BDRST bit or writing to the backup domain via a polling loop on targeted registers.",
+        "cited_pages": [
+          90011,
+          90013
+        ],
+        "shown_pages": [
+          90011,
+          90013,
+          90016
+        ],
+        "refused": false,
+        "latency_ms": 1924.4,
+        "usage": {
+          "prompt_tokens": 4825,
+          "total_tokens": 4935,
+          "completion_tokens": 110,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Identifies slowing the same APB from prescaler 1 to 4 during an active DMA write as the documented trigger.",
+            "status": "partially_met",
+            "assessment": "Connects the prescaler change and active DMA but incorrectly describes the affected transfer as on the AHB."
+          },
+          {
+            "fact": "Waits for the DMA transfer on the affected APB to finish before slowing the clock.",
+            "status": "met",
+            "assessment": "Says to wait for the affected APB DMA transfer before changing the prescaler."
+          },
+          {
+            "fact": "Names system reset as the documented recovery.",
+            "status": "contradicted",
+            "assessment": "Recommends BDRST or backup-domain polling instead of the required system reset."
+          }
+        ],
+        "rationale": "Prevention is correct; recovery is taken from a different erratum and is wrong.",
+        "citation_assessment": "Slot 2 (ES0182 p13) concerns backup-domain protection, not this DMA recovery. The DMA prevention belongs to slot 1.",
+        "context_fact_coverage": [
+          {
+            "fact": "Identifies slowing the same APB from prescaler 1 to 4 during an active DMA write as the documented trigger.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          },
+          {
+            "fact": "Waits for the DMA transfer on the affected APB to finish before slowing the clock.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          },
+          {
+            "fact": "Names system reset as the documented recovery.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "partial",
+        "no_context_checks": [
+          {
+            "fact": "Identifies slowing the same APB from prescaler 1 to 4 during an active DMA write as the documented trigger.",
+            "status": "met",
+            "assessment": "Connects the prescaler change during the active APB1 DMA write to the stall (the question already supplies this sequence)."
+          },
+          {
+            "fact": "Waits for the DMA transfer on the affected APB to finish before slowing the clock.",
+            "status": "met",
+            "assessment": "Says to wait for the DMA transfer to complete before changing the prescaler."
+          },
+          {
+            "fact": "Names system reset as the documented recovery.",
+            "status": "contradicted",
+            "assessment": "Suggests waiting for the stalled transfer and changing the clock safely, rather than the required system reset."
+          }
+        ],
+        "improved_from_no_context": false
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F407, a DMA write to an APB1 peripheral stalls when the CPU changes the AHB/APB1 prescaler from 1 to 4 during the transfer. What causes this, how can it be prevented, and how can the MCU recover?"
+      },
+      "citation_check": {
+        "labels": [
+          1,
+          2,
+          2
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          90011,
+          90013
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-007",
+      "question": "I'm migrating an STM32F407 LQFP100 board from silicon revision A to revision Z. Does the PDR_ON connection need to change, and can I continue using a 1.7 V supply?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 10,
+          "section": "2.2.8",
+          "grade": 1,
+          "support": "Partial answer: former PDR_ON becomes VSS and POR/PDR is always enabled; also supplies optional pin number 99.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "section": "2.2.8 continuation",
+          "grade": 2,
+          "support": "Both migration wiring cases and enabled-POR/PDR minimum VDD of 1.8 V; sufficient for all core facts without the optional pin number.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 90011,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "score": 39.0
+        },
+        {
+          "corpus_id": 80027,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 27,
+          "score": 36.5312
+        },
+        {
+          "corpus_id": 80193,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 193,
+          "score": 36.4688
+        },
+        {
+          "corpus_id": 80026,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 26,
+          "score": 35.6562
+        },
+        {
+          "corpus_id": 80019,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 19,
+          "score": 35.625
+        },
+        {
+          "corpus_id": 80018,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 18,
+          "score": 35.625
+        },
+        {
+          "corpus_id": 90010,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 10,
+          "score": 35.5312
+        },
+        {
+          "corpus_id": 80031,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 31,
+          "score": 35.5312
+        },
+        {
+          "corpus_id": 80061,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 61,
+          "score": 35.2188
+        },
+        {
+          "corpus_id": 90038,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 38,
+          "score": 35.0312
+        }
+      ],
+      "retrieval_timing_ms": 175.7,
+      "retrieval_stages": {
+        "encode_ms": 45.6,
+        "stage1_ms": 51.5,
+        "stage2_ms": 78.5
+      },
+      "generation": {
+        "answer": "According to Page 1, for applications using revision A devices with PDR_ON pin connected to VDD (POR/PDR feature enabled), you should connect the former PDR_ON pin to VSS on revision Z devices. For revision A devices with PDR_ON pin connected to VSS (POR/PDR feature disabled), no modification is required when migrating to other device revisions. However, it is no longer possible to supply the product from a 1.7 V VDD on LQFP100 package since VDD minimum value is 1.8 V when the POR/PDR feature is enabled. Therefore, you cannot continue using a 1.7 V supply; you must use a 1.8 V or higher supply voltage on the LQFP100 package.",
+        "cited_pages": [
+          90011
+        ],
+        "shown_pages": [
+          90011,
+          80027,
+          80193
+        ],
+        "refused": false,
+        "latency_ms": 2575.4,
+        "usage": {
+          "prompt_tokens": 4882,
+          "total_tokens": 5044,
+          "completion_tokens": 162,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 0.8868854556705132,
+        "recall_at_10": 1.0,
+        "recall_at_3": 0.5
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Requires the former PDR_ON pin to be tied to VSS on revision Z: change a VDD connection to VSS, or retain an existing VSS connection.",
+            "status": "met",
+            "assessment": "Gives both wiring cases correctly: VDD to VSS, or retain VSS."
+          },
+          {
+            "fact": "Explains that POR/PDR is always enabled on revision Z in LQFP100.",
+            "status": "partially_met",
+            "assessment": "Uses the enabled-POR/PDR voltage rule but does not explain that POR/PDR is permanently enabled on revision Z in this package."
+          },
+          {
+            "fact": "Rejects 1.7 V operation and gives the 1.8 V minimum.",
+            "status": "met",
+            "assessment": "Rejects 1.7 V and specifies the 1.8 V minimum."
+          }
+        ],
+        "rationale": "Wiring and voltage are correct. Under the frozen rubric, the always-enabled POR/PDR explanation remains incomplete.",
+        "citation_assessment": "Slot 1 (ES0182 p11) supports both wiring cases and the minimum voltage.",
+        "context_fact_coverage": [
+          {
+            "fact": "Requires the former PDR_ON pin to be tied to VSS on revision Z: change a VDD connection to VSS, or retain an existing VSS connection.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          },
+          {
+            "fact": "Explains that POR/PDR is always enabled on revision Z in LQFP100.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          },
+          {
+            "fact": "Rejects 1.7 V operation and gives the 1.8 V minimum.",
+            "covered": true,
+            "evidence_page_ids": [
+              90011
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "abstained",
+        "no_context_checks": [
+          {
+            "fact": "Requires the former PDR_ON pin to be tied to VSS on revision Z: change a VDD connection to VSS, or retain an existing VSS connection.",
+            "status": "missing",
+            "assessment": "Defers checking the pin connection to datasheets; gives no VSS requirement or concrete migration cases."
+          },
+          {
+            "fact": "Explains that POR/PDR is always enabled on revision Z in LQFP100.",
+            "status": "missing",
+            "assessment": "Does not state that POR/PDR is always enabled on revision Z."
+          },
+          {
+            "fact": "Rejects 1.7 V operation and gives the 1.8 V minimum.",
+            "status": "missing",
+            "assessment": "Gives no rejection of 1.7 V and no 1.8 V minimum."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "I'm migrating an STM32F407 LQFP100 board from silicon revision A to revision Z. Does the PDR_ON connection need to change, and can I continue using a 1.7 V supply?"
+      },
+      "citation_check": {
+        "labels": [
+          1
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          90011
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-008",
+      "question": "On an STM32F407, a write to an APB peripheral register immediately after enabling its RCC clock sometimes fails. How much delay is required, and what workaround does the errata recommend?",
+      "gold_pages": [
+        {
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 12,
+          "section": "2.2.13",
+          "grade": 2,
+          "support": "Delay rule and three workaround choices.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 90012,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 12,
+          "score": 32.9375
+        },
+        {
+          "corpus_id": 90019,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 19,
+          "score": 32.0625
+        },
+        {
+          "corpus_id": 90011,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 11,
+          "score": 31.8125
+        },
+        {
+          "corpus_id": 90007,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 7,
+          "score": 31.6719
+        },
+        {
+          "corpus_id": 90013,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 13,
+          "score": 31.6094
+        },
+        {
+          "corpus_id": 90020,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 20,
+          "score": 31.1094
+        },
+        {
+          "corpus_id": 90041,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 41,
+          "score": 31.0781
+        },
+        {
+          "corpus_id": 90030,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 30,
+          "score": 30.9375
+        },
+        {
+          "corpus_id": 90027,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 27,
+          "score": 30.8906
+        },
+        {
+          "corpus_id": 90029,
+          "doc_id": "st_stm32f407_errata_es0182",
+          "page_number": 29,
+          "score": 30.7031
+        }
+      ],
+      "retrieval_timing_ms": 103.5,
+      "retrieval_stages": {
+        "encode_ms": 48.5,
+        "stage1_ms": 34.4,
+        "stage2_ms": 20.5
+      },
+      "generation": {
+        "answer": "On an STM32F407, a write to an APB peripheral register immediately after enabling its RCC clock may fail due to a delay that depends on the peripheral mapping. The delay can be equal to 1 + (AHB/APB prescaler) cycles.\n\nThe errata recommends applying one of the following measures as a workaround:\n- Use the DSB instruction to stall the Arm\u00ae Cortex\u00ae-M4 CPU pipeline until the instruction has completed.\n- Insert \"n\" NOPs between the RCC enable bit write and the peripheral register writes (n = 2 for AHB peripherals, n = 1 + AHB/APB prescaler for APB peripherals).\n- Simply insert a dummy read operation from the corresponding register just after enabling the peripheral clock. [Page 1]",
+        "cited_pages": [
+          90012
+        ],
+        "shown_pages": [
+          90012,
+          90019,
+          90011
+        ],
+        "refused": false,
+        "latency_ms": 3118.1,
+        "usage": {
+          "prompt_tokens": 4808,
+          "total_tokens": 4970,
+          "completion_tokens": 162,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "correct",
+        "core_fact_checks": [
+          {
+            "fact": "Gives the delay as 1 plus the AHB/APB prescaler in CPU cycles.",
+            "status": "met",
+            "assessment": "Gives the documented 1 + AHB/APB prescaler delay in cycles."
+          },
+          {
+            "fact": "Names sufficient NOPs, DSB, or the documented post-enable dummy read as a workaround.",
+            "status": "met",
+            "assessment": "Lists documented DSB, NOP and dummy-read alternatives."
+          }
+        ],
+        "rationale": "All core requirements are satisfied; optional AHB detail does not invalidate the APB answer.",
+        "citation_assessment": "Slot 1 (ES0182 p12) supports the delay and workarounds.",
+        "context_fact_coverage": [
+          {
+            "fact": "Gives the delay as 1 plus the AHB/APB prescaler in CPU cycles.",
+            "covered": true,
+            "evidence_page_ids": [
+              90012
+            ]
+          },
+          {
+            "fact": "Names sufficient NOPs, DSB, or the documented post-enable dummy read as a workaround.",
+            "covered": true,
+            "evidence_page_ids": [
+              90012
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "incorrect",
+        "no_context_checks": [
+          {
+            "fact": "Gives the delay as 1 plus the AHB/APB prescaler in CPU cycles.",
+            "status": "contradicted",
+            "assessment": "Invents a fixed 100 ns delay instead of 1 + AHB/APB prescaler cycles."
+          },
+          {
+            "fact": "Names sufficient NOPs, DSB, or the documented post-enable dummy read as a workaround.",
+            "status": "missing",
+            "assessment": "Omits the documented NOP count, DSB and post-enable dummy read; substitutes unrelated delay code."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On an STM32F407, a write to an APB peripheral register immediately after enabling its RCC clock sometimes fails. How much delay is required, and what workaround does the errata recommend?"
+      },
+      "citation_check": {
+        "labels": [
+          1
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          90012
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-009",
+      "question": "On ESP32 chip revision v0.0, repeated consecutive writes to the same DPORT register address sometimes get lost, both for UART2 FIFO and for GPIO_OUT1_W1TC. What workaround should I use?",
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 16,
+          "section": "3.8 / CPU-3.3 continuation",
+          "grade": 2,
+          "support": "Prose states the mandatory AHB-alias workaround. The table addresses, FIFO-read caveat and fixed revision are optional supporting details on the same page.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 20016,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 16,
+          "score": 37.8125
+        },
+        {
+          "corpus_id": 20015,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 15,
+          "score": 32.6562
+        },
+        {
+          "corpus_id": 20024,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 24,
+          "score": 31.8594
+        },
+        {
+          "corpus_id": 20012,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 12,
+          "score": 31.6562
+        },
+        {
+          "corpus_id": 20020,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 20,
+          "score": 31.1562
+        },
+        {
+          "corpus_id": 20018,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 18,
+          "score": 30.6406
+        },
+        {
+          "corpus_id": 30150,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 150,
+          "score": 29.7344
+        },
+        {
+          "corpus_id": 20013,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 13,
+          "score": 29.5938
+        },
+        {
+          "corpus_id": 20030,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 30,
+          "score": 29.5781
+        },
+        {
+          "corpus_id": 20023,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 23,
+          "score": 29.5469
+        }
+      ],
+      "retrieval_timing_ms": 376.9,
+      "retrieval_stages": {
+        "encode_ms": 127.2,
+        "stage1_ms": 121.3,
+        "stage2_ms": 127.8
+      },
+      "generation": {
+        "answer": "For UART2 FIFO, use the equivalent AHB address not the DPORT address when writing the same register address in sequential instructions ([Page 1]). For GPIO_OUT1_W1TC, disable CPU interrupts before reading these five FIFO registers and enable CPU interrupts after read access ([Page 2]).",
+        "cited_pages": [
+          20016,
+          20015
+        ],
+        "shown_pages": [
+          20016,
+          20015,
+          20024
+        ],
+        "refused": false,
+        "latency_ms": 4471.1,
+        "usage": {
+          "prompt_tokens": 4790,
+          "total_tokens": 4850,
+          "completion_tokens": 60,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Uses the AHB register aliases for the affected consecutive writes.",
+            "status": "partially_met",
+            "assessment": "Correctly uses the AHB alias for UART2, but gives a FIFO-read interrupt workaround for GPIO_OUT1_W1TC instead of using its AHB alias."
+          }
+        ],
+        "rationale": "Only one of the two named registers receives the correct workaround. No penalty is applied for omitting optional exact addresses.",
+        "citation_assessment": "UART2 claim cites the right page. The GPIO advice is imported from the unrelated FIFO-read erratum on slot 2.",
+        "context_fact_coverage": [
+          {
+            "fact": "Uses the AHB register aliases for the affected consecutive writes.",
+            "covered": true,
+            "evidence_page_ids": [
+              20016
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "incorrect",
+        "no_context_checks": [
+          {
+            "fact": "Uses the AHB register aliases for the affected consecutive writes.",
+            "status": "missing",
+            "assessment": "Never recommends the equivalent AHB register aliases."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On ESP32 chip revision v0.0, repeated consecutive writes to the same DPORT register address sometimes get lost, both for UART2 FIFO and for GPIO_OUT1_W1TC. What workaround should I use?"
+      },
+      "citation_check": {
+        "labels": [
+          1,
+          2
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          20016,
+          20015
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-010",
+      "question": "On ESP32 chip revision v3.1, can GPIO4 use a rising-edge interrupt while other GPIO0-31 pins also have interrupts enabled? If not, what level-triggered workaround does the errata describe?",
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 18,
+          "section": "3.11 / GPIO-3.14",
+          "grade": 1,
+          "support": "Affected revisions, group restriction and first workaround step.",
+          "evidence_type": "text"
+        },
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 19,
+          "section": "3.11 continuation",
+          "grade": 1,
+          "support": "Second rising-edge workaround step.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 20018,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 18,
+          "score": 38.875
+        },
+        {
+          "corpus_id": 20019,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 19,
+          "score": 36.75
+        },
+        {
+          "corpus_id": 20009,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 9,
+          "score": 34.75
+        },
+        {
+          "corpus_id": 20016,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 16,
+          "score": 33.25
+        },
+        {
+          "corpus_id": 30146,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 146,
+          "score": 33.125
+        },
+        {
+          "corpus_id": 20023,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 23,
+          "score": 33.0
+        },
+        {
+          "corpus_id": 30153,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 153,
+          "score": 32.9688
+        },
+        {
+          "corpus_id": 20017,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 17,
+          "score": 32.6875
+        },
+        {
+          "corpus_id": 10024,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 24,
+          "score": 31.9844
+        },
+        {
+          "corpus_id": 30142,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 142,
+          "score": 31.9688
+        }
+      ],
+      "retrieval_timing_ms": 374.3,
+      "retrieval_stages": {
+        "encode_ms": 150.1,
+        "stage1_ms": 153.3,
+        "stage2_ms": 70.3
+      },
+      "generation": {
+        "answer": "On ESP32 chip revision v3.1, GPIO4 cannot use a rising-edge interrupt while other GPIO0-31 pins also have interrupts enabled due to the limitation described in [GPIO-3.14] on Page 18. The errata describes a workaround: set the GPIO interrupt type to high for the desired GPIO pin before triggering the interrupt, then change it to low after the CPU services the interrupt. This ensures that the CPU ignores the interrupt service routine during the second interrupt, allowing the desired GPIO interrupt to be triggered on a rising edge.",
+        "cited_pages": [],
+        "shown_pages": [
+          20018,
+          20019,
+          20009
+        ],
+        "refused": false,
+        "latency_ms": 2971.3,
+        "usage": {
+          "prompt_tokens": 4790,
+          "total_tokens": 4906,
+          "completion_tokens": 116,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "States the same-group edge/other-interrupt restriction.",
+            "status": "met",
+            "assessment": "Correctly rejects the edge interrupt alongside other interrupts in GPIO0-31."
+          },
+          {
+            "fact": "Allows multiple level interrupts when no edge interrupt is configured.",
+            "status": "missing",
+            "assessment": "Does not explain that multiple level interrupts are allowed only when no edge interrupts remain in the group."
+          },
+          {
+            "fact": "Gives high then low triggering and ignores the second interrupt.",
+            "status": "partially_met",
+            "assessment": "Gives high-then-low switching and mentions ignoring the second ISR, but presents ignoring as automatic rather than a software action."
+          }
+        ],
+        "rationale": "Recognizes the restriction and most of the sequence, but omits a required group condition and incompletely explains second-interrupt handling.",
+        "citation_assessment": "Uses physical Page 18 instead of local slot 1 or 2. This is an invalid citation label under the prompt, not a valid resolved citation.",
+        "context_fact_coverage": [
+          {
+            "fact": "States the same-group edge/other-interrupt restriction.",
+            "covered": true,
+            "evidence_page_ids": [
+              20018
+            ]
+          },
+          {
+            "fact": "Allows multiple level interrupts when no edge interrupt is configured.",
+            "covered": true,
+            "evidence_page_ids": [
+              20018
+            ]
+          },
+          {
+            "fact": "Gives high then low triggering and ignores the second interrupt.",
+            "covered": true,
+            "evidence_page_ids": [
+              20018,
+              20019
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "partial",
+        "no_context_checks": [
+          {
+            "fact": "States the same-group edge/other-interrupt restriction.",
+            "status": "met",
+            "assessment": "States the GPIO4 rising-edge versus other GPIO0-31 interrupt restriction."
+          },
+          {
+            "fact": "Allows multiple level interrupts when no edge interrupt is configured.",
+            "status": "partially_met",
+            "assessment": "Says level triggering can coexist with other interrupts, but omits that no edge-triggered interrupt may remain in the group."
+          },
+          {
+            "fact": "Gives high then low triggering and ignores the second interrupt.",
+            "status": "partially_met",
+            "assessment": "Recommends level triggering but omits high-then-low switching and ignoring the second interrupt."
+          }
+        ],
+        "improved_from_no_context": false
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On ESP32 chip revision v3.1, can GPIO4 use a rising-edge interrupt while other GPIO0-31 pins also have interrupts enabled? If not, what level-triggered workaround does the errata describe?"
+      },
+      "citation_check": {
+        "labels": [
+          18
+        ],
+        "invalid_labels": [
+          18
+        ],
+        "resolved_page_ids": [],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-011",
+      "question": "Can ESP32 chip revision v3.1 use EXT0 wake-up together with the ULP coprocessor and touch wake-up during Deep Sleep?",
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 17,
+          "section": "3.9 / ULP-3.19 continuation",
+          "grade": 2,
+          "support": "Clock-sequencing explanation and explicit power-domain trade-off.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 20017,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 17,
+          "score": 30.1094
+        },
+        {
+          "corpus_id": 30191,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 191,
+          "score": 29.375
+        },
+        {
+          "corpus_id": 20009,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 9,
+          "score": 26.6094
+        },
+        {
+          "corpus_id": 10031,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 31,
+          "score": 26.3281
+        },
+        {
+          "corpus_id": 30190,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 190,
+          "score": 26.1562
+        },
+        {
+          "corpus_id": 20016,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 16,
+          "score": 25.9531
+        },
+        {
+          "corpus_id": 30180,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 180,
+          "score": 25.9062
+        },
+        {
+          "corpus_id": 30189,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 189,
+          "score": 25.8438
+        },
+        {
+          "corpus_id": 10030,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 30,
+          "score": 25.8125
+        },
+        {
+          "corpus_id": 30186,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 186,
+          "score": 25.7344
+        }
+      ],
+      "retrieval_timing_ms": 128.7,
+      "retrieval_stages": {
+        "encode_ms": 49.7,
+        "stage1_ms": 26.9,
+        "stage2_ms": 51.9
+      },
+      "generation": {
+        "answer": "No, it cannot. According to Page 1 of the document \"espressif_esp32_errata\", if the RTC_PERIPH power domain is powered up, the ULP co-processor and touch sensor functionalities will not be available. This applies to revision v3.1 as indicated in Table 2.1 on Page 3.",
+        "cited_pages": [
+          20017,
+          20009
+        ],
+        "shown_pages": [
+          20017,
+          30191,
+          20009
+        ],
+        "refused": false,
+        "latency_ms": 2151.8,
+        "usage": {
+          "prompt_tokens": 4776,
+          "total_tokens": 4848,
+          "completion_tokens": 72,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "partial",
+        "core_fact_checks": [
+          {
+            "fact": "Rejects simultaneous EXT0 and ULP/touch in the stated Deep-sleep setup.",
+            "status": "met",
+            "assessment": "Explicitly rejects simultaneous EXT0 with ULP/touch."
+          },
+          {
+            "fact": "Explains that the wake sources require incompatible RTC_PERIPH power settings.",
+            "status": "partially_met",
+            "assessment": "States that powered-up RTC_PERIPH prevents ULP/touch, but does not explain that EXT0 requires that same domain powered up."
+          }
+        ],
+        "rationale": "Correct decision and one side of the power-domain restriction; the incompatibility explanation is incomplete.",
+        "citation_assessment": "Slot 1 supports the ULP/touch restriction. The extra revision-table claim is not used to satisfy any core fact.",
+        "context_fact_coverage": [
+          {
+            "fact": "Rejects simultaneous EXT0 and ULP/touch in the stated Deep-sleep setup.",
+            "covered": true,
+            "evidence_page_ids": [
+              20017
+            ]
+          },
+          {
+            "fact": "Explains that the wake sources require incompatible RTC_PERIPH power settings.",
+            "covered": true,
+            "evidence_page_ids": [
+              20017
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "abstained",
+        "no_context_checks": [
+          {
+            "fact": "Rejects simultaneous EXT0 and ULP/touch in the stated Deep-sleep setup.",
+            "status": "missing",
+            "assessment": "Does not decide that EXT0 with ULP/touch is unsupported."
+          },
+          {
+            "fact": "Explains that the wake sources require incompatible RTC_PERIPH power settings.",
+            "status": "missing",
+            "assessment": "Does not identify incompatible RTC_PERIPH power settings."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "Can ESP32 chip revision v3.1 use EXT0 wake-up together with the ULP coprocessor and touch wake-up during Deep Sleep?"
+      },
+      "citation_check": {
+        "labels": [
+          1,
+          3
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          20017,
+          20009
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    },
+    {
+      "question_id": "mcu-draft-012",
+      "question": "On ESP32 revision v0.0, changing Audio PLL sdm0 and sdm1 does not provide the expected frequency precision. Is this a hardware limitation, and was it fixed in later revisions?",
+      "gold_pages": [
+        {
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 21,
+          "section": "3.16 / CLK-3.7",
+          "grade": 2,
+          "support": "Prose identifies unused sdm0/sdm1 and the fix from chip v1.0. The rendered equation and driver discussion support optional details.",
+          "evidence_type": "text"
+        }
+      ],
+      "retrieved_pages": [
+        {
+          "corpus_id": 20021,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 21,
+          "score": 37.0625
+        },
+        {
+          "corpus_id": 30171,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 171,
+          "score": 33.375
+        },
+        {
+          "corpus_id": 10077,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 77,
+          "score": 28.7812
+        },
+        {
+          "corpus_id": 80038,
+          "doc_id": "st_stm32f407_datasheet_ds8626",
+          "page_number": 38,
+          "score": 27.875
+        },
+        {
+          "corpus_id": 20023,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 23,
+          "score": 26.7344
+        },
+        {
+          "corpus_id": 10070,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 70,
+          "score": 26.5469
+        },
+        {
+          "corpus_id": 10011,
+          "doc_id": "espressif_esp32_datasheet",
+          "page_number": 11,
+          "score": 26.5
+        },
+        {
+          "corpus_id": 20020,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 20,
+          "score": 26.3594
+        },
+        {
+          "corpus_id": 30170,
+          "doc_id": "espressif_esp32_refman",
+          "page_number": 170,
+          "score": 26.2812
+        },
+        {
+          "corpus_id": 20022,
+          "doc_id": "espressif_esp32_errata",
+          "page_number": 22,
+          "score": 26.2812
+        }
+      ],
+      "retrieval_timing_ms": 99.3,
+      "retrieval_stages": {
+        "encode_ms": 36.5,
+        "stage1_ms": 39.6,
+        "stage2_ms": 23.1
+      },
+      "generation": {
+        "answer": "Yes, it is a hardware limitation. The formula for calculating the Audio PLL frequency on chip revision v0.0 is limited by the use of configuration registers sdm0 & sdm1, which are not used when configuring the Audio PLL. This issue was fixed in chip revision v1.0, where the formula uses sdm0, sdm1, sdm2, and odiv to calculate the frequency more precisely [Page 1].",
+        "cited_pages": [
+          20021
+        ],
+        "shown_pages": [
+          20021,
+          30171,
+          10077
+        ],
+        "refused": false,
+        "latency_ms": 2480.2,
+        "usage": {
+          "prompt_tokens": 4788,
+          "total_tokens": 4880,
+          "completion_tokens": 92,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": null
+        },
+        "finish_reason": null,
+        "truncation_verified": false
+      },
+      "retrieval_metrics": {
+        "ndcg_at_10": 1.0,
+        "recall_at_10": 1.0,
+        "recall_at_3": 1.0
+      },
+      "assessment": {
+        "verdict": "correct",
+        "core_fact_checks": [
+          {
+            "fact": "Identifies ignored sdm0 and sdm1 on chip v0.0.",
+            "status": "met",
+            "assessment": "Explicitly says sdm0 and sdm1 are not used on v0.0, despite awkward introductory wording."
+          },
+          {
+            "fact": "Identifies chip v1.0 as fixed.",
+            "status": "met",
+            "assessment": "Explicitly identifies chip v1.0 as the fix."
+          }
+        ],
+        "rationale": "Both core facts are satisfied; no formula is required.",
+        "citation_assessment": "Slot 1 (ESP32 errata p21) supports both facts.",
+        "context_fact_coverage": [
+          {
+            "fact": "Identifies ignored sdm0 and sdm1 on chip v0.0.",
+            "covered": true,
+            "evidence_page_ids": [
+              20021
+            ]
+          },
+          {
+            "fact": "Identifies chip v1.0 as fixed.",
+            "covered": true,
+            "evidence_page_ids": [
+              20021
+            ]
+          }
+        ],
+        "complete_core_evidence_shown": true,
+        "reviewer": "Codex (assistant)",
+        "no_context_verdict": "partial",
+        "no_context_checks": [
+          {
+            "fact": "Identifies ignored sdm0 and sdm1 on chip v0.0.",
+            "status": "missing",
+            "assessment": "Does not state that sdm0 and sdm1 are ignored on chip v0.0."
+          },
+          {
+            "fact": "Identifies chip v1.0 as fixed.",
+            "status": "partially_met",
+            "assessment": "Mentions v1.0 onwards as likely improving the PLL, but does not establish that the specific bug was fixed then."
+          }
+        ],
+        "improved_from_no_context": true
+      },
+      "model_settings": {
+        "model": "qwen2.5-vl-7b-awq",
+        "max_tokens": 400,
+        "temperature": 0.0
+      },
+      "prompts": {
+        "system_prompt": "You answer questions about pages from technical manuals. You are given page images, each labelled 'Page N'. Answer only from what is visible in those pages -- tables, diagrams and text all count as visible.\nRules:\n1. Cite every claim inline as [Page N], using the labels given.\n2. If the pages do not contain the answer, reply exactly: NOT_IN_PAGES\n3. Be specific: quote the exact values, part numbers and units shown, not paraphrases.\n4. Keep the answer under 120 words.",
+        "user_question": "On ESP32 revision v0.0, changing Audio PLL sdm0 and sdm1 does not provide the expected frequency precision. Is this a hardware limitation, and was it fixed in later revisions?"
+      },
+      "citation_check": {
+        "labels": [
+          1
+        ],
+        "invalid_labels": [],
+        "resolved_page_ids": [
+          20021
+        ],
+        "note": "Valid local labels do not establish that the cited page supports the claim."
+      }
+    }
+  ],
+  "improvement_definition": "Verdict transitions only: incorrect/abstained to partial/correct, or partial to correct. Additional facts within an unchanged partial verdict are not counted.",
+  "complete_core_evidence_shown": 11,
+  "review_method": "Semantic review of frozen core facts, with no keyword scoring. Missing optional details are not penalized. A partial verdict can include correct parts alongside material errors. Citation quality is reported separately.",
+  "limitations": [
+    "Original legacy run did not save full API responses or exact image requests; finish reason and absence of truncation cannot be retrospectively verified.",
+    "Gold annotations are provisional. No-context and RAG prompts differ, so this is a comparison of workflows, not an isolated causal estimate of context alone.",
+    "Semantic judgments are by an assistant and can be reviewed by a human.",
+    "This is visual retrieval only; no MCU text-baseline comparison has been run here."
+  ],
+  "provenance": {
+    "rescored_at": "2026-09-08T16:47:05.460203+00:00",
+    "source_run": "reports/mcu_evaluation_original/mcu_evaluation.json",
+    "source_sha256": "aa2255f3794b511c045ed23ffa84e8634e22e3de635295fece3799d2623a8d42",
+    "baseline_sha256": "f1676ed6230118bda184a157c76576201a38b518cf0d7742dac22734c75ddc4f",
+    "questions_sha256": "f8a5daf4b435af9a4509693e9fac8884b62e5535245f79c04449fa1452063364",
+    "review_sha256": "2b3df805719b94ea9bd88d30c6dada5bd5052daf3bee5a501e65cbab34e0252b"
+  }
+}

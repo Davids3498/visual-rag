@@ -27,7 +27,7 @@ Plan documents: [part1-pipeline-and-serving.md](part1-pipeline-and-serving.md),
 | 9 | Part 2: MCU corpus, manifest + hash-pinned fetch | done — 10 documents, 3 vendors |
 | 10 | Part 2: render the selected pages | done — **1,201 pages** at 1.2 MP |
 | 11 | Part 2: embed + index the corpus | done — 5.0 pages/s, 19,216 index rows |
-| 12 | Part 2: question set from the errata, refusal path | in progress — 12 reviewed questions; no-context audit: 0 fully correct, all 12 retained; retrieval evaluation and refusal pending |
+| 12 | Part 2: question set from the errata, refusal path | in progress — 12-question MCU comparison: NDCG@10 text 0.6132 vs visual 0.9369; fully correct answers 4 vs 3; refusal pending |
 
 ## Results
 
@@ -638,11 +638,20 @@ deciding whether to exclude such pages — they are legitimately part of the doc
 
 Step 12 starts with [12 errata-derived candidates](corpus/questions/errata_candidates.json)
 and a [review/audit protocol](corpus/questions/README.md). These are authored scenarios with
-provisional gold pages, not yet scored for retrieval. All 12 are single-document under
+provisional gold pages, now scored in a text-versus-visual pilot. All 12 are single-document under
 their core-answer rubrics; optional manual pages are stored separately. An assistant source
 review corrected the annotations, followed by user approval and a no-context audit:
 0 correct, 5 partial, 5 incorrect, 2 abstained. All 12 remain eligible under this model and protocol;
 see the [recorded responses and judgments](corpus/questions/no_context_audits/20260908T134053918802Z.json).
+
+The [MCU comparison](reports/mcu_text_vs_visual.md) uses all 1,201 selected pages and
+the same image generator for both retrieval paths. Native-PDF-text BGE-M3 scores
+0.6132 NDCG@10 versus visual ColQwen2's 0.9369. Complete evidence reaches the generator
+for 7/12 versus 11/12 questions. Fully correct answers are 4/12 versus 3/12, respectively:
+better retrieval does not establish better answer accuracy in these single runs. The text
+path uses pypdf extraction, not OCR. This small prose-answer pilot does not isolate a
+visual-layout advantage. Raw requests/responses and semantic reviews are saved for both paths.
+
 Run
 `.venv/bin/python scripts/12_prepare_questions.py` to verify source hashes, extract the local
 errata, and generate `reports/mcu_question_review.md` with clickable evidence images.

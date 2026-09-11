@@ -1,7 +1,7 @@
 """Text encoder for the baseline retriever (BAAI/bge-m3 dense vectors).
 
-The input is the corpus `markdown` column — someone else's OCR — so the text-vs-visual
-comparison isn't confounded by my own PDF parsing.
+Part 1 uses the corpus's supplied OCR markdown. The MCU pilot uses separately recorded
+native PDF text extraction; that extraction choice is part of its baseline definition.
 """
 
 from __future__ import annotations
