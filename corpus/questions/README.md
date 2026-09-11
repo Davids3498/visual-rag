@@ -74,6 +74,64 @@ current `pages.parquet` only when exporting approved annotations; document ordin
 
 ## No-context audit
 
+The subsequent visual RAG run has been rescored using the shared linear-gain retrieval
+metrics and explicit semantic answer review. See `reports/mcu_evaluation.md` and
+`reports/mcu_evaluation.json`: NDCG@10 0.9369, recall@10 1.0, 3 correct, 8 partial,
+1 incorrect, and 7 improved verdicts over the no-context baseline. Complete core evidence
+was shown for 11/12 questions; question 003's gold page ranked sixth and was not shown.
+The answer judgments and per-fact context coverage are recorded in
+`rag_answer_review_20260908T161223.json`, bound to exact answer text, question, rubric
+and shown pages. These are assistant judgments; missing optional details are not errors.
+The original run lacked full API responses, so truncation cannot be retrospectively verified.
+
+To rescore without model calls, run:
+
+```bash
+.venv/bin/python scripts/12_mcu_evaluation.py \
+  --rescore reports/mcu_evaluation_original/mcu_evaluation.json \
+  --reviews corpus/questions/rag_answer_review_20260908T161223.json \
+  --output-dir reports/mcu_evaluation_rescored_new
+```
+
+Without `--rescore`, this entry point collects a new visual RAG run with exact image
+requests and raw API responses. Without a matching `--reviews` file, answer judgments
+remain pending; they are never inferred from keyword overlap. Output directories must
+be new. The initial erroneous reports and script are preserved in
+`reports/mcu_evaluation_original/`.
+
+## MCU text-versus-visual comparison
+
+The comparison uses the fresh visual run `reports/mcu_rag_20260908T165429Z/reviewed/`
+and text run `reports/mcu_text_20260908T180110Z/reviewed/`. All 24 API responses ended
+with `stop`; exact image requests and raw responses are preserved. The text run uses
+native pypdf text from all 1,201 hash-verified selected pages, BGE-M3 fp16, batch size 16,
+4096 tokens, and a separate database table. Three non-gold pages were truncated; no gold
+page was truncated and no extracted page was empty. Both paths send top-3 page images
+to the same generator configuration. This compares retrievers, not text-only versus
+image-based answer generation.
+
+`reports/mcu_text_vs_visual.md` and `.json` report NDCG@10 0.6132 versus 0.9369 and
+recall@10 0.7917 versus 1.0 (text then visual). Core evidence coverage is 7/12 versus
+11/12. Correct/partial/incorrect answer counts are 4/4/4 versus 3/8/1, based on explicit
+semantic review in `text_rag_answer_review_20260908T180110.json` and
+`rag_answer_review_20260908T165429.json`. The visual path does not have a higher
+fully-correct answer count in these single runs. Do not claim OCR failure, a demonstrated
+visual-layout advantage, or general significance from this 12-question prose pilot.
+
+`scripts/14_mcu_text_baseline.py` collects a new text run in unique data/report directories
+and a unique database table; it never overwrites the visual index. It requires running
+Postgres/vLLM and leaves semantic judgments pending. To regenerate the comparison from
+the reviewed runs:
+
+```bash
+.venv/bin/python scripts/15_compare_mcu_retrieval.py \
+  --text reports/mcu_text_20260908T180110Z/reviewed/mcu_evaluation.json \
+  --visual reports/mcu_rag_20260908T165429Z/reviewed/mcu_evaluation.json \
+  --output reports/mcu_text_vs_visual
+```
+
+## Original no-context results
+
 The first run, `20260908T134053918802Z`, is complete: **0 correct, 5 partial, 5 incorrect,
 2 abstained** under assistant review of the core facts. All 12 remain in the retrieval-dependent
 answer subset; no responses were truncated. The immutable

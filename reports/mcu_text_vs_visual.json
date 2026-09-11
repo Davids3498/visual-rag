@@ -1,0 +1,171 @@
+{
+  "question_count": 12,
+  "runs": {
+    "text": "reports/mcu_text_20260908T180110Z/reviewed/mcu_evaluation.json",
+    "visual": "reports/mcu_rag_20260908T165429Z/reviewed/mcu_evaluation.json"
+  },
+  "input_sha256": {
+    "text": "6fb5fcac48a64f8cb0a97b789e8e2a7a3e464d77fa717dfa960473a0a284d391",
+    "visual": "ba20eaecd9bc5406688349e6a8390e27cc37a9bdf302277f35f1d46b726dcd3e"
+  },
+  "summaries": {
+    "text": {
+      "metrics": {
+        "ndcg_at_10": {
+          "mean": 0.6131674588895514,
+          "median": 0.695558643501663,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "recall_at_10": {
+          "mean": 0.7916666666666666,
+          "median": 1.0,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "recall_at_3": {
+          "mean": 0.5416666666666666,
+          "median": 0.75,
+          "min": 0.0,
+          "max": 1.0
+        }
+      },
+      "verdicts": {
+        "correct": 4,
+        "partial": 4,
+        "incorrect": 4,
+        "abstained": 0,
+        "uncertain": 0
+      },
+      "complete_evidence_shown": 7,
+      "improved_vs_no_context": 6
+    },
+    "visual": {
+      "metrics": {
+        "ndcg_at_10": {
+          "mean": 0.9369243868982112,
+          "median": 1.0,
+          "min": 0.3562071871080222,
+          "max": 1.0
+        },
+        "recall_at_10": {
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "recall_at_3": {
+          "mean": 0.875,
+          "median": 1.0,
+          "min": 0.0,
+          "max": 1.0
+        }
+      },
+      "verdicts": {
+        "correct": 3,
+        "partial": 8,
+        "incorrect": 1,
+        "abstained": 0,
+        "uncertain": 0
+      },
+      "complete_evidence_shown": 11,
+      "improved_vs_no_context": 7
+    }
+  },
+  "visual_minus_text_ndcg": 0.32375692800865985,
+  "per_question": [
+    {
+      "question_id": "mcu-draft-001",
+      "text_ndcg": 0.0,
+      "visual_ndcg": 1.0,
+      "text_verdict": "incorrect",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-002",
+      "text_ndcg": 1.0,
+      "visual_ndcg": 1.0,
+      "text_verdict": "correct",
+      "visual_verdict": "correct"
+    },
+    {
+      "question_id": "mcu-draft-003",
+      "text_ndcg": 0.0,
+      "visual_ndcg": 0.3562071871080222,
+      "text_verdict": "incorrect",
+      "visual_verdict": "incorrect"
+    },
+    {
+      "question_id": "mcu-draft-004",
+      "text_ndcg": 0.43067655807339306,
+      "visual_ndcg": 1.0,
+      "text_verdict": "incorrect",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-005",
+      "text_ndcg": 0.31546487678572877,
+      "visual_ndcg": 1.0,
+      "text_verdict": "incorrect",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-006",
+      "text_ndcg": 0.3010299956639812,
+      "visual_ndcg": 1.0,
+      "text_verdict": "partial",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-007",
+      "text_ndcg": 0.7601875334318685,
+      "visual_ndcg": 0.8868854556705132,
+      "text_verdict": "partial",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-008",
+      "text_ndcg": 1.0,
+      "visual_ndcg": 1.0,
+      "text_verdict": "correct",
+      "visual_verdict": "correct"
+    },
+    {
+      "question_id": "mcu-draft-009",
+      "text_ndcg": 1.0,
+      "visual_ndcg": 1.0,
+      "text_verdict": "correct",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-010",
+      "text_ndcg": 0.9197207891481876,
+      "visual_ndcg": 1.0,
+      "text_verdict": "partial",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-011",
+      "text_ndcg": 1.0,
+      "visual_ndcg": 1.0,
+      "text_verdict": "partial",
+      "visual_verdict": "partial"
+    },
+    {
+      "question_id": "mcu-draft-012",
+      "text_ndcg": 0.6309297535714575,
+      "visual_ndcg": 1.0,
+      "text_verdict": "correct",
+      "visual_verdict": "correct"
+    }
+  ],
+  "checks": "Same questions, rubrics, system prompt, model alias, decoding parameters; 3 images/request; shared images byte-identical; all finish reasons stop.",
+  "interpretation": "Visual retrieval ranks the annotated evidence better on this pilot. It does not produce more fully correct answers in these single runs.",
+  "limitations": [
+    "12 assistant-authored prose-answer questions; provisional gold labels.",
+    "Native pypdf text extraction, not OCR; result does not isolate an OCR failure or a visual-layout advantage from encoder/architecture differences.",
+    "Same generator configuration, but single runs do not eliminate output variability. No generator superiority or significance claim.",
+    "Answer judgments are assistant semantic reviews. Partial can include materially wrong advice; these are not all usable answers.",
+    "No-context and grounded prompts differ; comparison measures workflows."
+  ]
+}
